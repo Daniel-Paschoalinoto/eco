@@ -1,6 +1,7 @@
+// Seu código principal (com as funções de formatação de janela)
 import sleep from "./utils/sleep.js";
 import log from "./utils/textformatter.js";
-import { setBackgroundRGB, setWindowTitle } from "./utils/windowFormatter.js";
+import { setBackgroundRGB, setWindowTitle, maximizeWindow, minimizeWindow, setWindowPositionAndSize } from "./utils/windowFormatter.js";
 
 // Configurações iniciais
 await sleep(2000);
@@ -15,17 +16,14 @@ await sleep(2000);
 await log("[INICIANDO TESTE DE FORMATAÇÃO DE JANELA...]");
 await sleep(2000);
 
-await log("1️⃣ Centralizando janela...", "m", "yellow");
+await log("🔲 Ajustando posição e tamanho da janela...", "m", "green");
+await setWindowPositionAndSize(100, 100, 800, 600);  // Define posição (100, 100) e tamanho (800x600)
 await sleep(2000);
 
-await log("2️⃣ Minimizar em 3...", "s", "magenta");
-await log("2", "f", "magenta");
-await sleep(500);
-await log("1", "f", "magenta");
-await sleep(500);
-await sleep(3000); // Dê tempo para ver que minimizou
-
-await log("3️⃣ Restaurando e maximizando...", "m", "green");
+await log("3️⃣ Minimizando...", "m", "green");
+await minimizeWindow();
 await sleep(2000);
 
-await log("✅ Teste concluído com sucesso.", "m", "brightWhite");
+await log("3️⃣ Maximizando...", "m", "green");
+await maximizeWindow();  // Maximizar a janela
+await sleep(50000);
