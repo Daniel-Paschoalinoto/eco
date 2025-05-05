@@ -1,13 +1,6 @@
 import sleep from "./utils/sleep.js";
 import log from "./utils/textformatter.js";
-import {
-  setBackgroundRGB,
-  setWindowTitle,
-  setTabColor,
-  maximizeWindow,
-  minimizeWindow,
-  centerWindow,
-} from "./utils/windowFormatter.js";
+import { setBackgroundRGB, setWindowTitle, setTabColor } from "./utils/windowFormatter.js";
 
 // Configurações iniciais
 setBackgroundRGB(10, 10, 40);
@@ -18,7 +11,6 @@ await log("[INICIANDO TESTE DE FORMATAÇÃO DE JANELA...]");
 await sleep(1000);
 
 await log("1️⃣ Centralizando janela...", "m", "yellow");
-centerWindow();
 await sleep(2000);
 
 await log("2️⃣ Minimizar em 3...", "s", "magenta");
@@ -30,7 +22,6 @@ minimizeWindow();
 await sleep(3000); // Dê tempo para ver que minimizou
 
 await log("3️⃣ Restaurando e maximizando...", "m", "green");
-maximizeWindow();
 await sleep(2000);
 
 await log("✅ Teste concluído com sucesso.", "m", "brightWhite");
