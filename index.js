@@ -1,5 +1,12 @@
 import sleep from "./utils/sleep.js";
-import { setBackgroundRGB, setWindowTitle, maximizeWindow, minimizeWindow, setWindowPositionAndSize } from "./utils/windowFormatter.js";
+import {
+  setWindowPositionAndSize,
+  saveCurrentWindowPositionAndSize,
+  restoreSavedWindowPositionAndSize,
+  maximizeWindow,
+  minimizeWindow,
+  setWindowTitle,
+} from "./utils/windowFormatter.js";
 import { log } from "./utils/textFormatter.js";
 import { playSound, stopSound } from "./utils/soundManager.js";
 
@@ -10,17 +17,49 @@ import { playSound, stopSound } from "./utils/soundManager.js";
 
 // Configurações iniciais
 async function main() {
+  await log("Alterando title para teste");
+  setWindowTitle("Teste"); // Define uma posição inicial
+  await sleep(3000);
+
+  await log("Definindo posição inicial da janela...");
+  await setWindowPositionAndSize(10, 10, 80, 80); // Define uma posição inicial
+  await sleep(1000);
+
+  await log("Salvando posição atual da janela...");
+  await saveCurrentWindowPositionAndSize(); // Salva a posição atual
+  await sleep(1000);
+
+  await log("Alterando posição da janela 5 vezes...");
+  for (let i = 1; i <= 3; i++) {
+    const posX = Math.random() * 100; // Gera uma posição X aleatória (0–100%)
+    const posY = Math.random() * 100; // Gera uma posição Y aleatória (0–100%)
+    await log(`Movendo para posição ${i}: (${Math.round(posX)}%, ${Math.round(posY)}%)`);
+    await setWindowPositionAndSize(posX, posY, 50, 50); // Define a posição com 50% de largura e altura
+  }
+
+  await log("Restaurando posição salva da janela...");
+  await restoreSavedWindowPositionAndSize(); // Restaura a posição salva
+  await sleep(10000);
+
+  await log("Maximizando a janela...");
+  await maximizeWindow(); // Maximiza a janela
+  await sleep(2000);
+
+  await log("Minimizando a janela...");
+  await minimizeWindow(); // Minimiza a janela
+  await sleep(2000);
+
   await log("Ajustando janela");
   await log("Esperando 2");
   await sleep(2000);
-  await setWindowPositionAndSize(0, 0, 200, 200);
+  await setWindowPositionAndSize(100, 100, 100, 96);
   await log("Tocando Boss_Time...", "magenta", "m");
   playSound("Boss_Time.mp3", true);
 
   await log("Esperando 10"); // Cor branca e velocidade média
   await sleep(10000);
 
-  await log("Pausando Musica"); 
+  await log("Pausando Musica");
   stopSound()
   await sleep(1000)
 
@@ -30,7 +69,7 @@ async function main() {
   await log("Esperando 5"); // Cor branca e velocidade média
   await sleep(5000);
 
-  await log("Pausando Musica"); 
+  await log("Pausando Musica");
   stopSound()
 
   await log("Definindo posição e tamanho da janela...", "blue", "m");
