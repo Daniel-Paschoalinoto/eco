@@ -1,7 +1,7 @@
 import sleep from "./utils/sleep.js";
 import { setBackgroundRGB, setWindowTitle, maximizeWindow, minimizeWindow, setWindowPositionAndSize } from "./utils/windowFormatter.js";
 import { log } from "./utils/textFormatter.js";
-import { playSound, pauseSound } from "./utils/soundManager.js";
+import { playSound, stopSound } from "./utils/soundManager.js";
 
 //Criar fluxos dependendo das decisões.
 //FAzer tocar sons.
@@ -10,15 +10,18 @@ import { playSound, pauseSound } from "./utils/soundManager.js";
 
 // Configurações iniciais
 async function main() {
-
+  await log("Ajustando janela");
+  await log("Esperando 2");
+  await sleep(2000);
+  await setWindowPositionAndSize(0, 0, 200, 200);
   await log("Tocando Boss_Time...", "magenta", "m");
-  playSound("msn-sound_1.mp3", "true");
+  playSound("Boss_Time.mp3", true);
 
   await log("Esperando 10"); // Cor branca e velocidade média
   await sleep(10000);
 
   await log("Pausando Musica"); 
-  pauseSound(3000)
+  stopSound()
   await sleep(1000)
 
   await log("Tocando Airlock-meio-misteriosa-e-instrumental.mp3...", "magenta", "m");
@@ -28,7 +31,7 @@ async function main() {
   await sleep(5000);
 
   await log("Pausando Musica"); 
-  pauseSound()
+  stopSound()
 
   await log("Definindo posição e tamanho da janela...", "blue", "m");
   await setWindowPositionAndSize(100, 100, 800, 600);

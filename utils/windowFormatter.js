@@ -58,12 +58,16 @@ public class WinAPI {
 
 export async function setWindowPositionAndSize(x, y, width, height) {
   const psScript = `
-    $hwnd = (Get-Process -Id $PID).MainWindowHandle
-    if ($hwnd -eq 0) {
-        $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle
-    }
-    if ($hwnd -ne 0) {
-        Add-Type -TypeDefinition @"
+  $hwnd = (Get-Process -Id $PID).MainWindowHandle
+  if ($hwnd -eq 0) {
+      $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle
+  }
+  if ($hwnd -eq 0) {
+      Write-Host "Erro: Não foi possível obter o identificador da janela."
+      exit 1
+  }
+  if ($hwnd -ne 0) {
+      Add-Type -TypeDefinition @"
 using System;
 using System.Runtime.InteropServices;
 public class WinAPI {
@@ -71,9 +75,9 @@ public class WinAPI {
     public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 }
 "@
-        [WinAPI]::MoveWindow($hwnd, ${x}, ${y}, ${width}, ${height}, $true) | Out-Null
-    }
-  `;
+      [WinAPI]::MoveWindow($hwnd, ${x}, ${y}, ${width}, ${height}, $true) | Out-Null
+  }
+`;
 
   await executeSpawn("powershell", ["-Command", psScript]);
 }

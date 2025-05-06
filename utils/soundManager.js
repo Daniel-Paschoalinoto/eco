@@ -6,7 +6,7 @@ import executeSpawn from "./executeSpawn.js";
 
 let vlcProcess = null;
 const RC = { host: "127.0.0.1", port: 5000 };
-let currentVolume = 50; // volume atual (0–100)%
+let currentVolume = 100; // volume atual (0–100)%
 
 function stopVLC() {
   if (vlcProcess) {
@@ -42,9 +42,10 @@ function sendCmd(cmd) {
 
 /**
  * Faz fade in de volume de 0% até currentVolume% em duration ms.
+ * @param {number} duration Duração do fade-in em ms
  */
-function fadeInSound(duration = 1000) {
-  if (!vlcProcess) return;
+function fadeInSound(duration) {
+  if (!vlcProcess || !duration) return; // Sem fade-in se a duração não for especificada
   const steps = 20;
   const stepTime = duration / steps;
   let pct = 0;
@@ -64,10 +65,10 @@ function fadeInSound(duration = 1000) {
  * Toca um arquivo de áudio via VLC com opções de loop, volume e fade-in.
  * @param {string} file
  * @param {boolean} [loop=false]
- * @param {number} [volume=50] 0–100 (percentual)
- * @param {number} [fadeIn=0] duração do fade-in em ms
+ * @param {number} [volume=100] 0–100 (percentual)
+ * @param {number} [fadeIn] Duração do fade-in em ms (opcional)
  */
-export function playSound(file, loop = false, volume = 70, fadeIn = 0) {
+export function playSound(file, loop = false, volume = 100, fadeIn) {
   stopVLC();
   const musicPath = resolveFile(file);
   if (!musicPath) return console.error(`Arquivo não encontrado: ${file}`);
@@ -86,54 +87,52 @@ export function playSound(file, loop = false, volume = 70, fadeIn = 0) {
   ];
   if (loop) args.push("--loop");
 
-  vlcProcess = executeSpawn(vlc, args, { stdio: 'ignore', windowsHide: true }).child;
+  vlcProcess = executeSpawn(vlc, args, { stdio: "ignore", windowsHide: true }).child;
 
-  // set initial volume to zero if fading in
+  // Aplica fade-in apenas se especificado
   setTimeout(() => {
-    if (fadeIn > 0) {
+    if (fadeIn) {
       fadeInSound(fadeIn);
     } else {
-      sendCmd(`volume ${currentVolume}%`).catch(err => console.error('Erro volume:', err));
+      sendCmd(`volume ${currentVolume}%`).catch(err => console.error("Erro volume:", err));
     }
   }, 300);
 }
 
 /**
- * Fade out de volume (percentual) até 0% e então stop.
- * @param {number} [duration=1000] duração em ms
+ * Para o som com ou sem fade-out.
+ * @param {number} [duration] Duração do fade-out em ms (opcional)
  */
-export function fadeOutSound(duration = 1000) {
-  if (!vlcProcess) return;
-  const steps = 20;
-  const stepTime = duration / steps;
-  let pct = currentVolume;
-  const delta = pct / steps;
+export function stopSound(duration) {
+  if (!vlcProcess) return; // Se o VLC não estiver ativo, não faz nada
 
-  const iv = setInterval(() => {
-    pct = Math.max(0, pct - delta);
-    sendCmd(`volume ${Math.round(pct)}%`);
-    if (pct <= 0) {
-      clearInterval(iv);
-      stopSound();
-    }
-  }, stepTime);
-}
+  if (duration) {
+    // Aplica fade-out antes de parar
+    const steps = 20;
+    const stepTime = duration / steps;
+    let pct = currentVolume;
+    const delta = pct / steps;
 
-/**
- * Pausa com fade out atrelado.
- * @param {number} [duration=1000] duração do fade em ms
- */
-export function pauseSound(duration = 1000) {
-  fadeOutSound(duration);
-}
-
-/**
- * Para imediatamente.
- */
-export function stopSound() {
-  sendCmd("stop").finally(stopVLC);
+    const iv = setInterval(() => {
+      pct = Math.max(0, pct - delta);
+      sendCmd(`volume ${Math.round(pct)}%`);
+      if (pct <= 0) {
+        clearInterval(iv);
+        sendCmd("stop").finally(stopVLC); // Para o som após o fade-out
+      }
+    }, stepTime);
+  } else {
+    // Para imediatamente se nenhuma duração for especificada
+    sendCmd("stop").finally(stopVLC);
+  }
 }
 
 process.on("exit", stopVLC);
-process.on("SIGINT", () => { stopVLC(); process.exit(); });
-process.on("SIGTERM", () => { stopVLC(); process.exit(); });
+process.on("SIGINT", () => {
+  stopVLC();
+  process.exit();
+});
+process.on("SIGTERM", () => {
+  stopVLC();
+  process.exit();
+});
