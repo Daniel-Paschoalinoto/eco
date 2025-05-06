@@ -17,6 +17,25 @@ import { playSound, stopSound } from "./utils/soundManager.js";
 
 // Configurações iniciais
 async function main() {
+  await log("Tocando Boss_Time...", "magenta", "m");
+  playSound("Boss_Time.mp3", true);
+
+  await log("Esperando 10"); // Cor branca e velocidade média
+  await sleep(10000);
+
+  await log("Pausando Musica");
+  stopSound()
+  await sleep(1000)
+
+  await log("Tocando Airlock-meio-misteriosa-e-instrumental.mp3...", "magenta", "m");
+  playSound("Airlock-meio-misteriosa-e-instrumental.mp3");
+
+  await log("Esperando 5"); // Cor branca e velocidade média
+  await sleep(5000);
+
+  await log("Pausando Musica");
+  stopSound()
+
   await log("Alterando title para teste");
   setWindowTitle("Teste"); // Define uma posição inicial
   await sleep(3000);
@@ -53,24 +72,7 @@ async function main() {
   await log("Esperando 2");
   await sleep(2000);
   await setWindowPositionAndSize(100, 100, 100, 96);
-  await log("Tocando Boss_Time...", "magenta", "m");
-  playSound("Boss_Time.mp3", true);
-
-  await log("Esperando 10"); // Cor branca e velocidade média
-  await sleep(10000);
-
-  await log("Pausando Musica");
-  stopSound()
-  await sleep(1000)
-
-  await log("Tocando Airlock-meio-misteriosa-e-instrumental.mp3...", "magenta", "m");
-  playSound("Airlock-meio-misteriosa-e-instrumental.mp3");
-
-  await log("Esperando 5"); // Cor branca e velocidade média
-  await sleep(5000);
-
-  await log("Pausando Musica");
-  stopSound()
+  
 
   await log("Definindo posição e tamanho da janela...", "blue", "m");
   await setWindowPositionAndSize(100, 100, 800, 600);

@@ -27,16 +27,28 @@ function resolveFile(file) {
 /**
  * Envia comando RC ao VLC via socket TCP.
  */
-function sendCmd(cmd) {
+function sendCmd(cmd, retries = 1) {
   return new Promise((resolve, reject) => {
     if (!vlcProcess) return reject("VLC não ativo");
     const client = new net.Socket();
+
     client.connect(RC.port, RC.host, () => {
       client.write(cmd + "\n");
       client.end();
     });
+
     client.on("close", resolve);
-    client.on("error", reject);
+
+    client.on("error", (err) => {
+      if (retries > 0) {
+        console.warn(`Erro ao enviar comando "${cmd}", tentando novamente...`, err);
+        setTimeout(() => {
+          sendCmd(cmd, retries - 1).then(resolve).catch(reject);
+        }, 100); // Retry após 100ms
+      } else {
+        reject(err);
+      }
+    });
   });
 }
 
