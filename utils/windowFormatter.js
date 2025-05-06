@@ -55,3 +55,25 @@ public class WinAPI {
 
   await executeSpawn("powershell", ["-Command", psScript]);
 }
+
+export async function setWindowPositionAndSize(x, y, width, height) {
+  const psScript = `
+    $hwnd = (Get-Process -Id $PID).MainWindowHandle
+    if ($hwnd -eq 0) {
+        $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle
+    }
+    if ($hwnd -ne 0) {
+        Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public class WinAPI {
+    [DllImport("user32.dll")]
+    public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+}
+"@
+        [WinAPI]::MoveWindow($hwnd, ${x}, ${y}, ${width}, ${height}, $true) | Out-Null
+    }
+  `;
+
+  await executeSpawn("powershell", ["-Command", psScript]);
+}

@@ -2,6 +2,7 @@ import sleep from "./sleep.js"; // Função de sleep já existente
 
 // Mapeamento de cores ANSI
 const colorMap = {
+  black: "\x1b[30m",
   red: "\x1b[31m",
   green: "\x1b[32m",
   yellow: "\x1b[33m",
@@ -9,8 +10,18 @@ const colorMap = {
   magenta: "\x1b[35m",
   cyan: "\x1b[36m",
   white: "\x1b[37m",
-  gray: "\x1b[90m",
-  default: "\x1b[0m", // Reseta para a cor padrão (branco)
+
+  // Cores claras / brilhantes
+  lightBlack: "\x1b[90m",    // Também pode ser considerado "gray"
+  lightRed: "\x1b[91m",
+  lightGreen: "\x1b[92m",
+  lightYellow: "\x1b[93m",
+  lightBlue: "\x1b[94m",
+  lightMagenta: "\x1b[95m",
+  lightCyan: "\x1b[96m",
+  lightWhite: "\x1b[97m",
+
+  default: "\x1b[0m", // Reseta para a cor padrão (normal)
 };
 
 // Mapeamento de velocidades
@@ -32,7 +43,6 @@ function getRandomSpeed() {
 
 // Função para logar texto formatado
 export async function log(text, color = "default", speed = "m") {
-  // Define cor e velocidade padrão caso não sejam especificados
   const colorCode = colorMap[color] || colorMap.default;
   const delay = speed === "random" ? getRandomSpeed() : (speedMap[speed] || speedMap.m);
 
