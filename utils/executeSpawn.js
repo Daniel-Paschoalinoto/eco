@@ -1,35 +1,27 @@
-import { spawn } from "child_process";
+// utils/executeSpawn.js
+import { spawn as _spawn } from "child_process";
 
-// Função para executar comandos do sistema usando spawn
-async function executeSpawn(command, args = []) {
-    return new Promise((resolve, reject) => {
-        const process = spawn(command, args);
+function executeSpawn(command, args = [], options = {}) {
+  const child = _spawn(command, args, options);
 
-        let stdout = "";
-        let stderr = "";
-
-        process.stdout.on("data", (data) => {
-            stdout += data.toString();
-        });
-
-        process.stderr.on("data", (data) => {
-            stderr += data.toString();
-        });
-
-        process.on("close", (code) => {
-            if (code === 0) {
-                resolve(stdout.trim());
-            } else {
-                const error = new Error(`Processo terminou com código ${code}`);
-                error.stderr = stderr.trim();
-                reject(error);
-            }
-        });
-
-        process.on("error", (error) => {
-            reject(error);
-        });
+  const promise = new Promise((resolve, reject) => {
+    let stdout = "", stderr = "";
+    child.stdout?.on("data", d => stdout += d);
+    child.stderr?.on("data", d => stderr += d);
+    child.on("close", code => {
+      if (code === 0) resolve(stdout.trim());
+    //   else {
+    //     const err = new Error(`Código ${code}`);
+    //     err.stderr = stderr.trim();
+    //     reject(err);
+    //   }
     });
+    child.on("error", reject);
+  });
+
+  // anexa o processo à promise
+  promise.child = child;
+  return promise;
 }
 
 export default executeSpawn;
