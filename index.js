@@ -12,13 +12,13 @@ import { playSound, pauseSound } from "./utils/soundManager.js";
 async function main() {
 
   await log("Tocando Boss_Time...", "magenta", "m");
-  playSound("Boss_Time.mp3");
+  playSound("msn-sound_1.mp3", "true");
 
-  await log("Esperando 3"); // Cor branca e velocidade média
-  await sleep(3000);
+  await log("Esperando 10"); // Cor branca e velocidade média
+  await sleep(10000);
 
   await log("Pausando Musica"); 
-  pauseSound()
+  pauseSound(3000)
   await sleep(1000)
 
   await log("Tocando Airlock-meio-misteriosa-e-instrumental.mp3...", "magenta", "m");
