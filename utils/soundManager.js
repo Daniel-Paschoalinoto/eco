@@ -41,7 +41,7 @@ function sendCmd(cmd, retries = 1) {
 
     client.on("error", (err) => {
       if (retries > 0) {
-        console.warn(`Erro ao enviar comando "${cmd}", tentando novamente...`, err);
+        // console.warn(`Erro ao enviar comando "${cmd}", tentando novamente...`, err);
         setTimeout(() => {
           sendCmd(cmd, retries - 1).then(resolve).catch(reject);
         }, 100); // Retry após 100ms
@@ -98,7 +98,7 @@ export function playSound(file, loop = false, volume = 100, fadeIn) {
     musicPath
   ];
   if (loop) args.push("--loop");
-
+  // console.log(`${RC.port}`) //porta
   vlcProcess = executeSpawn(vlc, args, { stdio: "ignore", windowsHide: true }).child;
 
   // Aplica fade-in apenas se especificado
