@@ -10,11 +10,11 @@ function executeSpawn(command, args = [], options = {}) {
     child.stderr?.on("data", d => stderr += d);
     child.on("close", code => {
       if (code === 0) resolve(stdout.trim());
-    //   else {
-    //     const err = new Error(`Código ${code}`);
-    //     err.stderr = stderr.trim();
-    //     reject(err);
-    //   }
+      //   else {
+      //     const err = new Error(`Código ${code}`);
+      //     err.stderr = stderr.trim();
+      //     reject(err);
+      //   }
     });
     child.on("error", reject);
   });

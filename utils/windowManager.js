@@ -1,10 +1,10 @@
 import executeSpawn from "./executeSpawn.js";
 
-let savedXPosPercent = 0;
-let savedYPosPercent = 0;
-let savedWidthPercent = 100;
-let savedHeightPercent = 100;
-let savedWindowTitle = ""; // Variável para armazenar o título atual da janela
+let savedXPosPercent = 5;
+let savedYPosPercent = 10;
+let savedWidthPercent = 59;
+let savedHeightPercent = 59;
+let savedWindowTitle = "Terminal"; // Variável para armazenar o título atual da janela
 
 
 /**
@@ -33,6 +33,10 @@ public class WinAPI {
     }
   `;
   await executeSpawn("powershell", ["-Command", psScript]);
+
+  if (savedWindowTitle) {
+    setWindowTitle(savedWindowTitle);
+  }
 }
 
 /**
@@ -60,7 +64,12 @@ public class WinAPI {
         [WinAPI]::ShowWindow($hwnd, 6) | Out-Null # 6 = SW_MINIMIZE
     }
   `;
+
   await executeSpawn("powershell", ["-Command", psScript]);
+
+  if (savedWindowTitle) {
+    setWindowTitle(savedWindowTitle);
+  }
 }
 
 export function setBackgroundRGB(r, g, b) {
@@ -100,6 +109,10 @@ public class ScreenResolution {
   `;
   const output = await executeSpawn("powershell", ["-Command", psScript]);
   const [width, height] = output.trim().split(",").map(Number);
+
+  if (savedWindowTitle) {
+    setWindowTitle(savedWindowTitle);
+  }
   return { width, height };
 }
 
@@ -146,14 +159,18 @@ public struct RECT {
     const output = await executeSpawn("powershell", ["-Command", psScript]);
     const [x, y, width, height] = output.trim().split(",").map(Number);
 
-    if (isNaN(x) || isNaN(y) || isNaN(width) || isNaN(height)) {
-      throw new Error("Valores inválidos retornados pelo PowerShell.");
+    // if (isNaN(x) || isNaN(y) || isNaN(width) || isNaN(height)) {
+    //   throw new Error("Valores inválidos retornados pelo PowerShell.");
+    // }
+
+    if (savedWindowTitle) {
+      setWindowTitle(savedWindowTitle);
     }
 
     return { x, y, width, height };
   } catch (error) {
     console.error("Erro ao obter posição e tamanho da janela:", error);
-    return { x: 0, y: 0, width: 0, height: 0 }; // Retorna valores padrão em caso de erro
+    return { x: 5, y: 10, width: 59, height: 59 }; // Retorna valores padrão em caso de erro
   }
 }
 
@@ -198,10 +215,10 @@ public class WinAPI {
 
   await executeSpawn("powershell", ["-Command", psScript]);
 
-  // Restaura o título da janela após mover/redimensionar
   if (savedWindowTitle) {
     setWindowTitle(savedWindowTitle);
   }
+
 }
 
 /**
@@ -217,7 +234,11 @@ export async function saveCurrentWindowPositionAndSize() {
   savedWidthPercent = Math.round((width / screenWidth) * 100);
   savedHeightPercent = Math.round((height / screenHeight) * 100);
 
-  // // Log para depuração
+  if (savedWindowTitle) {
+    setWindowTitle(savedWindowTitle);
+  }
+
+  // Log para depuração
   // console.log("Posição e tamanho salvos:", {
   //   savedXPosPercent,
   //   savedYPosPercent,
@@ -239,8 +260,8 @@ export async function restoreSavedWindowPositionAndSize() {
 
   await setWindowPositionAndSize(savedXPosPercent, savedYPosPercent, savedWidthPercent, savedHeightPercent);
 
-  // Restaura o título salvo
   if (savedWindowTitle) {
     setWindowTitle(savedWindowTitle);
   }
+
 }

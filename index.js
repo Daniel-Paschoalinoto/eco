@@ -6,10 +6,12 @@ import {
   maximizeWindow,
   minimizeWindow,
   setWindowTitle,
+  setBackgroundRGB
 } from "./utils/windowManager.js";
 import { log } from "./utils/textManager.js";
 import { askLog, closeInput } from './utils/inputManager.js';
 import { playSound, stopSound } from "./utils/soundManager.js";
+import { user } from "./utils/nameGetter.js";
 
 //Criar fluxos dependendo das decisões.
 //FAzer tocar sons.
@@ -18,8 +20,7 @@ import { playSound, stopSound } from "./utils/soundManager.js";
 
 // Configurações iniciais
 async function main() {
-
-  
+  await saveCurrentWindowPositionAndSize();
 
   // const nome = await askLog("Qual é o seu nome, herói?", "lightCyan", "m");
   // await log(`Bem-vindo, ${nome}! Sua jornada começa agora...`, "lightGreen", "m");
@@ -67,75 +68,19 @@ async function main() {
   // await restoreSavedWindowPositionAndSize(); // Restaura a posição salva
   // await sleep(10000);
 
-  // await log("Maximizando a janela...");
-  // await maximizeWindow(); // Maximiza a janela
-  // await sleep(2000);
-
   // await log("Minimizando a janela...");
   // await minimizeWindow(); // Minimiza a janela
   // await sleep(2000);
 
-  // await log("Ajustando janela");
-  // await log("Esperando 2");
+  // await log("Maximizando a janela...");
+  // await maximizeWindow(); // Maximiza a janela
   // await sleep(2000);
-  // await setWindowPositionAndSize(100, 100, 100, 96);
   
 
-  // await log("Definindo posição e tamanho da janela...", "blue", "m");
-  // await setWindowPositionAndSize(100, 100, 800, 600);
-  // await sleep(2000);
-
-  // await log("Alterando posição e tamanho novamente...", "green", "m");
-  // await setWindowPositionAndSize(200, 200, 1024, 768);
-  // await sleep(2000);
-
-  // await log("Teste 1: Minimizando a janela...", "yellow", "sf");
-  // await minimizeWindow();
-  // await sleep(2000);
-
-  // await log("Teste 2: Maximizar a janela com velocidade aleatória...", "blue", "uf");
-  // await maximizeWindow();
-  // await sleep(2000);
-
-  // await log("Teste 3: Alterando o fundo para azul escuro...", "gray", "s");
+  // await log("Alterando o fundo para azul escuro...", "gray", "s");
   // setBackgroundRGB(10, 10, 40);
   // await sleep(2000);
 
-  // await log("Teste 4: Alterando o título da janela para 'Janela de Teste'...", "magenta", "f");
-  // setWindowTitle("Janela de Teste");
-  // await sleep(2000);
-
-  // await log("Teste 5: Texto com velocidade ultra rápida (uf)...", "cyan", "uf");
-  // await sleep(1000);
-
-  // await log("Teste 6: Texto com velocidade ultra lenta (us)...", "red", "us");
-  // await sleep(1000);
-
-  // await log("Teste 7: Texto com cor cinza e velocidade média (m)...", "gray", "m");
-  // await sleep(1000);
-
-  // await log("Teste 8: Cor azul clara (lightBlue)...", "lightBlue", "f");
-  // await sleep(1000);
-
-  // await log("Teste 9: Cor verde clara (lightGreen)...", "lightGreen", "sf");
-  // await sleep(1000);
-
-  // await log("Teste 10: Cor amarela clara (lightYellow)...", "lightYellow", "sf");
-  // await sleep(1000);
-
-  // await log("Teste 11: Cor vermelha clara (lightRed)...", "lightRed", "s");
-  // await sleep(1000);
-
-  // await log("Teste 12: Cor branca brilhante (lightWhite)...", "lightWhite", "f");
-  // await sleep(1000);
-
-  // // Efeito dramático com título
-  // await log("Preparando para a revelação do título...", "lightMagenta", "ss");
-  // await sleep(1000);
-  // setWindowTitle("✨ Revelação Final ✨");
-  // await log("✨ Título Revelado ✨", "lightCyan", "m");
-
-  // await log("Todos os testes concluídos!", "lightGreen", "sf");
 }
 
 main();
