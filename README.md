@@ -26,8 +26,7 @@ Sob os termos da licença CC BY-NC-ND 4.0, é **obrigatório** o reconhecimento 
 **A atribuição deve ser feita de maneira razoável e deve incluir:**
 
 * A identificação do autor original (Daniel Paschoalinoto).
-* Uma menção ao título da obra (ECO).
+* Uma menção ao título da obra (ECO - Fragmento do Amanhã).
 * A indicação da licença utilizada (CC BY-NC-ND 4.0).
-* Se fornecido, um link para a licença.
 
 Para informações legais completas, consulte: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode) (disponível em diversos idiomas, incluindo português: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt))
