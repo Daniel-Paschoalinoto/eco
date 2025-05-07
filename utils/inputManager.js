@@ -17,7 +17,7 @@ stdin.on('data', noop);
  * Exibe prompt via log(), depois lê teclas em modo raw, gerenciando edição de linha,
  * retornando a string quando Enter for pressionado.
  * Suporta movimentação de cursor (setas esquerda/direita), backspace, delete, inserção no meio.
- * As setas para cima e para baixo são ignoradas.
+ * As setas para cima e para baixo e a tecla ESC são ignoradas.
  */
 export async function askLog(prompt, color = 'white', speed = 'm') {
   await log(prompt, color, speed);
@@ -72,8 +72,8 @@ export async function askLog(prompt, color = 'white', speed = 'm') {
         case 3: // Ctrl+C
           process.exit();
           break;
-        case 127: // Backspace
-        case 8:
+        case 127: // Backspace (pode ser o código enviado pelo ESC em alguns terminais)
+        case 8:   // Backspace (código padrão)
           if (cursor > 0) {
             // remove char before cursor
             input = input.slice(0, cursor - 1) + input.slice(cursor);
@@ -87,6 +87,8 @@ export async function askLog(prompt, color = 'white', speed = 'm') {
             process.stdout.write(`\x1b[${tail.length + 1}D`);
           }
           break;
+        case 0x1b: // ESC key - IGNORAR
+          return;
         default:
           // caractere normal: inserção
           const char = buffer.toString('utf8');
