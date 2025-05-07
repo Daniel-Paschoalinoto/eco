@@ -1,4 +1,5 @@
 import executeSpawn from "./executeSpawn.js";
+import { colors } from "./colors.js";
 
 let savedXPosPercent = 5;
 let savedYPosPercent = 10;
@@ -72,12 +73,23 @@ public class WinAPI {
   }
 }
 
-export function setBackgroundRGB(r, g, b) {
+export function setBackgroundRGB(colorOrR, g, b) {
+  let r, gg, bb;
+
+  if (typeof colorOrR === "string") {
+    const colorData = colors[colorOrR];
+    if (!colorData) throw new Error(`Cor inválida: ${colorOrR}`);
+    [r, gg, bb] = colorData.rgb;
+  } else {
+    [r, gg, bb] = [colorOrR, g, b];
+  }
+
   const toHex = (v) => v.toString(16).padStart(2, "0");
-  const rgb = `${toHex(r)}/${toHex(g)}/${toHex(b)}`;
+  const rgb = `${toHex(r)}/${toHex(gg)}/${toHex(bb)}`;
   const seq = `\x1b]11;rgb:${rgb}\x07`;
   process.stdout.write(seq);
 }
+
 
 /**
  * Define o título da janela e salva o título atual.
