@@ -25,4 +25,4 @@ Sob os termos da licença CC BY-NC-ND 4.0, é **obrigatório** o reconhecimento 
 * A indicação da licença utilizada (CC BY-NC-ND 4.0).
 * Se fornecido, um link para a licença.
 
-Para informações legais completas, consulte: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode) (disponível em diversos idiomas, incluindo português: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt-BR](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt-BR))
+Para informações legais completas, consulte: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode) (disponível em diversos idiomas, incluindo português: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt))
