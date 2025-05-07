@@ -16,7 +16,8 @@ stdin.on('data', noop);
 /**
  * Exibe prompt via log(), depois lê teclas em modo raw, gerenciando edição de linha,
  * retornando a string quando Enter for pressionado.
- * Suporta movimentação de cursor (setas), backspace, delete, inserção no meio.
+ * Suporta movimentação de cursor (setas esquerda/direita), backspace, delete, inserção no meio.
+ * As setas para cima e para baixo são ignoradas.
  */
 export async function askLog(prompt, color = 'white', speed = 'm') {
   await log(prompt, color, speed);
@@ -52,6 +53,9 @@ export async function askLog(prompt, color = 'white', speed = 'm') {
               // move back tail.length+1
               process.stdout.write(`\x1b[${tail.length + 1}D`);
             }
+            return;
+          case 0x41: // Up arrow - IGNORAR
+          case 0x42: // Down arrow - IGNORAR
             return;
         }
       }
