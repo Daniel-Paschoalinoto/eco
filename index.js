@@ -17,7 +17,7 @@ import {
   setBackgroundRGB
 } from "./utils/windowManager.js";
 import { log } from "./utils/textManager.js";
-import { askLog, closeInput } from './utils/inputManager.js';
+import { askLog } from './utils/inputManager.js';
 import { playSound, stopSound } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 
@@ -29,10 +29,8 @@ import { user } from "./utils/nameGetter.js";
 // Configurações iniciais
 async function main() {
   setWindowTitle("ECO")
-  await log(`${user}!`)
-  await sleep(2000)
-  await log(`Temos muito o que conversar.`)
-  await sleep(1000)
+  // await log(`Temos muito o que conversar.`)
+  // await sleep(1000)
   await log(`Dimensione o terminal de um jeito que fique confortável pra você.`)
   await log(`Se possível use fones de ouvido enquanto estiver no ECO.`)
   await sleep(1000)
@@ -42,6 +40,20 @@ async function main() {
     if (confirmacaoSetup.toLowerCase() === "sim") {
       break;
     } else {
+      await log(`Você digitou ${confirmacaoSetup}, não entendi.`)
+      await sleep(1000);
+      await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+      await sleep(1000);
+      console.clear();
+    }
+  }
+
+  while (true) {
+    let confirmacaoSetup = await askLog(`Quando estiver pronto digite "não".`)
+    if (confirmacaoSetup.toLowerCase() === "não") {
+      break;
+    } else {
+      await log(`Você digitou ${confirmacaoSetup}, não entendi.`)
       await sleep(1000);
       await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
       await sleep(1000);
