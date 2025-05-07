@@ -76,9 +76,12 @@ export async function log(texts, colorNames = "default", speeds = "random") {
       await sleep(charDelay);
 
       if (char === ' ') await sleep(baseDelay * 1.2); // pausa levemente maior em espaços
-      if (isSpecialCharacter(char)) await sleep(baseDelay * 2.5);
-      if (isUpperCase(char)) await sleep(baseDelay * 2);
-      if (isPunctuation(char)) await sleep(baseDelay * 1.5);
+      if (isSpecialCharacter(char)) await sleep(baseDelay * 2.2);
+      if (isUpperCase(char)) await sleep(baseDelay * 1.8);
+      if (isPunctuation(char)) await sleep(baseDelay * 1.3);
+    }
+    if (!Array.isArray(texts)) {
+      process.stdout.write("\n");
     }
   }
 

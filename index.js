@@ -28,6 +28,36 @@ import { user } from "./utils/nameGetter.js";
 
 // Configurações iniciais
 async function main() {
+  setWindowTitle("ECO")
+  await log(`${user}!`)
+  await sleep(2000)
+  await log(`Temos muito o que conversar.`)
+  await sleep(1000)
+  await log(`Dimensione o terminal de um jeito que fique confortável pra você.`)
+  await log(`Se possível use fones de ouvido enquanto estiver no ECO.`)
+  await sleep(1000)
+
+  while (true) {
+    let confirmacaoSetup = await askLog(`Quando estiver pronto digite "sim".`)
+    if (confirmacaoSetup.toLowerCase() === "sim") {
+      break;
+    } else {
+      await sleep(1000);
+      await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+      await sleep(1000);
+      console.clear();
+    }
+  }
+
+  await sleep(500)
+  await log(`Ótimo!`)
+  await log(`Vamos começar!`)
+  await playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 100);
+  console.clear()
+  stopSound()
+  await sleep(500)
+  await playSound("Boss_Time.mp3", true, 100);
+
   // Chamar com múltiplos textos e velocidades diferentes para cada parte
   // Chamar com múltiplos textos, cores e velocidades diferentes para cada parte
   // await log([
@@ -45,31 +75,7 @@ async function main() {
   //     "s",  // Fast para o terceiro texto
   //     "sf",  // Fast para o terceiro texto
   //   ]);
-  // await log(`${user}`)
-  // await sleep(2000)
-  // await log(`Dimensione o terminal de um jeito que fica confortável pra você.`)
-  // await sleep(1000)
-  // await log(`Temos muito o que conversar.`)
-  // await sleep(1000)
-  // await setWindowPositionAndSize(30, 80, 20, 20);
-  // setBackgroundRGB("red")
-  // await sleep(500)
-  // await setWindowPositionAndSize(0, 0, 50, 50);
-  // setBackgroundRGB("default")
-  // await sleep(500)
-  // await setWindowPositionAndSize(60, 60, 70, 30);
-  // setBackgroundRGB("darkGreen")
-  // await sleep(500)
-  // await minimizeWindow()
-  // await sleep(500)
-  // await setWindowPositionAndSize(15, 30, 90, 20);
-  // setBackgroundRGB("darkBlue")
-  // await sleep(500)
-  // await maximizeWindow()
-  // await sleep(500)
-  // await setWindowPositionAndSize(0, 20, 20, 90);
-  // setBackgroundRGB("black")
-  // await restoreSavedWindowPositionAndSize()
+
   // await log(`Vamos fazer assim, você escolhe a melhor posição pra você nos próximos 10 segundos.`)
   // await log(`10`)
   // await sleep(1000)
