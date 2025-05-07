@@ -1,3 +1,11 @@
+/**
+ * ECO - Fragmento do Amanhã
+ * Copyright (c) 2025 Daniel Paschoalinoto
+ *
+ * Este trabalho está licenciado sob a Licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional.
+ * Para visualizar uma cópia desta licença, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ */
+
 import sleep from "./utils/sleep.js";
 import {
   setWindowPositionAndSize,
@@ -22,24 +30,26 @@ import { user } from "./utils/nameGetter.js";
 async function main() {
   // Chamar com múltiplos textos e velocidades diferentes para cada parte
   // Chamar com múltiplos textos, cores e velocidades diferentes para cada parte
-  await log([
-    "Texto rápido em vermelho, ",
-    "texto lento em verde, ",
-    "e outro rápido em azul!"
-  ],
-    [
-      "red",   // Cor vermelha para o primeiro texto
-      "green", // Cor verde para o segundo texto
-      "blue"   // Cor azul para o terceiro texto
-    ],
-    [
-      "random"  // Fast para o terceiro texto
-    ]);
-  await log(`${user}`)
-  await sleep(2000)
-  await log(`Dimensione o terminal de um jeito que fica confortável pra você.`)
-  await sleep(1000)
-  await log(`Temos muito o que conversar.`)
+  // await log([
+  //   "Texto rápido em vermelho, ",
+  //   "texto lento em verde, ",
+  //   "e outro rápidão em azul!"
+  // ],
+  //   [
+  //     "red",   // Cor vermelha para o primeiro texto
+  //     "green", // Cor verde para o segundo texto
+  //     "blue"   // Cor azul para o terceiro texto
+  //   ],
+  //   [
+  //     "f",  // Fast para o terceiro texto
+  //     "s",  // Fast para o terceiro texto
+  //     "sf",  // Fast para o terceiro texto
+  //   ]);
+  // await log(`${user}`)
+  // await sleep(2000)
+  // await log(`Dimensione o terminal de um jeito que fica confortável pra você.`)
+  // await sleep(1000)
+  // await log(`Temos muito o que conversar.`)
   // await sleep(1000)
   // await setWindowPositionAndSize(30, 80, 20, 20);
   // setBackgroundRGB("red")
