@@ -7,6 +7,7 @@
  */
 
 import sleep from "./utils/sleep.js";
+import realDate from "./utils/realDate.js";
 import {
   setWindowPositionAndSize,
   saveCurrentWindowPositionAndSize,
@@ -18,57 +19,122 @@ import {
 } from "./utils/windowManager.js";
 import { log } from "./utils/textManager.js";
 import { askLog } from './utils/inputManager.js';
-import { playSound, stopSound } from "./utils/soundManager.js";
+import { playSound, stopSound} from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 
-//Criar fluxos dependendo das decisões.
-//FAzer tocar sons.
+//Estruturar bem início
+//Melhorar pipoco no som
+
+//Pensar em fluxos legais pra identificar perfil
+
 //Gerar imersão
 
 
 // Configurações iniciais
 async function main() {
+  await ensureVLCReady();
+  while (true) {
+    const p1 = await askLog(`${user} coloque fones de ouvido e digite "ok". Fique tranquilo, não estou aqui pra te assustar.`)
+    if (p1.toLowerCase() === "ok") {
+      process.stdout.write('\x1Bc');
+      break;
+    } else {
+      await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+      await sleep(1000);
+      process.stdout.write('\x1Bc');
+    }
+  }
+  await log(`Deixa eu me ajeitar aqui...`)
+  await sleep(2000);
+  setWindowPositionAndSize(5, 5, 10, 10);
+  setBackgroundRGB("blue");
+  await sleep(500);
+  setWindowPositionAndSize(8, 8, 10, 80);
+  setBackgroundRGB("darkRed");
+  await sleep(500);
+  setWindowPositionAndSize(3, 3, 80, 10);
+  setBackgroundRGB("darkGreen");
+  await sleep(500);
+  setWindowPositionAndSize(7, 7, 10, 10);
+  setBackgroundRGB("darkBlue");
+  await sleep(500);
+  setWindowPositionAndSize(0, 0, 70, 70);
+  setBackgroundRGB("darkMagenta");
+  await sleep(500);
+  setWindowPositionAndSize(0, 0, 100, 96);
+  setBackgroundRGB("darkGray");
+  await sleep(500);
+  setBackgroundRGB("default");
+  await maximizeWindow();
   setWindowTitle("ECO")
-  // await log(`Temos muito o que conversar.`)
+  await sleep(500);
+  process.stdout.write('\x1Bc');
+  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 100);
+  await log(`Ótimo! Vamos começar!`)
+  await sleep(500);
+  process.stdout.write('\x1Bc');
+  await sleep(1000);
+  await log(`Não espero que entenda de primeira.`)
+  await sleep(2000);
+  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 100);
+  await log([
+    "Eu sou você.",
+    "Aliás.",
+    "Você é o que eu fui."
+  ],
+    [
+      "default", 
+      "default", 
+      "default"  
+    ],
+    [
+      "ss",  
+      "ss", 
+      "s",
+    ]);
+  await sleep(500);
+  
+  await log(`Antes da Guerra. Antes de tudo ruir.`)
+  
+  await sleep(50000);
+
+
   // await sleep(1000)
-  await log(`Dimensione o terminal de um jeito que fique confortável pra você.`)
-  await log(`Se possível use fones de ouvido enquanto estiver no ECO.`)
-  await sleep(1000)
 
-  while (true) {
-    let confirmacaoSetup = await askLog(`Quando estiver pronto digite "sim".`)
-    if (confirmacaoSetup.toLowerCase() === "sim") {
-      break;
-    } else {
-      await log(`Você digitou ${confirmacaoSetup}, não entendi.`)
-      await sleep(1000);
-      await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
-      await sleep(1000);
-      console.clear();
-    }
-  }
+  // while (true) {
+  //   let confirmacaoSetup = await askLog(`Quando estiver pronto digite "sim".`)
+  //   if (confirmacaoSetup.toLowerCase() === "sim") {
+  //     break;
+  //   } else {
+  //     await log(`Você digitou ${confirmacaoSetup}, não entendi.`)
+  //     await sleep(1000);
+  //     await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+  //     await sleep(1000);
+  //     console.clear();
+  //   }
+  // }
 
-  while (true) {
-    let confirmacaoSetup = await askLog(`Quando estiver pronto digite "não".`)
-    if (confirmacaoSetup.toLowerCase() === "não") {
-      break;
-    } else {
-      await log(`Você digitou ${confirmacaoSetup}, não entendi.`)
-      await sleep(1000);
-      await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
-      await sleep(1000);
-      console.clear();
-    }
-  }
+  // while (true) {
+  //   let confirmacaoSetup = await askLog(`Quando estiver pronto digite "não".`)
+  //   if (confirmacaoSetup.toLowerCase() === "não") {
+  //     break;
+  //   } else {
+  //     await log(`Você digitou ${confirmacaoSetup}, não entendi.`)
+  //     await sleep(1000);
+  //     await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+  //     await sleep(1000);
+  //     console.clear();
+  //   }
+  // }
 
-  await sleep(500)
-  await log(`Ótimo!`)
-  await log(`Vamos começar!`)
-  await playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 100);
-  console.clear()
-  stopSound()
-  await sleep(500)
-  await playSound("Boss_Time.mp3", true, 100);
+  // await sleep(500)
+  // await log(`Ótimo!`)
+  // await log(`Vamos começar!`)
+  // await playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 100);
+  // console.clear()
+  // stopSound()
+  // await sleep(500)
+  // await playSound("Boss_Time.mp3", true, 100);
 
   // Chamar com múltiplos textos e velocidades diferentes para cada parte
   // Chamar com múltiplos textos, cores e velocidades diferentes para cada parte

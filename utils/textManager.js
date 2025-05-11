@@ -27,20 +27,17 @@ function getRandomSpeed() {
   return Math.floor(Math.random() * (90 - 50 + 1)) + 50;
 }
 
-// Função para verificar se o caractere é acentuado, especial ou maiúscula
+// Funções de verificação de caracteres
 function isSpecialCharacter(char) {
-  const specialChars = ['á', 'à', 'ã', 'â', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç', 'Á', 'À', 'Ã', 'Ê', 'Í', 'Ó', 'Ô', 'Õ', 'Ú'];
+  const specialChars = ['á','à','ã','â','é','ê','í','ó','ô','õ','ú','ç',
+                         'Á','À','Ã','Ê','Í','Ó','Ô','Õ','Ú'];
   return specialChars.includes(char);
 }
-
-// Função para verificar se o caractere é maiúsculo
 function isUpperCase(char) {
   return char === char.toUpperCase() && char !== char.toLowerCase();
 }
-
-// Função para verificar se o caractere é pontuação
 function isPunctuation(char) {
-  const punctuationChars = ['.', ',', '!', '?', ';', ':', '-', '(', ')', '"', "'"];
+  const punctuationChars = ['.',',','!','?',';',':','-','(',')','"','\''];
   return punctuationChars.includes(char);
 }
 
@@ -49,10 +46,13 @@ export async function log(texts, colorNames = "default", speeds = "random") {
   const colorArray = Array.isArray(colorNames) ? colorNames : [colorNames];
   const speedArray = Array.isArray(speeds) ? speeds : [speeds];
 
-  while (colorArray.length < textArray.length)
+  // Ajusta comprimentos de arrays de cores e velocidades
+  while (colorArray.length < textArray.length) {
     colorArray.push(colorArray[colorArray.length - 1]);
-  while (speedArray.length < textArray.length)
+  }
+  while (speedArray.length < textArray.length) {
     speedArray.push(speedArray[speedArray.length - 1]);
+  }
 
   for (let i = 0; i < textArray.length; i++) {
     const text = textArray[i];
@@ -61,7 +61,6 @@ export async function log(texts, colorNames = "default", speeds = "random") {
 
     const colorData = colors[colorName] || colors.default;
     const colorCode = colorData.ansi;
-
     const baseDelay = speed === "random"
       ? getRandomSpeed()
       : (speedMap[speed] || speedMap.m);
@@ -69,21 +68,28 @@ export async function log(texts, colorNames = "default", speeds = "random") {
     process.stdout.write(colorCode);
 
     for (const char of text) {
-      const variation = Math.floor(Math.random() * 15) - 7; // Varia entre -7 e +7ms
+      const variation = Math.floor(Math.random() * 15) - 7;
       const charDelay = Math.max(0, baseDelay + variation);
 
       process.stdout.write(char);
       await sleep(charDelay);
 
-      if (char === ' ') await sleep(baseDelay * 1.2); // pausa levemente maior em espaços
+      if (char === ' ') await sleep(baseDelay * 1.2);
       if (isSpecialCharacter(char)) await sleep(baseDelay * 2.2);
       if (isUpperCase(char)) await sleep(baseDelay * 1.8);
       if (isPunctuation(char)) await sleep(baseDelay * 1.3);
     }
-    if (!Array.isArray(texts)) {
+
+    // Se for array e for última iteração, acrescenta quebra de linha
+    if (Array.isArray(texts) && i === textArray.length - 1) {
+      process.stdout.write("\n");
+    }
+    // Se não for array, comportamento padrão
+    else if (!Array.isArray(texts)) {
       process.stdout.write("\n");
     }
   }
 
+  // Restaura cor padrão
   process.stdout.write("\x1b[0m");
 }
