@@ -32,7 +32,6 @@ import { user } from "./utils/nameGetter.js";
 
 // Configurações iniciais
 async function main() {
-  await ensureVLCReady();
   while (true) {
     const p1 = await askLog(`${user} coloque fones de ouvido e digite "ok". Fique tranquilo, não estou aqui pra te assustar.`)
     if (p1.toLowerCase() === "ok") {
