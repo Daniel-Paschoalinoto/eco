@@ -1,180 +1,105 @@
-/**
- * ECO - Fragmento do Amanhã
- * Copyright (c) 2025 Daniel Paschoalinoto
- *
- * Este trabalho está licenciado sob a Licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional.
- * Para visualizar uma cópia desta licença, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- */
-
 // utils/soundManager.js
-import fs from "fs";
-import path from "path";
-import net from "net";
-import executeSpawn from "./executeSpawn.js";
+import executeSpawn from './executeSpawn.js';
+import fs from 'fs';
+import path from 'path';
+import sleep from './sleep.js';
 
-let vlcProcess = null;
-const RC = { host: "127.0.0.1", port: 5000 };
-let currentVolume = 100; // volume atual (0–100)%
-let warmupDone = false;
+let currentSoundProcess = null;
 
-function stopVLC() {
-  if (vlcProcess) {
-    vlcProcess.kill();
-    vlcProcess = null;
-  }
-}
-
-function resolveFile(file) {
-  const base = path.join(process.cwd(), "assets");
-  for (const sub of ["musics", "sounds"]) {
-    const p = path.join(base, sub, file);
-    if (fs.existsSync(p)) return p;
-  }
-  return null;
-}
-
-/**
- * Envia comando RC ao VLC via socket TCP.
- */
-function sendCmd(cmd, retries = 3) {
-  return new Promise((resolve, reject) => {
-    if (!vlcProcess) return reject(new Error("VLC não ativo"));
-    const client = new net.Socket();
-
-    client.connect(RC.port, RC.host, () => {
-      client.write(cmd + "\n");
-      client.end();
-    });
-
-    client.on("close", resolve);
-    client.on("error", (err) => {
-      if (retries > 0) {
-        setTimeout(() => {
-          sendCmd(cmd, retries - 1).then(resolve).catch(reject);
-        }, 100);
-      } else {
-        reject(err);
-      }
-    });
-  });
-}
-
-/**
- * Aguarda até que o RC do VLC responda, polling de status.
- */
-async function waitVlcReady(timeout = 2000) {
-  const start = Date.now();
-  while (Date.now() - start < timeout) {
-    try {
-      await sendCmd("status", 0);
-      return;
-    } catch {
-      await new Promise((r) => setTimeout(r, 100));
-    }
-  }
-  console.warn("VLC RC não respondeu dentro do tempo limite");
-}
-
-/**
- * Warm-up: inicializa o VLC headless para carregar plugins e RC.
- */
-async function warmupVLC() {
-  if (warmupDone) return;
-  warmupDone = true;
-
-  const vlcBin = path.join(
-    process.cwd(),
-    "assets/player/vlc-portable-main/App/vlc/vlc.exe"
-  );
-  const warm = executeSpawn(
-    vlcBin,
-    ["--intf", "dummy", "--extraintf", "rc", "--rc-host", `${RC.host}:${RC.port}`, "--no-video"],
-    { stdio: "ignore", windowsHide: true }
-  ).child;
-
-  // Aguarda cache/plugins carregar
-  await new Promise((res) => setTimeout(res, 1500));
-  warm.kill();
-}
-
-/**
- * Toca um arquivo de áudio via VLC com opções de loop, volume e fade-in.
- */
-export async function playSound(file, loop = false, volume = 100, fadeIn) {
-  await warmupVLC();
-  stopVLC();
-
-  const musicPath = resolveFile(file);
-  if (!musicPath) return console.error(`Arquivo não encontrado: ${file}`);
-
-  currentVolume = Math.max(0, Math.min(100, volume));
-  const vlc = path.join(
-    process.cwd(),
-    "assets/player/vlc-portable-main/App/vlc/vlc.exe"
-  );
-  const args = [
-    "--intf", "dummy",
-    "--extraintf", "rc",
-    "--rc-host", `${RC.host}:${RC.port}`,
-    "--no-video",
-    musicPath
+function getSoundFilePath(soundFile) {
+  const paths = [
+    path.resolve('./assets/musics', soundFile),
+    path.resolve('./assets/sounds', soundFile)
   ];
-  if (loop) args.push("--loop");
 
-  vlcProcess = executeSpawn(vlc, args, { stdio: "ignore", windowsHide: true }).child;
-
-  // Aguarda pronto e aplica volume/fade-in
-  await waitVlcReady();
-  if (fadeIn) {
-    fadeInSound(fadeIn);
-  } else {
-    sendCmd(`volume ${currentVolume}%`).catch(err => console.error("Erro volume:", err));
-  }
+  const foundPath = paths.find(p => fs.existsSync(p));
+  if (!foundPath) throw new Error(`Arquivo de áudio não encontrado: ${soundFile}`);
+  return foundPath;
 }
 
-/**
- * Faz fade in de volume de 0% até currentVolume% em duration ms.
- */
-function fadeInSound(duration) {
-  if (!vlcProcess || !duration) return;
-  const steps = 20;
-  const stepTime = duration / steps;
-  let pct = 0;
-  const delta = currentVolume / steps;
-  sendCmd(`volume 0%`);
+export async function playSound(
+  soundFile, 
+  isLoop = false, 
+  volume = 100,
+  fadeInDuration = 0, // Padrão 0 (sem fade in)
+  fadeOutDuration = 0 // Padrão 0 (sem fade out)
+) {
+  try {
+    await stopSound(fadeOutDuration); // Aplica fade out no som atual
 
-  const iv = setInterval(() => {
-    pct = Math.min(currentVolume, pct + delta);
-    sendCmd(`volume ${Math.round(pct)}%`);
-    if (pct >= currentVolume) clearInterval(iv);
-  }, stepTime);
-}
+    const soundPath = getSoundFilePath(soundFile);
+    const args = [
+      soundPath,
+      '-f', volume.toString(),
+      ...(isLoop ? ['--loop'] : [])
+    ];
 
-/**
- * Para o som com ou sem fade-out.
- */
-export function stopSound(duration) {
-  if (!vlcProcess) return;
+    const player = await executeSpawn('mpg123.exe', args, { 
+      cwd: './assets/player',
+      returnProcess: true 
+    });
 
-  if (duration) {
-    const steps = 20;
-    const stepTime = duration / steps;
-    let pct = currentVolume;
-    const delta = pct / steps;
+    currentSoundProcess = player.child;
 
-    const iv = setInterval(() => {
-      pct = Math.max(0, pct - delta);
-      sendCmd(`volume ${Math.round(pct)}%`);
-      if (pct <= 0) {
-        clearInterval(iv);
-        sendCmd("stop").finally(stopVLC);
+    // Aplica fade in se especificado
+    if (fadeInDuration > 0) {
+      await applyFadeIn(volume, fadeInDuration);
+    }
+
+    currentSoundProcess.on('exit', () => {
+      if (currentSoundProcess?.pid === player.pid) {
+        currentSoundProcess = null;
       }
-    }, stepTime);
-  } else {
-    sendCmd("stop").finally(stopVLC);
+    });
+
+  } catch (err) {
+    throw err;
   }
 }
 
-process.on("exit", stopVLC);
-process.on("SIGINT", () => { stopVLC(); process.exit(); });
-process.on("SIGTERM", () => { stopVLC(); process.exit(); });
+export async function stopSound(fadeDuration = 0) { // Padrão 0 (parada imediata)
+  if (!currentSoundProcess) return;
+
+  try {
+    if (fadeDuration > 0) {
+      await applyFadeOut(fadeDuration);
+    }
+    currentSoundProcess.kill('SIGTERM');
+    currentSoundProcess = null;
+  } catch (err) {
+    currentSoundProcess = null;
+  }
+}
+
+// Funções auxiliares para fade
+async function applyFadeIn(targetVolume, duration) {
+  const steps = 10;
+  const stepDuration = duration / steps;
+  const volumeStep = targetVolume / steps;
+
+  for (let i = 1; i <= steps; i++) {
+    if (!currentSoundProcess) break;
+    const currentVolume = Math.round(volumeStep * i);
+    // Implemente a mudança de volume aqui (depende do seu player)
+    await sleep(stepDuration);
+  }
+}
+
+async function applyFadeOut(duration) {
+  const steps = 10;
+  const stepDuration = duration / steps;
+
+  for (let i = steps; i >= 0; i--) {
+    if (!currentSoundProcess) break;
+    const currentVolume = Math.round((100 / steps) * i);
+    // Implemente a mudança de volume aqui (depende do seu player)
+    await sleep(stepDuration);
+  }
+}
+
+export function forceStopSound() {
+  if (currentSoundProcess) {
+    currentSoundProcess.kill('SIGKILL');
+    currentSoundProcess = null;
+  }
+}

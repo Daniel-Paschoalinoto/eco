@@ -1,35 +1,29 @@
-/**
- * ECO - Fragmento do Amanhã
- * Copyright (c) 2025 Daniel Paschoalinoto
- *
- * Este trabalho está licenciado sob a Licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional.
- * Para visualizar uma cópia desta licença, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- */
-
-// utils/executeSpawn.js
 import { spawn as _spawn } from "child_process";
 
-function executeSpawn(command, args = [], options = {}) {
+export default function executeSpawn(command, args = [], options = {}) {
   const child = _spawn(command, args, options);
 
-  const promise = new Promise((resolve, reject) => {
-    let stdout = "", stderr = "";
-    child.stdout?.on("data", d => stdout += d);
-    child.stderr?.on("data", d => stderr += d);
-    child.on("close", code => {
-      if (code === 0) resolve(stdout.trim());
-      //   else {
-      //     const err = new Error(`Código ${code}`);
-      //     err.stderr = stderr.trim();
-      //     reject(err);
-      //   }
+  // Modo CLI (para PowerShell/command line - retorna string)
+  if (command.toLowerCase() === 'powershell' || !options.returnProcess) {
+    return new Promise((resolve, reject) => {
+      let stdout = '';
+      child.stdout?.on('data', (d) => stdout += d);
+      child.on('close', (code) => {
+        code === 0 ? resolve(stdout.trim()) : reject(new Error(`Process exited with code ${code}`));
+      });
+      child.on('error', reject);
     });
-    child.on("error", reject);
+  }
+
+  // Modo Processo (para áudio - retorna objeto com controle)
+  return new Promise((resolve, reject) => {
+    child.on('spawn', () => {
+      resolve({
+        child,
+        kill: () => child.kill('SIGTERM'),
+        pid: child.pid
+      });
+    });
+    child.on('error', reject);
   });
-
-  // anexa o processo à promise
-  promise.child = child;
-  return promise;
 }
-
-export default executeSpawn;

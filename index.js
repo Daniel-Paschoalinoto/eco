@@ -19,7 +19,7 @@ import {
 } from "./utils/windowManager.js";
 import { log } from "./utils/textManager.js";
 import { askLog } from './utils/inputManager.js';
-import { playSound, stopSound} from "./utils/soundManager.js";
+import { playSound, stopSound, forceStopSound } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 
 //Estruturar bem início
@@ -68,33 +68,37 @@ async function main() {
   setWindowTitle("ECO")
   await sleep(500);
   process.stdout.write('\x1Bc');
-  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 100);
+  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50, 5000,2000);
   await log(`Ótimo! Vamos começar!`)
-  await sleep(500);
+  await sleep(10000);
+  await stopSound();
   process.stdout.write('\x1Bc');
   await sleep(1000);
   await log(`Não espero que entenda de primeira.`)
   await sleep(2000);
-  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 100);
+  stopSound()
+  await sleep(5000);
+  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50);
   await log([
     "Eu sou você.",
     "Aliás.",
     "Você é o que eu fui."
   ],
     [
-      "default", 
-      "default", 
-      "default"  
+      "default",
+      "default",
+      "default"
     ],
     [
-      "ss",  
-      "ss", 
+      "ss",
+      "ss",
       "s",
     ]);
   await sleep(500);
-  
+
   await log(`Antes da Guerra. Antes de tudo ruir.`)
-  
+  forceStopSound()
+
   await sleep(50000);
 
 
