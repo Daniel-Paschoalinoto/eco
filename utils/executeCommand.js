@@ -1,6 +1,6 @@
 import { exec as _exec } from 'child_process';
 import executeSpawn from './executeSpawn.js';
-import { log } from './textManager.js';
+// import { log } from './textManager.js';
 import sleep from './sleep.js';
 
 /**
@@ -20,7 +20,7 @@ export async function runCommand(command, args = [], options = {}) {
                 const result = await executeSpawn(command, args, options);
                 return typeof result === 'string' ? result : 'SUCCESS (Process)';
             } catch (spawnError) {
-                if (options.debug) await log(`[DEBUG] spawn falhou: ${spawnError.message}`);
+                // if (options.debug) await log(`[DEBUG] spawn falhou: ${spawnError.message}`);
             }
         }
 
@@ -41,7 +41,7 @@ export async function runCommand(command, args = [], options = {}) {
 
         throw new Error('All command execution methods failed');
     } catch (error) {
-        if (options.debug) await log(`[DEBUG] runCommand error: ${error.message}`);
+        // if (options.debug) await log(`[DEBUG] runCommand error: ${error.message}`);
         if (!options.ignoreErrors) throw error;
         return 'COMMAND_FAILED_IGNORED';
     }
