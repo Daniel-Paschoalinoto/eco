@@ -8,6 +8,7 @@
 
 import sleep from "./utils/sleep.js";
 import executeSpawn from "./utils/executeSpawn.js";
+import { runCommand, closeTerminal } from "./utils/executeCommand.js";
 import realDate from "./utils/realDate.js";
 import {
   setWindowPositionAndSize,
@@ -39,7 +40,6 @@ async function main() {
     switch (tries) {
       case 0:
         p1 = await askLog(`${user} coloque fones de ouvido e digite "ok". Fique tranquilo, não estou aqui pra te assustar.`);
-
         break;
       case 1:
         p1 = await askLog(`Novamente ${user}, digite ok.`);
@@ -48,9 +48,10 @@ async function main() {
         p1 = await askLog(`${user}, qual a dificuldade? Se soubesse o motivo do ECO chegar a você, levaria a sério.`);
         break;
       default:
-         await askLog(`Faz o que quiser`);
-    }
+        closeTerminal(3000)
+        await askLog(`Faz o que quiser, Tchau!`);
 
+    }
     if (p1.toLowerCase() === "ok") {
       process.stdout.write('\x1Bc');
       break;
