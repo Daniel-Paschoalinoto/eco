@@ -7,6 +7,7 @@
  */
 
 import sleep from "./utils/sleep.js";
+import executeSpawn from "./utils/executeSpawn.js";
 import realDate from "./utils/realDate.js";
 import {
   setWindowPositionAndSize,
@@ -23,26 +24,57 @@ import { playSound, stopSound, forceStopSound } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 
 //Estruturar bem início
-//Melhorar pipoco no som
+//Melhorar pipoco no som ok
 
 //Pensar em fluxos legais pra identificar perfil
-
 //Gerar imersão
 
 
 // Configurações iniciais
 async function main() {
+  let tries = 0
+  let p1
+
   while (true) {
-    const p1 = await askLog(`${user} coloque fones de ouvido e digite "ok". Fique tranquilo, não estou aqui pra te assustar.`)
+    switch (tries) {
+      case 0:
+        p1 = await askLog(`${user} coloque fones de ouvido e digite "ok". Fique tranquilo, não estou aqui pra te assustar.`);
+
+        break;
+      case 1:
+        p1 = await askLog(`Novamente ${user}, digite ok.`);
+        break;
+      case 2:
+        p1 = await askLog(`${user}, qual a dificuldade? Se soubesse o motivo do ECO chegar a você, levaria a sério.`);
+        break;
+      default:
+         await askLog(`Faz o que quiser`);
+    }
+
     if (p1.toLowerCase() === "ok") {
       process.stdout.write('\x1Bc');
       break;
     } else {
-      await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+      switch (tries) {
+        case 0:
+          await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+          break;
+        case 1:
+          await log(`Isso explica muita coisa, mesmo com toda a evolução as origens são fortes.`);
+          break;
+        case 2:
+          await log(`A persistência no erro é quase admirável, mas não muito.`);
+          break;
+        default:
+          await log(`Perder tempo é o mal dos ignorantes, mas eu irei te salvar!`);
+      }
+
+      tries++;
       await sleep(1000);
       process.stdout.write('\x1Bc');
     }
   }
+
   await log(`Deixa eu me ajeitar aqui...`)
   await sleep(2000);
   setWindowPositionAndSize(5, 5, 10, 10);
@@ -68,7 +100,7 @@ async function main() {
   setWindowTitle("ECO")
   await sleep(500);
   process.stdout.write('\x1Bc');
-  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50, 5000,2000);
+  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50, 5000, 2000);
   await log(`Ótimo! Vamos começar!`)
   await sleep(10000);
   await stopSound();
