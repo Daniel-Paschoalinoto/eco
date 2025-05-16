@@ -8,6 +8,8 @@
 
 import sleep from "./sleep.js"; // Função de sleep já existente
 import { colors } from "./colors.js";
+import { getScreenResolution } from "./windowManager.js";
+import { time } from "console";
 
 // Mapeamento de velocidades
 const speedMap = {
@@ -27,21 +29,27 @@ function getRandomSpeed() {
   return Math.floor(Math.random() * (90 - 50 + 1)) + 50;
 }
 
+export async function screenWidthforText() {
+  let { width } = await getScreenResolution()
+  let times = (Math.floor(width * 0.0605))
+  return times
+}
+
 // Funções de verificação de caracteres
 function isSpecialCharacter(char) {
-  const specialChars = ['á','à','ã','â','é','ê','í','ó','ô','õ','ú','ç',
-                         'Á','À','Ã','Ê','Í','Ó','Ô','Õ','Ú'];
+  const specialChars = ['á', 'à', 'ã', 'â', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç',
+    'Á', 'À', 'Ã', 'Ê', 'Í', 'Ó', 'Ô', 'Õ', 'Ú'];
   return specialChars.includes(char);
 }
 function isUpperCase(char) {
   return char === char.toUpperCase() && char !== char.toLowerCase();
 }
 function isPunctuation(char) {
-  const punctuationChars = ['.',',','!','?',';',':','-','(',')','"','\''];
+  const punctuationChars = ['.', ',', '!', '?', ';', ':', '-', '(', ')', '"', '\''];
   return punctuationChars.includes(char);
 }
 
-export async function log(texts, colorNames = "default", speeds = "random") {
+export async function log(texts, speeds = "random", colorNames = "default") {
   const textArray = Array.isArray(texts) ? texts : [texts];
   const colorArray = Array.isArray(colorNames) ? colorNames : [colorNames];
   const speedArray = Array.isArray(speeds) ? speeds : [speeds];

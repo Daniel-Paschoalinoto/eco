@@ -17,21 +17,32 @@ import {
   closeTerminal,
   fadeBackground
 } from "./utils/windowManager.js";
-import { log } from "./utils/textManager.js";
+import { log, screenWidthforText } from "./utils/textManager.js";
 import { askLog } from './utils/inputManager.js';
 import { playSound, stopSound, stopAllSounds } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 import { colors } from "./utils/colors.js";
 
-//Estruturar bem início
-//Pensar em fluxos legais pra identificar perfil
-//Gerar imersão
-
-
 // Configurações iniciais
 async function main() {
+  await log(">>> ERRO CRÍTICO: Fragmento corrompido.");
+  await log("IA inimiga identificada")
+  await log("testando cor", "black", "uf")
+  playSound("Dark_Shadows.mp3", true, 20)
+  await log(`[PROTOCOLO_ECO::INICIADO]`, "uf");
+  await sleep(1000);
+  await log(`[CONEXÃO TEMPORAL ESTABELECIDA]`, "uf");
+  await sleep(1200);
+  await log(`[CARREGANDO PERFIL COMPORTAMENTAL DE ${user.toLocaleUpperCase()}]`, "uf");
+  await sleep(1200);
+  process.stdout.write('\x1Bc');
+  await log(`▓`.repeat(await screenWidthforText()), "f")
+  process.stdout.write('\x1Bc');
+  await log(`[CARREGAMENTO CONCLUÍDO]`, "uf");
+  await sleep(800);
+  process.stdout.write('\x1Bc');
 
-  //teste de SONS ok
+  // // teste de SONS ok
   // playSound("Dark_Shadows.mp3", true, 50);
   // playSound("Boss_Time.mp3", true, 20);
   // await sleep(5000);
@@ -65,7 +76,7 @@ async function main() {
   // let tries = 0
   // let p1
 
-  //TESTE LOGS OK
+  // // TESTE LOGS OK
   // while (true) {
   //   switch (tries) {
   //     case 0:
@@ -106,7 +117,7 @@ async function main() {
   //   }
   // }
 
-  //Teste fadebackground OK
+  // // Teste fadebackground OK
   // fadeBackground([10, 10, 10], [0, 100, 25], 10, 100, 3);
   // await log(">>> ERRO CRÍTICO: Fragmento corrompido.");
   // await log("IA inimiga identificada")
@@ -128,7 +139,7 @@ async function main() {
   // await sleep(100000)
 
 
-  //TESTE WINDOW size OK + closeterminal ok
+  // // TESTE WINDOW size OK + closeterminal ok
   // await log(`Deixa eu me ajeitar aqui...`)
   // await sleep(2000);
   // setWindowPositionAndSize(5, 5, 10, 10);
@@ -192,8 +203,8 @@ async function main() {
   // await sleep(500)
   // await playSound("Boss_Time.mp3", true, 100);
 
-  // Chamar com múltiplos textos e velocidades diferentes para cada parte
-  // Chamar com múltiplos textos, cores e velocidades diferentes para cada parte
+  // // Chamar com múltiplos textos e velocidades diferentes para cada parte
+  // // Chamar com múltiplos textos, cores e velocidades diferentes para cada parte
   // await log([
   //   "Texto rápido em vermelho, ",
   //   "texto lento em verde, ",

@@ -41,7 +41,7 @@ export async function maximizeWindow() {
   `;
 
   const output = await runCommand('powershell', ['-Command', psScript]);
-  
+
   if (output.includes('maximized')) {
     savedWindowState.isMaximized = true;
     setWindowTitle(savedWindowState.title);
@@ -100,7 +100,7 @@ export function setWindowTitle(title) {
 /**
  * Obtém a resolução da tela
  */
-async function getScreenResolution() {
+export async function getScreenResolution() {
   const psScript = `
     Add-Type -TypeDefinition @"
       using System;
