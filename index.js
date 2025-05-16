@@ -7,7 +7,6 @@
  */
 
 import sleep from "./utils/sleep.js";
-import executeSpawn from "./utils/executeSpawn.js";
 import { runCommand, closeTerminal } from "./utils/executeCommand.js";
 import realDate from "./utils/realDate.js";
 import {
@@ -21,7 +20,7 @@ import {
 } from "./utils/windowManager.js";
 import { log } from "./utils/textManager.js";
 import { askLog } from './utils/inputManager.js';
-import { playSound, stopSound, forceStopSound } from "./utils/soundManager.js";
+import { playSound, stopSound, stopAllSounds } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 
 //Estruturar bem início
@@ -33,85 +32,10 @@ import { user } from "./utils/nameGetter.js";
 
 // Configurações iniciais
 async function main() {
-  let tries = 0
-  let p1
-
-  while (true) {
-    switch (tries) {
-      case 0:
-        p1 = await askLog(`${user} coloque fones de ouvido e digite "ok". Fique tranquilo, não estou aqui pra te assustar.`);
-        break;
-      case 1:
-        p1 = await askLog(`Novamente ${user}, digite ok.`);
-        break;
-      case 2:
-        p1 = await askLog(`${user}, qual a dificuldade? Se soubesse o motivo do ECO chegar a você, levaria a sério.`);
-        break;
-      default:
-        closeTerminal(3000)
-        await askLog(`Faz o que quiser, Tchau!`);
-
-    }
-    if (p1.toLowerCase() === "ok") {
-      process.stdout.write('\x1Bc');
-      break;
-    } else {
-      switch (tries) {
-        case 0:
-          await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
-          break;
-        case 1:
-          await log(`Isso explica muita coisa, mesmo com toda a evolução as origens são fortes.`);
-          break;
-        case 2:
-          await log(`A persistência no erro é quase admirável, mas não muito.`);
-          break;
-        default:
-          await log(`Perder tempo é o mal dos ignorantes, mas eu irei te salvar!`);
-      }
-
-      tries++;
-      await sleep(1000);
-      process.stdout.write('\x1Bc');
-    }
-  }
-
-  await log(`Deixa eu me ajeitar aqui...`)
-  await sleep(2000);
-  setWindowPositionAndSize(5, 5, 10, 10);
-  setBackgroundRGB("blue");
-  await sleep(500);
-  setWindowPositionAndSize(8, 8, 10, 80);
-  setBackgroundRGB("darkRed");
-  await sleep(500);
-  setWindowPositionAndSize(3, 3, 80, 10);
-  setBackgroundRGB("darkGreen");
-  await sleep(500);
-  setWindowPositionAndSize(7, 7, 10, 10);
-  setBackgroundRGB("darkBlue");
-  await sleep(500);
-  setWindowPositionAndSize(0, 0, 70, 70);
-  setBackgroundRGB("darkMagenta");
-  await sleep(500);
-  setWindowPositionAndSize(0, 0, 100, 96);
-  setBackgroundRGB("darkGray");
-  await sleep(500);
-  setBackgroundRGB("default");
-  await maximizeWindow();
-  setWindowTitle("ECO")
-  await sleep(500);
-  process.stdout.write('\x1Bc');
-  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50, 5000, 2000);
-  await log(`Ótimo! Vamos começar!`)
-  await sleep(10000);
-  await stopSound();
-  process.stdout.write('\x1Bc');
-  await sleep(1000);
-  await log(`Não espero que entenda de primeira.`)
-  await sleep(2000);
-  stopSound()
+  playSound("Dark_Shadows.mp3", true, 50);
+  playSound("Boss_Time.mp3", true, 20);
   await sleep(5000);
-  playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50);
+  stopAllSounds()
   await log([
     "Eu sou você.",
     "Aliás.",
@@ -123,16 +47,120 @@ async function main() {
       "default"
     ],
     [
-      "ss",
-      "ss",
-      "s",
+      "uf",
+      "uf",
+      "uf",
     ]);
-  await sleep(500);
+  playSound("Dark_Shadows.mp3", true, 50);
+  playSound("Boss_Time.mp3", true, 20);
+  await sleep(5000);
+  stopAllSounds()
+  // await log(`Ótimo! Vamos começar!`)
+  // await sleep(10000);
+  // await stopSound();
+  // process.stdout.write('\x1Bc');
+  // await log(`Denovo!`)
+  // await sleep(10000);
+  // playSound("Dark_Shadows.mp3");
+  // let tries = 0
+  // let p1
 
-  await log(`Antes da Guerra. Antes de tudo ruir.`)
-  forceStopSound()
+  // while (true) {
+  //   switch (tries) {
+  //     case 0:
+  //       p1 = await askLog(`${user} coloque fones de ouvido e digite "ok". Fique tranquilo, não estou aqui pra te assustar.`);
+  //       break;
+  //     case 1:
+  //       p1 = await askLog(`Novamente ${user}, digite ok.`);
+  //       break;
+  //     case 2:
+  //       p1 = await askLog(`${user}, qual a dificuldade? Se soubesse o motivo do ECO chegar a você, levaria a sério.`);
+  //       break;
+  //     default:
+  //       closeTerminal(3000)
+  //       await askLog(`Faz o que quiser, Tchau!`);
 
-  await sleep(50000);
+  //   }
+  //   if (p1.toLowerCase() === "ok") {
+  //     process.stdout.write('\x1Bc');
+  //     break;
+  //   } else {
+  //     switch (tries) {
+  //       case 0:
+  //         await log(`É, vejo que meu trabalho aqui será mais difícil do que pensei.`);
+  //         break;
+  //       case 1:
+  //         await log(`Isso explica muita coisa, mesmo com toda a evolução as origens são fortes.`);
+  //         break;
+  //       case 2:
+  //         await log(`A persistência no erro é quase admirável, mas não muito.`);
+  //         break;
+  //       default:
+  //         await log(`Perder tempo é o mal dos ignorantes, mas eu irei te salvar!`);
+  //     }
+
+  //     tries++;
+  //     await sleep(1000);
+  //     process.stdout.write('\x1Bc');
+  //   }
+  // }
+
+  // await log(`Deixa eu me ajeitar aqui...`)
+  // await sleep(2000);
+  // setWindowPositionAndSize(5, 5, 10, 10);
+  // setBackgroundRGB("blue");
+  // await sleep(500);
+  // setWindowPositionAndSize(8, 8, 10, 80);
+  // setBackgroundRGB("darkRed");
+  // await sleep(500);
+  // setWindowPositionAndSize(3, 3, 80, 10);
+  // setBackgroundRGB("darkGreen");
+  // await sleep(500);
+  // setWindowPositionAndSize(7, 7, 10, 10);
+  // setBackgroundRGB("darkBlue");
+  // await sleep(500);
+  // setWindowPositionAndSize(0, 0, 70, 70);
+  // setBackgroundRGB("darkMagenta");
+  // await sleep(500);
+  // setWindowPositionAndSize(0, 0, 100, 96);
+  // setBackgroundRGB("darkGray");
+  // await sleep(500);
+  // setBackgroundRGB("default");
+  // await maximizeWindow();
+  // setWindowTitle("ECO")
+  // await sleep(500);
+  // process.stdout.write('\x1Bc');
+  // playSound("Dark_Shadows-interessante-pro-inicio.mp3");
+  // await log(`Ótimo! Vamos começar!`)
+  // await sleep(10000);
+  // await stopSound();
+  // process.stdout.write('\x1Bc');
+  // await sleep(1000);
+  // await log(`Não espero que entenda de primeira.`)
+  // await sleep(2000);
+  // stopSound()
+  // await sleep(5000);
+  // playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50);
+  // await log([
+  //   "Eu sou você.",
+  //   "Aliás.",
+  //   "Você é o que eu fui."
+  // ],
+  //   [
+  //     "default",
+  //     "default",
+  //     "default"
+  //   ],
+  //   [
+  //     "ss",
+  //     "ss",
+  //     "s",
+  //   ]);
+  // await sleep(500);
+
+  // await log(`Antes da Guerra. Antes de tudo ruir.`)
+
+  // await sleep(50000);
 
 
   // await sleep(1000)
