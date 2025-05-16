@@ -1,6 +1,13 @@
-// utils/windowManager.js
-import executeSpawn from './executeSpawn.js';
+/**
+ * ECO - Fragmento do Amanhã
+ * Copyright (c) 2025 Daniel Paschoalinoto
+ *
+ * Este trabalho está licenciado sob a Licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional.
+ * Para visualizar uma cópia desta licença, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ */
+
 import { colors } from './colors.js';
+import { runCommand } from './runCommand.js';
 
 // Configurações de janela persistente
 let savedWindowState = {
@@ -8,8 +15,8 @@ let savedWindowState = {
   y: 10,
   width: 59,
   height: 59,
-  title: "Terminal",
-  isMaximized: false
+  title: "ECO - Fragmento do Amanhã",
+  isMaximized: true
 };
 
 /**
@@ -33,8 +40,9 @@ export async function maximizeWindow() {
     Write-Output "maximized"
   `;
 
-  const output = await executeSpawn("powershell", ["-Command", psScript]);
-  if (output.includes("maximized")) {
+  const output = await runCommand('powershell', ['-Command', psScript]);
+  
+  if (output.includes('maximized')) {
     savedWindowState.isMaximized = true;
     setWindowTitle(savedWindowState.title);
   }
@@ -60,7 +68,7 @@ export async function minimizeWindow() {
     }
   `;
 
-  await executeSpawn("powershell", ["-Command", psScript]);
+  await runCommand('powershell', ['-Command', psScript]);
 }
 
 /**
@@ -77,7 +85,7 @@ export function setBackgroundRGB(colorOrR, g, b) {
     [r, gg, bb] = [colorOrR, g, b];
   }
 
-  const toHex = (v) => v.toString(16).padStart(2, '0');
+  const toHex = v => v.toString(16).padStart(2, '0');
   process.stdout.write(`\x1b]11;rgb:${toHex(r)}/${toHex(gg)}/${toHex(bb)}\x07`);
 }
 
@@ -107,7 +115,7 @@ async function getScreenResolution() {
     Write-Output "$width,$height"
   `;
 
-  const output = await executeSpawn("powershell", ["-Command", psScript]);
+  const output = await runCommand('powershell', ['-Command', psScript]);
   const [width, height] = output.trim().split(',').map(Number);
   return { width, height };
 }
@@ -119,7 +127,7 @@ export async function setWindowPositionAndSize(xPercent, yPercent, widthPercent,
   const { width: screenWidth, height: screenHeight } = await getScreenResolution();
 
   const calculate = (percent, max) => Math.round((percent / 100) * max);
-  
+
   const psScript = `
     $hwnd = (Get-Process -Id $PID).MainWindowHandle
     if ($hwnd -eq 0) { $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle }
@@ -137,64 +145,51 @@ export async function setWindowPositionAndSize(xPercent, yPercent, widthPercent,
     }
   `;
 
-  await executeSpawn("powershell", ["-Command", psScript]);
+  await runCommand('powershell', ['-Command', psScript]);
   savedWindowState.isMaximized = false;
   setWindowTitle(savedWindowState.title);
 }
 
-/**
- * Salva o estado atual da janela
- */
-export async function saveCurrentWindowPositionAndSize() {
+export async function closeTerminal(ms = 0) {
   const psScript = `
-    $hwnd = (Get-Process -Id $PID).MainWindowHandle
-    if ($hwnd -eq 0) { $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle }
-    if ($hwnd -ne 0) {
-      Add-Type -TypeDefinition @"
-        using System;
-        using System.Runtime.InteropServices;
-        public class WinAPI {
-          [DllImport("user32.dll")]
-          public static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
-        }
-        public struct RECT {
-          public int Left; public int Top; public int Right; public int Bottom;
-        }
-"@
-      $rect = New-Object RECT
-      if ([WinAPI]::GetWindowRect($hwnd, [ref]$rect)) {
-        Write-Output "$($rect.Left),$($rect.Top),$($rect.Right - $rect.Left),$($rect.Bottom - $rect.Top)"
-      }
+    Start-Sleep -Milliseconds ${ms}
+    $parent = (Get-Process -Id $PID).Parent
+    if ($null -eq $parent) {
+      $parent = Get-Process -Name "WindowsTerminal"
+    }
+    if ($parent) {
+      Stop-Process -Id $parent.Id -Force
     }
   `;
 
-  const { width: screenWidth, height: screenHeight } = await getScreenResolution();
-  const output = await executeSpawn("powershell", ["-Command", psScript]);
-  const [x, y, width, height] = output.trim().split(',').map(Number);
-
-  savedWindowState = {
-    ...savedWindowState,
-    x: Math.round((x / screenWidth) * 100),
-    y: Math.round((y / screenHeight) * 100),
-    width: Math.round((width / screenWidth) * 100),
-    height: Math.round((height / screenHeight) * 100),
-    isMaximized: false
-  };
+  await runCommand('powershell', ['-Command', psScript]);
 }
 
-/**
- * Restaura o estado salvo da janela
- */
-export async function restoreSavedWindowPositionAndSize() {
-  if (savedWindowState.isMaximized) {
-    await maximizeWindow();
-  } else {
-    await setWindowPositionAndSize(
-      savedWindowState.x,
-      savedWindowState.y,
-      savedWindowState.width,
-      savedWindowState.height
-    );
+export function fadeBackground(from, to, steps = 10, delay = 100, loops = 1) {
+  const lerp = (a, b, t) => Math.round(a + (b - a) * t);
+
+  async function runFade() {
+    for (let loop = 0; loop < loops; loop++) {
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const r = lerp(from[0], to[0], t);
+        const g = lerp(from[1], to[1], t);
+        const b = lerp(from[2], to[2], t);
+        setBackgroundRGB(r, g, b);
+        await new Promise(res => setTimeout(res, delay));
+      }
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const r = lerp(to[0], from[0], t);
+        const g = lerp(to[1], from[1], t);
+        const b = lerp(to[2], from[2], t);
+        setBackgroundRGB(r, g, b);
+        await new Promise(res => setTimeout(res, delay));
+      }
+    }
   }
-  setWindowTitle(savedWindowState.title);
+
+  runFade();
 }
+
+

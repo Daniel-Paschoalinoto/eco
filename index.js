@@ -7,54 +7,54 @@
  */
 
 import sleep from "./utils/sleep.js";
-import { runCommand, closeTerminal } from "./utils/executeCommand.js";
 import realDate from "./utils/realDate.js";
 import {
   setWindowPositionAndSize,
-  saveCurrentWindowPositionAndSize,
-  restoreSavedWindowPositionAndSize,
   maximizeWindow,
   minimizeWindow,
   setWindowTitle,
-  setBackgroundRGB
+  setBackgroundRGB,
+  closeTerminal,
+  fadeBackground
 } from "./utils/windowManager.js";
 import { log } from "./utils/textManager.js";
 import { askLog } from './utils/inputManager.js';
 import { playSound, stopSound, stopAllSounds } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
+import { colors } from "./utils/colors.js";
 
 //Estruturar bem início
-//Melhorar pipoco no som ok
-
 //Pensar em fluxos legais pra identificar perfil
 //Gerar imersão
 
 
 // Configurações iniciais
 async function main() {
-  playSound("Dark_Shadows.mp3", true, 50);
-  playSound("Boss_Time.mp3", true, 20);
-  await sleep(5000);
-  stopAllSounds()
-  await log([
-    "Eu sou você.",
-    "Aliás.",
-    "Você é o que eu fui."
-  ],
-    [
-      "default",
-      "default",
-      "default"
-    ],
-    [
-      "uf",
-      "uf",
-      "uf",
-    ]);
-  playSound("Dark_Shadows.mp3", true, 50);
-  playSound("Boss_Time.mp3", true, 20);
-  await sleep(5000);
-  stopAllSounds()
+
+  //teste de SONS ok
+  // playSound("Dark_Shadows.mp3", true, 50);
+  // playSound("Boss_Time.mp3", true, 20);
+  // await sleep(5000);
+  // stopAllSounds()
+  // await log([
+  //   "Eu sou você.",
+  //   "Aliás.",
+  //   "Você é o que eu fui."
+  // ],
+  //   [
+  //     "default",
+  //     "default",
+  //     "default"
+  //   ],
+  //   [
+  //     "uf",
+  //     "uf",
+  //     "uf",
+  //   ]);
+  // playSound("Dark_Shadows.mp3", true, 50);
+  // playSound("Boss_Time.mp3", true, 20);
+  // await sleep(5000);
+  // stopAllSounds()
   // await log(`Ótimo! Vamos começar!`)
   // await sleep(10000);
   // await stopSound();
@@ -65,6 +65,7 @@ async function main() {
   // let tries = 0
   // let p1
 
+  //TESTE LOGS OK
   // while (true) {
   //   switch (tries) {
   //     case 0:
@@ -105,6 +106,29 @@ async function main() {
   //   }
   // }
 
+  //Teste fadebackground OK
+  // fadeBackground([10, 10, 10], [0, 100, 25], 10, 100, 3);
+  // await log(">>> ERRO CRÍTICO: Fragmento corrompido.");
+  // await log("IA inimiga identificada")
+  // await log("testando cor", "black", "uf")
+
+  // console.log("A sala está escura e o ar é denso. Algo está à espreita.");
+  // await minimizeWindow()
+  // await sleep(5000)
+  // await maximizeWindow()
+  // setBackgroundRGB("red")
+  // await setWindowPositionAndSize(0, 0, 60, 60)
+  // await sleep(1000)
+  // await sleep(1000)
+  // await maximizeWindow()
+  // setWindowTitle("Foda-se")
+  // await sleep(5000)
+  // await log("Rodou até aqui")
+
+  // await sleep(100000)
+
+
+  //TESTE WINDOW size OK + closeterminal ok
   // await log(`Deixa eu me ajeitar aqui...`)
   // await sleep(2000);
   // setWindowPositionAndSize(5, 5, 10, 10);
@@ -127,43 +151,11 @@ async function main() {
   // await sleep(500);
   // setBackgroundRGB("default");
   // await maximizeWindow();
-  // setWindowTitle("ECO")
   // await sleep(500);
   // process.stdout.write('\x1Bc');
-  // playSound("Dark_Shadows-interessante-pro-inicio.mp3");
-  // await log(`Ótimo! Vamos começar!`)
-  // await sleep(10000);
-  // await stopSound();
-  // process.stdout.write('\x1Bc');
-  // await sleep(1000);
-  // await log(`Não espero que entenda de primeira.`)
-  // await sleep(2000);
-  // stopSound()
-  // await sleep(5000);
-  // playSound("Dark_Shadows-interessante-pro-inicio.mp3", true, 50);
-  // await log([
-  //   "Eu sou você.",
-  //   "Aliás.",
-  //   "Você é o que eu fui."
-  // ],
-  //   [
-  //     "default",
-  //     "default",
-  //     "default"
-  //   ],
-  //   [
-  //     "ss",
-  //     "ss",
-  //     "s",
-  //   ]);
-  // await sleep(500);
+  //  await sleep(5000000);
+  // await closeTerminal()
 
-  // await log(`Antes da Guerra. Antes de tudo ruir.`)
-
-  // await sleep(50000);
-
-
-  // await sleep(1000)
 
   // while (true) {
   //   let confirmacaoSetup = await askLog(`Quando estiver pronto digite "sim".`)
