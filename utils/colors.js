@@ -1,11 +1,3 @@
-/**
- * ECO - Fragmento do Amanhã
- * Copyright (c) 2025 Daniel Paschoalinoto
- *
- * Este trabalho está licenciado sob a Licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional.
- * Para visualizar uma cópia desta licença, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- */
-
 export const colors = {
   // Cores primárias
   red: { ansi: "\x1b[31m", rgb: [255, 100, 100] },         // Vermelho (mais suave)

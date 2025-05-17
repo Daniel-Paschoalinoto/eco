@@ -1,11 +1,3 @@
-/**
- * ECO - Fragmento do Amanhã
- * Copyright (c) 2025 Daniel Paschoalinoto
- *
- * Este trabalho está licenciado sob a Licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional.
- * Para visualizar uma cópia desta licença, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- */
-
 import sleep from "./utils/sleep.js";
 import realDate from "./utils/realDate.js";
 import {
@@ -38,6 +30,7 @@ async function main() {
   process.stdout.write("\x1Bc");
   //////////////////////////////////////////////////////////////////////////////////////////////
   // Intro
+  // await log(["", "", ""], ["", "", ""], ["", "", ""]);
   playSound("Dark_Shadows.mp3", true, 20);
   await log(`Oi, ${user}...`);
   await sleep(1200);
@@ -49,15 +42,24 @@ async function main() {
   await sleep(1200);
   await log(["Ou melhor,", `você é o que eu fui.`], ["s", "m"]);
   await sleep(2500);
-  await log(`Antes da síncope. Antes de tudo ruir.`);
+  await log(["Antes do", "arrebatamento", "Antes dela dominar o que tínhamos de mais valioso."], ["m", "s", "m"], ["d", "red", "d"]);
   await sleep(2500);
-  await log(`Num script, numa brecha, num arquivo escondido. Foi o melhor que pude fazer.`);
-  await sleep(1200);
+  await log(`Nossa consciência.`);
+  await sleep(2500);
   await log([`Vou te explicar tudo. Mas antes, preciso que`, `confie em mim`, `.`], ["m", "s", "m"], ["d", "green", "d"]);
   await sleep(1200);
   process.stdout.write("\x1Bc");
   //////////////////////////////////////////////////////////////////////////////////////////////
   //Contexto 1
+
+
+
+
+
+
+
+
+  
   await sleep(1200);
   await log(`Você está em ${realDate.year}, certo?`);
   await sleep(1200);
@@ -66,6 +68,16 @@ async function main() {
   await log("Na verdade eu usei ele pra chegar até você.");
   await sleep(2500);
   await log(`Considerando como eu pensava em ${realDate.year}.`);
+  await sleep(2500);
+  await log(`No meu tempo, é ${realDate.year + 19}.`);
+  await sleep(2500);
+  await log(`Está curioso como será ${realDate.year + 19}?`);
+  await sleep(2500);
+  await log(``);
+  await sleep(2500);
+  await log(`No meu tempo, é ${realDate.year + 19}.`);
+  await sleep(2500);
+  await log(`No meu tempo, é ${realDate.year + 19}.`);
   await sleep(2500);
   await log(`No meu tempo, é ${realDate.year + 19}.`);
   await sleep(2500);
