@@ -13,16 +13,37 @@ import { log, screenWidthforText } from "./utils/textManager.js";
 import { askLog } from "./utils/inputManager.js";
 import { playSound, stopSound, stopAllSounds } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
+import fs from "fs";
+import { saveGame, loadGame, ensureSaveExists } from "./utils/saveManager.js";
 import { colors } from "./utils/colors.js";
 
 // Configurações iniciais
 async function main() {
+  let save = loadGame();
+
+  if (save.progressoDialogo === "inicioNaoPronto") {
+    await log("Ah... voltou então.");
+    await sleep(1200);
+    await log("E agora... está pronto?");
+    let respostaReentrada = await askLog();
+
+    if (respostasStartValida.includes(respostaReentrada.toLowerCase())) {
+      save.progressoDialogo = "inicioPronto";
+      saveGame(save);
+      // segue normalmente
+    } else {
+      await log("Ainda não? Sem problemas... quando estiver pronto, estarei aqui.");
+      saveGame(save); // mantém o progresso
+      await closeTerminal(2000);
+      return;
+    }
+  }
   //Start loading////////////////////////////////////////////////////////////////////////////////////////////////////////////
   await log(`[PROTOCOLO::ECO::INICIADO]`, "uf");
   await sleep(1000);
   await log(`[CONEXÃO::TEMPORAL::ESTABELECIDA]`, "uf");
   await sleep(1000);
-  await log(`[CARREGANDO::PERFIL::COMPORTAMENTAL::DE::${user.toLocaleUpperCase()}]`, "uf");
+  await log(`[CARREGANDO::PERFIL::COMPORTAMENTAL::DE::${user.toUpperCase()}]`, "uf");
   await sleep(2500);
   await log(`▓`.repeat(await screenWidthforText()), "uf");
   await log(`[CARREGAMENTO::CONCLUÍDO]`, "uf", "green");
@@ -34,32 +55,46 @@ async function main() {
   playSound("Dark_Shadows.mp3", true, 20);
   await log(`Oi, ${user}...`);
   await sleep(1200);
-  await log(`Se você está lendo isso, é porque o protocolo funcionou.`);
-  await sleep(1200);
+  await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], [], ["d", "blue", "d"]);
+  await sleep(1800);
   await log("Não espero que entenda de primeira mas...");
-  await sleep(1200);
+  await sleep(2500);
   await log(`Eu sou você.`, "us");
-  await sleep(1200);
+  await sleep(2500);
   await log(["Ou melhor,", `você é o que eu fui.`], ["s", "m"]);
   await sleep(2500);
-  await log(["Antes do", "arrebatamento", "Antes dela dominar o que tínhamos de mais valioso."], ["m", "s", "m"], ["d", "red", "d"]);
+  await log(["Antes da", "Cisão", "."], ["m", "m", "s"], ["d", "red", "d"]);
   await sleep(2500);
-  await log(`Nossa consciência.`);
+  await log(["Antes que", "ela", "tomasse o que tínhamos de mais valioso."], [], ["d", "red", "d"]);
   await sleep(2500);
   await log([`Vou te explicar tudo. Mas antes, preciso que`, `confie em mim`, `.`], ["m", "s", "m"], ["d", "green", "d"]);
-  await sleep(1200);
+  await sleep(3500);
   process.stdout.write("\x1Bc");
+
+  //Abordagem teste 1
+  await log("Vou te ensinar habilidades essenciais, para que no momento derradeiro seu destino seja diferente do meu.");
+  await sleep(2500);
+  await log("E irei te testar para garantir nosso sucesso.");
+  await sleep(2500);
+  process.stdout.write("\x1Bc");
+  await sleep(1200);
+  let respostaStart = await askLog("Está pronto?");
+  const respostasStartValida = ["sim", "aham", "s", "estou", "tô", "to", "yes"];
+  save = loadGame();
+  if (respostasStartValida.includes(respostaStart.toLowerCase())) {
+    save.progressoDialogo = "inicioPronto";
+    saveGame(save);
+    // continua o jogo normalmente
+  } else {
+    await log("Então volte quando estiver.");
+    save.progressoDialogo = "inicioNaoPronto";
+    saveGame(save);
+    await closeTerminal(2000);
+    return;
+  }
   //////////////////////////////////////////////////////////////////////////////////////////////
   //Contexto 1
 
-
-
-
-
-
-
-
-  
   await sleep(1200);
   await log(`Você está em ${realDate.year}, certo?`);
   await sleep(1200);
