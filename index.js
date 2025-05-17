@@ -49,8 +49,8 @@ async function main() {
   await sleep(1200);
   await log(["Ou melhor,", `você é o que eu fui.`], ["s", "m"]);
   await sleep(2500);
-  await log(`Antes da Guerra. Antes de tudo ruir.`);
-  await sleep(1200);
+  await log(`Antes da síncope. Antes de tudo ruir.`);
+  await sleep(2500);
   await log(`Num script, numa brecha, num arquivo escondido. Foi o melhor que pude fazer.`);
   await sleep(1200);
   await log([`Vou te explicar tudo. Mas antes, preciso que`, `confie em mim`, `.`], ["m", "s", "m"], ["d", "green", "d"]);
