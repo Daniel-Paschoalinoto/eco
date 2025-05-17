@@ -41,7 +41,7 @@ export const colors = {
   darkGray: { ansi: "\x1b[38;5;236m", rgb: [169, 169, 169] },    // Cinza escuro
   lightGray: { ansi: "\x1b[38;5;245m", rgb: [211, 211, 211] },    // Cinza claro
 
-  default: {
+  d: {
     ansi: "\x1b[37m",         // Cinza claro padrão para o texto
     rgb: [12, 12, 12]         // Cor de fundo padrão (quase preto)
   }               // Reset ANSI

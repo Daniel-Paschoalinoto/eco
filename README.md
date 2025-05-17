@@ -1,7 +1,10 @@
-## ECO
+## ECO - versão 0.2.0
 
-Eco está em desenvolvimento =D
+Eco está em desenvolvimento =D  
+Tem sugestões ou idéias?  
 
+Fale comigo!  
+danielpaschoalinoto@gmail.com  
 
 ## Licença
 

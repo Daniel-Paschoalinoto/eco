@@ -9,52 +9,52 @@
 import sleep from "./sleep.js"; // Função de sleep já existente
 import { colors } from "./colors.js";
 import { getScreenResolution } from "./windowManager.js";
-import { time } from "console";
 
-// Mapeamento de velocidades
-const speedMap = {
-  uf: 5,   // Ultra fast
-  sf: 10,  // Super fast
-  f: 25,   // Fast
-  m: 50,   // Medium (padrão)
-  s: 100,  // Slow
-  ss: 200, // Super slow
-  us: 400, // Ultra slow
-  random: null,
+// Mapeamento de faixas de velocidade por tipo
+const speedRanges = {
+  uf: [5, 20], // Ultra fast
+  sf: [20, 30], // Super fast
+  f: [30, 50], // Fast
+  m: [45, 95], // Medium (padrão)
+  s: [90, 150], // Slow
+  ss: [150, 250], // Super Slow
+  ms: [250, 350], // Mega Slow
+  us: [350, 500], // Ultra Slow
+  r: [5, 500], // Random
 };
 
-// Função para obter uma velocidade aleatória simulando um humano de TI realista
-function getRandomSpeed() {
-  // Entre 50ms e 90ms por caractere: rápido, mas ainda humano
-  return Math.floor(Math.random() * (90 - 50 + 1)) + 50;
+// Sorteia um delay dentro do intervalo fornecido
+function getSpeedFromRange([min, max]) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 export async function screenWidthforText() {
-  let { width } = await getScreenResolution()
-  let times = (Math.floor(width * 0.0605))
-  return times
+  let { width } = await getScreenResolution();
+  let times = Math.floor(width * 0.0605);
+  return times;
 }
 
 // Funções de verificação de caracteres
 function isSpecialCharacter(char) {
-  const specialChars = ['á', 'à', 'ã', 'â', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç',
-    'Á', 'À', 'Ã', 'Ê', 'Í', 'Ó', 'Ô', 'Õ', 'Ú'];
+  const specialChars = ["á", "à", "ã", "â", "é", "ê", "í", "ó", "ô", "õ", "ú", "ç", "Á", "À", "Ã", "Ê", "Í", "Ó", "Ô", "Õ", "Ú"];
   return specialChars.includes(char);
 }
+
 function isUpperCase(char) {
   return char === char.toUpperCase() && char !== char.toLowerCase();
 }
+
 function isPunctuation(char) {
-  const punctuationChars = ['.', ',', '!', '?', ';', ':', '-', '(', ')', '"', '\''];
+  const punctuationChars = [".", ",", "!", "?", ";", ":", "-", "(", ")", '"', "'"];
   return punctuationChars.includes(char);
 }
 
-export async function log(texts, speeds = "random", colorNames = "default") {
+export async function log(texts, speeds = "m", colorNames = "") {
   const textArray = Array.isArray(texts) ? texts : [texts];
   const colorArray = Array.isArray(colorNames) ? colorNames : [colorNames];
   const speedArray = Array.isArray(speeds) ? speeds : [speeds];
 
-  // Ajusta comprimentos de arrays de cores e velocidades
+  // Ajusta comprimentos dos arrays
   while (colorArray.length < textArray.length) {
     colorArray.push(colorArray[colorArray.length - 1]);
   }
@@ -65,35 +65,38 @@ export async function log(texts, speeds = "random", colorNames = "default") {
   for (let i = 0; i < textArray.length; i++) {
     const text = textArray[i];
     const colorName = colorArray[i];
-    const speed = speedArray[i];
+    const speedKey = speedArray[i];
 
-    const colorData = colors[colorName] || colors.default;
+    const colorData = colors[colorName] || colors.d;
     const colorCode = colorData.ansi;
-    const baseDelay = speed === "random"
-      ? getRandomSpeed()
-      : (speedMap[speed] || speedMap.m);
+    const range = speedRanges[speedKey] || speedRanges.m;
 
     process.stdout.write(colorCode);
 
     for (const char of text) {
-      const variation = Math.floor(Math.random() * 15) - 7;
-      const charDelay = Math.max(0, baseDelay + variation);
+      const baseDelay = getSpeedFromRange(range);
 
       process.stdout.write(char);
-      await sleep(charDelay);
+      await sleep(baseDelay);
 
-      if (char === ' ') await sleep(baseDelay * 1.2);
+      if (char === " ") await sleep(baseDelay * 1.2);
       if (isSpecialCharacter(char)) await sleep(baseDelay * 2.2);
       if (isUpperCase(char)) await sleep(baseDelay * 1.8);
       if (isPunctuation(char)) await sleep(baseDelay * 1.3);
     }
 
-    // Se for array e for última iteração, acrescenta quebra de linha
-    if (Array.isArray(texts) && i === textArray.length - 1) {
-      process.stdout.write("\n");
-    }
-    // Se não for array, comportamento padrão
-    else if (!Array.isArray(texts)) {
+    if (Array.isArray(texts)) {
+      const nextText = textArray[i + 1];
+      const nextIsPunctuationOnly = typeof nextText === "string" && /^[.,!?;:\-()"']+$/.test(nextText.trim());
+
+      if (i < textArray.length - 1) {
+        if (!nextIsPunctuationOnly) {
+          process.stdout.write(" ");
+        }
+      } else {
+        process.stdout.write("\n");
+      }
+    } else {
       process.stdout.write("\n");
     }
   }
