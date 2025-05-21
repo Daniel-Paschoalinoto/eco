@@ -28,8 +28,7 @@ async function main() {
       return await intro();
 
     case "naoQuerComecar":
-      await naoQuerComecar();
-      return await contexto0();
+      return await naoQuerComecar();
 
     case "contexto0":
       return await contexto0();
@@ -41,7 +40,7 @@ async function main() {
       return await contexto2();
 
     default:
-      await intro();
+      return await intro();
   }
 }
 main();
@@ -92,6 +91,7 @@ async function intro() {
     await closeTerminal(2000);
   } else {
     guardar("contexto0");
+    return await contexto0();
   }
 }
 
@@ -105,6 +105,7 @@ async function naoQuerComecar() {
     await closeTerminal(2000);
   } else {
     guardar("contexto0");
+    return await contexto0();
   }
 }
 
