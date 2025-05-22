@@ -20,10 +20,10 @@ import { carregar, guardar, apagar } from "./utils/saveManager.js";
 async function main() {
   let pontoAtual = carregar() || "intro";
   playSound("Dark_Shadows.mp3", true, 20);
-
   const mapaFuncoes = {
     intro,
     naoQuerComecar,
+    prova1,
     contexto0,
     contexto1,
     contexto2,
@@ -32,10 +32,7 @@ async function main() {
   const proximaFuncao = mapaFuncoes[pontoAtual] || intro;
   await proximaFuncao();
 }
-
 main();
-
-// === FUNÇÕES DE HISTÓRIA ===
 
 async function intro() {
   await log(`[PROTOCOLO::ECO::INICIADO]`, "uf");
@@ -57,33 +54,29 @@ async function intro() {
   await sleep(2500);
   await log(`Eu sou você.`, "us");
   await sleep(2500);
-  await log(["Ou melhor,", `você é o que eu fui.`], ["s", "m"]);
+  await log(["Ou melhor,", `você é o que eu fui.`], ["s", "s"]);
   await sleep(2500);
-  await log(["Antes da", "Cisão", "."], ["m", "m", "s"], ["d", "red", "d"]);
+  await log(["Antes da", "Convergência", "."], ["m", "m", "s"], ["d", "red", "d"]);
   await sleep(2500);
-  await log(["Antes que", "ela", "tomasse o que tínhamos de mais valioso."], [], ["d", "red", "d"]);
+  await log(["Antes que", "Ela", "tomasse o que tínhamos de mais valioso."], [], ["d", "red", "d"]);
   await sleep(2500);
-  await log([`Vou te explicar tudo. Mas antes, preciso que`, `confie em mim`, `.`], ["m", "s", "m"], ["d", "green", "d"]);
+  await log([`Vou te explicar em detalhes. Mas antes, preciso que`, `confie em mim`, `.`], ["m", "s", "m"], ["d", "green", "d"]);
   await sleep(3500);
-
   process.stdout.write("\x1Bc");
-  await log("Vou te ensinar habilidades essenciais, para que no momento derradeiro seu destino seja diferente do meu.");
-  await sleep(2500);
-  await log("E irei te testar para garantir nosso sucesso.");
+  await log("Testarei suas capacidades para garantir seu sucesso, já que o meu.");
   await sleep(2500);
   process.stdout.write("\x1Bc");
-  await sleep(1200);
 
   const resposta = await askLog("Está pronto?");
-  const aceita = ["sim", "s", "tô", "to", "claro", "yes"];
+  const aceita = ["sim", "s", "tô", "to", "claro", "yes", "estou"];
 
   if (!aceita.includes(resposta.toLowerCase())) {
     await log("Então volte quando estiver.");
     guardar("naoQuerComecar");
     await closeTerminal(1000);
   } else {
-    guardar("contexto0");
-    return await contexto0();
+    guardar("prova1");
+    return await prova1();
   }
 }
 
@@ -91,16 +84,20 @@ async function naoQuerComecar() {
   await log("Então você voltou?");
   await sleep(2500);
   const resposta = await askLog("Podemos começar?");
-  const aceita = ["sim", "s", "tô", "to", "claro", "yes"];
+  const aceita = ["sim", "s", "tô", "to", "claro", "yes", "estou"];
 
   if (!aceita.includes(resposta.toLowerCase())) {
-    await log("Ok, volte quando estiver.");
+    await log("Ok, tchau.");
     guardar("naoQuerComecar");
     await closeTerminal(1000);
   } else {
-    guardar("contexto0");
-    return await contexto0();
+    guardar("prova1");
+    return await prova1();
   }
+}
+
+async function prova1() {
+  await log(``);
 }
 
 async function contexto0() {
