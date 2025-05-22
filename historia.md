@@ -25,7 +25,7 @@ Irei te contar tudo em detalhes, mas não podemos perder tempo.
 
 Podemos começar?
 ################################################################################################################
-
+Em 2032, as IA's eram poderosas massssssss? E ai moço
 
 
 
