@@ -50,11 +50,9 @@ async function intro() {
   await sleep(1200);
   await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], [], ["d", "blue", "d"]);
   await sleep(1800);
-  await log("Não espero que entenda de primeira mas...");
+  await log("Não espero que entenda tudo de imediato, mas preciso que confie em mim.");
   await sleep(2500);
-  await log(`Eu sou você.`, "us");
-  await sleep(2500);
-  await log(["Ou melhor,", `você é o que eu fui.`], ["s", "s"]);
+  await log(`O ECO é uma iniciativa que você fez parte na minha realidade.`, "us");
   await sleep(2500);
   await log(["Antes da", "Convergência", "."], ["m", "m", "s"], ["d", "red", "d"]);
   await sleep(2500);
@@ -62,9 +60,6 @@ async function intro() {
   await sleep(2500);
   await log([`Vou te explicar em detalhes. Mas antes, preciso que`, `confie em mim`, `.`], ["m", "s", "m"], ["d", "green", "d"]);
   await sleep(3500);
-  process.stdout.write("\x1Bc");
-  await log("Testarei suas capacidades para garantir seu sucesso, já que o meu.");
-  await sleep(2500);
   process.stdout.write("\x1Bc");
 
   const resposta = await askLog("Está pronto?");
@@ -97,7 +92,16 @@ async function naoQuerComecar() {
 }
 
 async function prova1() {
-  await log(``);
+  await log(`O protocolo ECO é complexo, e envolve nossos últimos membros conscientes em ${realDate.year + 19}.`);
+  await sleep(2500);
+  await log(`Com base nas atividades que executavamos na sua época, uma versão personalizada foi enviada a cada um de nós.`)
+  await sleep(2500);
+  await log(`E caso consigamos desempenhar nosso papel, na sua linha do tempo Ela será parada.`)
+  await sleep(2500);
+  await log(`Nós falhamos, mas com a evolução da tecnologia e a compreensão do tempo e espaço isso foi possível, ainda que como algo recente para nós.`)
+  await sleep(2500);
+  await log(`Nós não conseguimos viajar no tempo, mas podemos inserir sugestões no subconsciente das pessoas na sua linha do tempo.`)
+  await sleep(2500);
 }
 
 async function contexto0() {
