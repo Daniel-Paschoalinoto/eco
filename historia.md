@@ -21,11 +21,22 @@ Na esperança de que, em alguma realidade, ainda exista uma chance.
 Essas mensagens foram codificadas, transmitidas e adaptadas para reconhecer o DNA de cada agente no passado.
 Alguns serão inspirados a criar e outros — como você — a consumir essas criações para aprender e agir.
 
-Irei te contar tudo em detalhes, mas não podemos perder tempo.
+Irei te contar tudo em detalhes, mas precisamos começar o quanto antes.
 
 Podemos começar?
 ################################################################################################################
-Em 2032, as IA's eram poderosas massssssss? E ai moço
+Em 2030, os implantes neurais começaram a ser comercializados pelos Norte Americanos.
+Com eles, era possível controlar dispositivos, acessar a internet e interagir em redes sociais apenas com o pensamento — sem a necessidade de telas ou aparelhos físicos.
+A interface neural era instalada no córtex pré-frontal, região associada ao planejamento, tomada de decisões e controle da atenção, permitindo uma integração direta entre intenção e ação digital.
+
+Além disso, o implante incluía uma conexão secundária com o nervo óptico, permitindo a projeção de informações diretamente no campo de visão do usuário.
+
+Graças à engenharia reversa e a concorrência Chinesa, o custo de produção caiu drasticamente, permitindo sua adoção em larga escala.
+Em poucos anos, tornaram-se comuns em todo o mundo.
+################################################################################################################
+Teste 01    MELHORES, QUE MINI GAME SIMULARIA COMO O IMPLANTE FUNCIONA?
+Como em sua época essa tecnologia ainda não é acessível, preciso que aprenda a utiliza-la para que quanmdo for criada você tire o máximo de proveito.
+Isso será essencial
 
 
 
