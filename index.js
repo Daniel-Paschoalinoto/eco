@@ -18,8 +18,20 @@ import { carregar, guardar, apagar } from "./utils/saveManager.js";
 
 // Ponto de entrada
 async function main() {
-  let pontoAtual = carregar() || "intro";
+  const pontoAtual = carregar() || "intro";
+
+  // Rotina de inicialização padrão
   playSound("Dark_Shadows.mp3", true, 20);
+  process.stdout.write("\x1Bc"); // Limpa a tela
+
+  // Se estiver carregando um save, exibe uma mensagem de contexto
+  if (pontoAtual !== "intro") {
+    await log(`[CONTINUANDO::SESSÃO]`, "f");
+    await sleep(2000);
+    process.stdout.write("\x1Bc"); // Limpa a tela novamente após a mensagem
+  }
+
+  // Mapa de fluxo do jogo
   const mapaFuncoes = {
     intro,
     naoQuerComecar,
@@ -29,6 +41,7 @@ async function main() {
     contexto2,
   };
 
+  // Inicia o jogo a partir do ponto de controle correto
   const proximaFuncao = mapaFuncoes[pontoAtual] || intro;
   await proximaFuncao();
 }
@@ -52,7 +65,7 @@ async function intro() {
   await sleep(1800);
   await log("Não espero que entenda tudo de imediato, mas preciso que confie em mim.");
   await sleep(2500);
-  await log("Em 2044, você fez parte do último grupo com chances reais de salvar a humanidade.");
+  await log(`Em ${realDate.year + 19}, você fez parte do último grupo com chances reais de salvar a humanidade.`);
   await sleep(2500);
   await log("“Fez” — no passado. Porque falhamos.");
   await sleep(2500);
@@ -64,13 +77,15 @@ async function intro() {
   await sleep(2500);
   await log("Na esperança de que, em alguma realidade, ainda exista uma chance.");
   await sleep(2500);
-  await log(
-    "Essas mensagens foram codificadas, transmitidas e adaptadas para reconhecer o DNA de cada agente em um formato agradável dependendo de cada perfil."
-  );
+  await log("Essas mensagens foram codificadas, transmitidas e adaptadas para gerar interesse em cada agente.");
   await sleep(2500);
-  await log("Alguns serão inspirados a criar e outros — como você — a consumir essas criações para aprender e agir no momento decisivo.");
+  await log('No seu caso, a abordagem escolhida é de um "jogo" e o desenvolvedor (função dele na sua época), também faz parte da nossa equipe.');
   await sleep(2500);
-  await log("Irei te contar tudo em detalhes, mas precisamos começar o quanto antes.");
+  await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
+  await sleep(2500);
+  await log("Tendo êxito Ela será derrotada e a humanidade irá prevalecer.");
+  await sleep(2500);
+  await log("Prometo te contar tudo em detalhes, mas precisamos começar o quanto antes.");
   await sleep(2500);
   process.stdout.write("\x1Bc");
 
@@ -101,30 +116,27 @@ async function naoQuerComecar() {
     guardar("prova1");
     return await prova1();
   }
-}
+} 
 
 async function prova1() {
-
-
-
-
-
-
-
+  let resposta;
+  do {
+    process.stdout.write("\x1Bc");
+    await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.");
+    await log("");
+    await log("Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para Ela entrar em operação.");
+    await log("");
+    await log("Arquivo 1: Está salvo aonde você trabalha.");
+    await log("");
+    await log("Arquivo 2: É onde tudo que você acessa diariamente está, mas nesse nível você não costuma mexer.");
+    await log("");
+    await log("Arquivo 3: É onde todas suas interações com as aplicações ficam salvas.");
+    await log("");
+    resposta = await askLog("Qual o nome da tecnologia que foi meio para Ela entrar em contato conosco?");
+  } while (resposta.toLowerCase() !== "implante");
 }
 
-async function contexto0() {
-  await log(`O protocolo ECO é complexo, e envolve nossos últimos membros conscientes em ${realDate.year + 19}.`);
-  await sleep(2500);
-  await log(`Com base nas atividades que executávamos na sua época, uma versão personalizada foi enviada a cada um de nós.`);
-  await sleep(2500);
-  await log(`No seu caso, a abordagem escolhida é de um "jogo" e o desenvolvedor (função dele na sua época), também faz parte da nossa equipe.`);
-  await sleep(2500);
-  await log(`Tendo êxito nessa jornada, Ela será derrotada e a humanidade irá prevalecer.`);
-  await sleep(2500);
-  await log(`Nós não conseguimos viajar no tempo, mas podemos inserir sugestões no subconsciente das pessoas na sua linha do tempo.`);
-  await sleep(2500);
-}
+async function contexto0() {}
 
 // async function contexto0() {
 //   process.stdout.write("\x1Bc");

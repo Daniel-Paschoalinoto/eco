@@ -13,16 +13,32 @@ A boa notícia? É que isso ainda não aconteceu na sua linha do tempo.
 Diante da nossa incapacidade de vencer o inimigo, tomamos uma última decisão.
 Desenvolver uma tecnologia que permita que mensagens cruzem a camada temporal.
 Na esperança de que, em alguma realidade, ainda exista uma chance.
-Essas mensagens foram codificadas, transmitidas e adaptadas para reconhecer o DNA de cada agente em um formato interessante dependendo de cada perfil.
+Essas mensagens foram codificadas, transmitidas e adaptadas para reconhecer cada agente em um formato interessante de acordo com seu perfil.
 Alguns serão inspirados a criar e outros — como você — a consumir essas criações para aprender e agir no momento decisivo.
 No seu caso, a abordagem escolhida é de um "jogo" e o desenvolvedor (função dele na sua época), também faz parte da nossa equipe.
-O protocolo ECO é complexo, e envolve nossos últimos membros conscientes em ANO + 19.
+O protocolo ECO é complexo, e envolve nossos últimos membros conscientes.
 Tendo êxito nessa jornada, Ela será derrotada e a humanidade irá prevalecer.
-Irei te contar tudo em detalhes, mas precisamos começar o quanto antes.
+Prometo te contar tudo em detalhes, mas precisamos começar o quanto antes.
 Podemos começar?
 
 Prova 1
-(Este será o primeiro desafio ou teste que o jogador enfrentará para provar sua capacidade ou aptidão para a missão, conforme as instruções do "eu do futuro".)
+Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.
+Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para Ela entrar em operação.
+
+Arquivo 1
+Conteúdo - TE
+Local - Área de trabalho
+Dica: Está salvo aonde você trabalha.
+
+Arquivo 2
+Conteúdo - IM
+Local - %users%/nome do usuário/
+Dica: É onde tudo que você acessa diariamente está, mas nesse nível você não costuma mexer.
+
+Arquivo 3
+Conteúdo - PLAN
+Local - em %appdata%
+Dica: É onde todas suas interações com as aplicações ficam salvas.
 
 Ato 2: O Despertar da Era Digital
 Implante Neural
