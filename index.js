@@ -16,22 +16,12 @@ import { user } from "./utils/nameGetter.js";
 import { colors } from "./utils/colors.js";
 import { carregar, guardar, apagar } from "./utils/saveManager.js";
 
+import { startGame } from "./utils/gameManager.js";
+
 // Ponto de entrada
 async function main() {
-  const pontoAtual = carregar() || "intro";
-
-  // Rotina de inicialização padrão
-  playSound("Dark_Shadows.mp3", true, 20);
-  process.stdout.write("\x1Bc"); // Limpa a tela
-
-  // Se estiver carregando um save, exibe uma mensagem de contexto
-  if (pontoAtual !== "intro") {
-    await log(`[CONTINUANDO::SESSÃO]`, "f");
-    await sleep(2000);
-    process.stdout.write("\x1Bc"); // Limpa a tela novamente após a mensagem
-  }
-
-  // Mapa de fluxo do jogo
+  // O mapa de funções define todas as "cenas" possíveis do jogo.
+  // O gameManager usará isso para navegar na história.
   const mapaFuncoes = {
     intro,
     naoQuerComecar,
@@ -41,10 +31,13 @@ async function main() {
     contexto2,
   };
 
-  // Inicia o jogo a partir do ponto de controle correto
-  const proximaFuncao = mapaFuncoes[pontoAtual] || intro;
-  await proximaFuncao();
+  // Inicia o motor do jogo, passando o mapa de cenas.
+  await startGame(mapaFuncoes);
 }
+
+// ====================================================================
+// Abaixo estão todas as funções que compõem a narrativa do jogo.
+// ====================================================================
 main();
 
 async function intro() {
