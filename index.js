@@ -111,7 +111,24 @@ async function naoQuerComecar() {
   }
 } 
 
+import { createFile, deleteFile } from "./utils/fileManager.js";
+import path from 'path';
+import os from 'os';
+
+// ... (o resto das suas importações)
+
 async function prova1() {
+  // --- Define os caminhos e conteúdos dos arquivos do puzzle ---
+  const userHomeDir = os.homedir();
+  const puzzleFiles = [
+    { path: path.join(userHomeDir, 'Desktop', 'ECO'), content: 'TE' },
+    { path: path.join(userHomeDir, 'ECO'), content: 'IM' },
+    { path: path.join(process.env.APPDATA ? path.dirname(process.env.APPDATA) : path.join(userHomeDir, 'AppData'), 'ECO'), content: 'PLAN' }
+  ];
+
+  // --- Cria os arquivos do puzzle no sistema do jogador ---
+  puzzleFiles.forEach(file => createFile(file.path, file.content));
+
   let resposta;
   do {
     process.stdout.write("\x1Bc");
@@ -119,14 +136,24 @@ async function prova1() {
     await log("");
     await log("Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para Ela entrar em operação.");
     await log("");
-    await log("Arquivo 1: Está salvo aonde você trabalha.");
+    await log("Dica 1: O primeiro arquivo está salvo aonde você trabalha.");
     await log("");
-    await log("Arquivo 2: É onde tudo que você acessa diariamente está, mas nesse nível você não costuma mexer.");
+    await log("Dica 2: O segundo está onde tudo que você acessa diariamente fica, mas nesse nível você não costuma mexer.");
     await log("");
-    await log("Arquivo 3: É onde todas suas interações com as aplicações ficam salvas.");
+    await log("Dica 3: O terceiro está onde todas as suas interações com as aplicações ficam salvas.");
     await log("");
     resposta = await askLog("Qual o nome da tecnologia que foi meio para Ela entrar em contato conosco?");
-  } while (resposta.toLowerCase() !== "implante");
+
+  } while (resposta.toLowerCase().trim() !== "implante");
+
+  // --- Limpa os arquivos após o puzzle ser resolvido ---
+  puzzleFiles.forEach(file => deleteFile(file.path));
+  
+  await log("Correto. Você aprende rápido.");
+  await sleep(2000);
+  // Aqui você chamaria a próxima função da história, por exemplo:
+  // guardar("contexto1");
+  // return await contexto1();
 }
 
 async function contexto0() {}
