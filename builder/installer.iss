@@ -59,6 +59,8 @@ Name: "{userdesktop}\ECO"; Filename: "wt.exe"; \
 
 [UninstallDelete]
 Type: files; Name: "{userdesktop}\ECO.lnk"
+Type: filesandordirs; Name: "{app}\save"
+Type: filesandordirs; Name: "{app}"
 
 [Code]
 function NotInPath: Boolean;
