@@ -56,7 +56,20 @@ export async function log(texts, speeds = "m", colorNames = "") {
   }
 
   for (let i = 0; i < textArray.length; i++) {
-    const text = textArray[i];
+    const currentItem = textArray[i];
+
+    // Handle pause token
+    if (typeof currentItem === 'string' && currentItem.startsWith('<PAUSE:') && currentItem.endsWith('>')) {
+      const delayStr = currentItem.substring(7, currentItem.length - 1);
+      const delay = parseInt(delayStr, 10);
+      if (!isNaN(delay) && delay >= 0) {
+        await sleep(delay);
+      }
+      continue; // Skip to next item
+    }
+
+    // Existing logic for text processing
+    const text = currentItem;
     const colorName = colorArray[i];
     const speedKey = speedArray[i];
 
@@ -82,18 +95,24 @@ export async function log(texts, speeds = "m", colorNames = "") {
       }
     }
 
-    if (Array.isArray(texts)) {
-      const nextText = textArray[i + 1];
-      const nextIsPunctuationOnly = typeof nextText === "string" && /^[.,!?;:()"'-]+$/.test(nextText.trim());
+    // Logic for adding space/newline, considering pause tokens
+    // Find the next actual text item
+    let nextActualTextIndex = -1;
+    for (let j = i + 1; j < textArray.length; j++) {
+      if (typeof textArray[j] === 'string' && !textArray[j].startsWith('<PAUSE:')) {
+        nextActualTextIndex = j;
+        break;
+      }
+    }
 
-      if (i < textArray.length - 1) {
-        if (!nextIsPunctuationOnly) {
-          process.stdout.write(" ");
-        }
-      } else {
-        process.stdout.write("\n");
+    if (nextActualTextIndex !== -1) {
+      const nextActualText = textArray[nextActualTextIndex];
+      const nextIsPunctuationOnly = typeof nextActualText === "string" && /^[.,!?;:()\"'-]+$/.test(nextActualText.trim());
+      if (!nextIsPunctuationOnly) {
+        process.stdout.write(" ");
       }
     } else {
+      // This is the last actual text item in the array (after skipping any trailing pauses)
       process.stdout.write("\n");
     }
   }

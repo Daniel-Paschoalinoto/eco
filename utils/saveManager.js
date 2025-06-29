@@ -16,13 +16,19 @@ try {
   // console.warn(`Aviso: Arquivo de ambiente (${envPath}) não encontrado. Usando modo padrão: '${env}'.`);
 }
 
-const SAVE_FILE_PATH = "save/save.dat";
+const SAVE_DIR = "save"; // Definindo o nome do diretório
+const SAVE_FILE_PATH = path.join(SAVE_DIR, "save.dat"); // Juntando o diretório com o nome do arquivo
 
 /**
  * Salva o progresso do jogador.
  * @param {string} checkpoint - O nome do ponto da história a ser salvo (ex: "intro", "prova1").
  */
 export function guardar(checkpoint) {
+  // **VERIFICA E CRIA A PASTA 'save' SE ELA NÃO EXISTIR**
+  if (!fs.existsSync(SAVE_DIR)) {
+    fs.mkdirSync(SAVE_DIR, { recursive: true }); // 'recursive: true' garante que pastas pai também sejam criadas, se necessário
+  }
+
   const saveData = {
     checkpoint: checkpoint,
     timestamp: Date.now(),

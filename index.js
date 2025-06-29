@@ -57,30 +57,32 @@ async function intro() {
 
   await log(`Oi, ${user}...`);
   await sleep(1200);
-  await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], ["m", "m", "m"], ["d", "blue", "d"]);
+  await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], [], ["d", "blue", "d"]);
   await sleep(1800);
   await log("Não espero que entenda tudo de imediato, mas preciso que confie em mim.");
   await sleep(2500);
   await log(`Em ${realDate.year + 19}, você fez parte do último grupo com chances reais de salvar a humanidade.`);
   await sleep(2500);
-  await log("“Fez” — no passado. Porque falhamos.");
+  await log(["“Fez” — no passado.","<PAUSE:1000>","Porque falhamos."]);
   await sleep(2500);
-  await log("A boa notícia? É que isso ainda não aconteceu na sua linha do tempo.");
+  await log(["A boa notícia?", "<PAUSE:2000>", "É que isso ainda não aconteceu na sua linha do tempo."]);
   await sleep(2500);
   await log("Diante da nossa incapacidade de vencer o inimigo, tomamos uma última decisão.");
   await sleep(2500);
   await log("Desenvolver uma tecnologia que permita que mensagens cruzem a camada temporal.");
   await sleep(2500);
-  await log("Na esperança de que, em alguma realidade, ainda exista uma chance.");
+  await log("Na esperança de que, se houverem outras realidades, ainda exista uma chance.");
   await sleep(2500);
-  await log("Essas mensagens foram codificadas, transmitidas e adaptadas para gerar interesse em cada agente.");
+  await log("Essas mensagens foram codificadas, transmitidas e adaptadas para cada membro do grupo.");
   await sleep(2500);
-  await log('No seu caso, a abordagem escolhida é de um "jogo" e o desenvolvedor (função dele na sua época), também faz parte da nossa equipe.');
+  await log('Alguns (como o desenvolvedor dessa ferramenta), serão inspirados a criar.');
+  await sleep(2500);
+  await log('E outros como você, consumirão essas criações para se preparar para o momento decisivo.');
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
-  await log(["Tendo êxito", "Ela", "será derrotada e a humanidade irá prevalecer."], ["m", "m", "m"], ["d", "red", "d"]);
-  await sleep(250);
+  await log(["Tendo êxito", "Ela", "será derrotada e a humanidade terá mais uma chance."], [], ["d", "red", "d"]);
+  await sleep(2500);
   await log("Prometo te contar tudo em detalhes, mas precisamos começar o quanto antes.");
   await sleep(2500);
   process.stdout.write("\x1Bc");
@@ -89,7 +91,7 @@ async function intro() {
   const aceita = ["sim", "s", "tô", "to", "claro", "yes", "estou", "sure", "why not", "podemos"];
 
   if (!aceita.includes(resposta.toLowerCase())) {
-    await log("Indico que não demore, mas aguardo seu retorno.");
+    await log(["Pro seu bem,", "<PAUSE:2000>", "indico que não demore."]);
     guardar("naoQuerComecar");
     await closeTerminal(1000);
   } else {
@@ -99,7 +101,7 @@ async function intro() {
 }
 
 async function naoQuerComecar() {
-  await log("Então você voltou?");
+  await log("Escolha inteligente, ter retornado.");
   await sleep(2500);
   const resposta = await askLog("Podemos começar?");
   const aceita = ["sim", "s", "tô", "to", "claro", "yes", "estou"];
@@ -143,6 +145,8 @@ async function prova1() {
 
     const hintSpeed = isFirstAttempt ? "m" : "instant"; // Define a velocidade com base na tentativa
 
+    await log("[CONHEÇA::O::AMBIENTE]", hintSpeed);
+    await log("", hintSpeed);
     await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.", hintSpeed);
     await log("", hintSpeed);
     await log(["Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para", "Ela", "entrar em operação."], [hintSpeed, hintSpeed, hintSpeed], ["d", "red", "d"]);
