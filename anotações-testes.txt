@@ -16,6 +16,9 @@ o arquivo não foi criado na área de trabalho.
 
 1920x1080
 desinstalação ok
-incluir no uninstall emoção do save
+incluir no uninstall emoção do save         OK
 
 ícone na barratde tarefas é do  terminal.
+
+
+LIMITE 105 CARACTERES
