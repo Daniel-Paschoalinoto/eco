@@ -54,7 +54,7 @@ async function intro() {
 
   await log(`Oi, ${user}...`);
   await sleep(1200);
-  await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], [], ["d", "blue", "d"]);
+  await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], ["m", "m", "m"], ["d", "blue", "d"]);
   await sleep(1800);
   await log("Não espero que entenda tudo de imediato, mas preciso que confie em mim.");
   await sleep(2500);
@@ -76,8 +76,8 @@ async function intro() {
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
-  await log("Tendo êxito Ela será derrotada e a humanidade irá prevalecer.");
-  await sleep(2500);
+  await log(["Tendo êxito ", "Ela", " será derrotada e a humanidade irá prevalecer."], ["m", "m", "m"], ["d", "red", "d"]);
+  await sleep(250);
   await log("Prometo te contar tudo em detalhes, mas precisamos começar o quanto antes.");
   await sleep(2500);
   process.stdout.write("\x1Bc");
@@ -142,7 +142,7 @@ async function prova1() {
 
     await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.", hintSpeed);
     await log("", hintSpeed);
-    await log("Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para Ela entrar em operação.", hintSpeed);
+    await log(["Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para", "Ela", "entrar em operação."], [hintSpeed, hintSpeed, hintSpeed], ["d", "red", "d"]);
     await log("", hintSpeed);
     await log("Dica 1: O primeiro arquivo está salvo aonde você trabalha.", hintSpeed);
     await log("", hintSpeed);
@@ -153,12 +153,12 @@ async function prova1() {
 
     isFirstAttempt = false; // Após a primeira exibição, define como false
 
-    resposta = await askLog("Qual o nome da tecnologia que foi meio para Ela entrar em contato conosco?"); // Pergunta sempre na velocidade padrão
+    resposta = await askLog(["Qual o nome da tecnologia que foi meio para", "Ela", "entrar em contato conosco?"], ["m", "m", "m"], ["d", "red", "d"]); // Pergunta sempre na velocidade padrão
 
     if (encrypt(resposta.toLowerCase().trim()) !== encryptedCorrectAnswer) {
       process.stdout.write("\x1Bc"); // Limpa a tela antes da mensagem de erro
       await log("Resposta incorreta. Tente novamente.", "instant", "red");
-      await sleep(1500); // Pequena pausa para o jogador ler
+      await sleep(2500); // Pequena pausa para o jogador ler
     }
 
   } while (encrypt(resposta.toLowerCase().trim()) !== encryptedCorrectAnswer);

@@ -19,8 +19,8 @@ stdin.on('data', noop);
  * Suporta movimentação de cursor (setas esquerda/direita), backspace, delete, inserção no meio.
  * As setas para cima e para baixo e a tecla ESC são ignoradas.
  */
-export async function askLog(prompt, color = 'white', speed = 'm') {
-  await log(prompt, color, speed);
+export async function askLog(texts, speeds = "m", colorNames = "") {
+  await log(texts, speeds, colorNames);
 
   let input = '';
   let cursor = 0;
