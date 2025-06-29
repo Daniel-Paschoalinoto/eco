@@ -112,6 +112,7 @@ async function naoQuerComecar() {
 } 
 
 import { createFile, deleteFile } from "./utils/fileManager.js";
+import { encrypt } from "./utils/cryptoManager.js";
 import path from 'path';
 import os from 'os';
 
@@ -129,6 +130,8 @@ async function prova1() {
   // --- Cria os arquivos do puzzle no sistema do jogador ---
   puzzleFiles.forEach(file => createFile(file.path, file.content));
 
+  const encryptedCorrectAnswer = "6e615bd3ab09486bd3703fef64374444"; // Valor criptografado de "implante"
+
   let resposta;
   do {
     process.stdout.write("\x1Bc");
@@ -144,7 +147,7 @@ async function prova1() {
     await log("");
     resposta = await askLog("Qual o nome da tecnologia que foi meio para Ela entrar em contato conosco?");
 
-  } while (resposta.toLowerCase().trim() !== "implante");
+  } while (encrypt(resposta.toLowerCase().trim()) !== encryptedCorrectAnswer);
 
   // --- Limpa os arquivos após o puzzle ser resolvido ---
   puzzleFiles.forEach(file => deleteFile(file.path));
