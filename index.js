@@ -133,19 +133,33 @@ async function prova1() {
   const encryptedCorrectAnswer = "6e615bd3ab09486bd3703fef64374444"; // Valor criptografado de "implante"
 
   let resposta;
+  let isFirstAttempt = true; // Flag para controlar a primeira exibição
+
   do {
     process.stdout.write("\x1Bc");
-    await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.");
-    await log("");
-    await log("Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para Ela entrar em operação.");
-    await log("");
-    await log("Dica 1: O primeiro arquivo está salvo aonde você trabalha.");
-    await log("");
-    await log("Dica 2: O segundo está onde tudo que você acessa diariamente fica, mas nesse nível você não costuma mexer.");
-    await log("");
-    await log("Dica 3: O terceiro está onde todas as suas interações com as aplicações ficam salvas.");
-    await log("");
-    resposta = await askLog("Qual o nome da tecnologia que foi meio para Ela entrar em contato conosco?");
+
+    const hintSpeed = isFirstAttempt ? "m" : "instant"; // Define a velocidade com base na tentativa
+
+    await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.", hintSpeed);
+    await log("", hintSpeed);
+    await log("Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para Ela entrar em operação.", hintSpeed);
+    await log("", hintSpeed);
+    await log("Dica 1: O primeiro arquivo está salvo aonde você trabalha.", hintSpeed);
+    await log("", hintSpeed);
+    await log("Dica 2: O segundo está onde tudo que você acessa diariamente fica, mas nesse nível você não costuma mexer.", hintSpeed);
+    await log("", hintSpeed);
+    await log("Dica 3: O terceiro está onde todas as suas interações com as aplicações ficam salvas.", hintSpeed);
+    await log("", hintSpeed);
+
+    isFirstAttempt = false; // Após a primeira exibição, define como false
+
+    resposta = await askLog("Qual o nome da tecnologia que foi meio para Ela entrar em contato conosco?"); // Pergunta sempre na velocidade padrão
+
+    if (encrypt(resposta.toLowerCase().trim()) !== encryptedCorrectAnswer) {
+      process.stdout.write("\x1Bc"); // Limpa a tela antes da mensagem de erro
+      await log("Resposta incorreta. Tente novamente.", "instant", "red");
+      await sleep(1500); // Pequena pausa para o jogador ler
+    }
 
   } while (encrypt(resposta.toLowerCase().trim()) !== encryptedCorrectAnswer);
 

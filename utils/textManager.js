@@ -13,6 +13,7 @@ const speedRanges = {
   ms: [250, 350], // Mega Slow
   us: [350, 500], // Ultra Slow
   r: [5, 500], // Random
+  instant: [0, 0], // Instantâneo (sem delay)
 };
 
 // Sorteia um delay dentro do intervalo fornecido
@@ -37,7 +38,7 @@ function isUpperCase(char) {
 }
 
 function isPunctuation(char) {
-  const punctuationChars = [".", ",", "!", "?", ";", ":", "-", "(", ")", '"', "'"];
+  const punctuationChars = [".", ",", "!", "?", ";", ":", "-", "(", ")", "\"", "'"];
   return punctuationChars.includes(char);
 }
 
@@ -65,21 +66,25 @@ export async function log(texts, speeds = "m", colorNames = "") {
 
     process.stdout.write(colorCode);
 
-    for (const char of text) {
-      const baseDelay = getSpeedFromRange(range);
+    if (speedKey === "instant") {
+      process.stdout.write(text);
+    } else {
+      for (const char of text) {
+        const baseDelay = getSpeedFromRange(range);
 
-      process.stdout.write(char);
-      await sleep(baseDelay);
+        process.stdout.write(char);
+        await sleep(baseDelay);
 
-      if (char === " ") await sleep(baseDelay * 1.2);
-      if (isSpecialCharacter(char)) await sleep(baseDelay * 2.2);
-      if (isUpperCase(char)) await sleep(baseDelay * 1.8);
-      if (isPunctuation(char)) await sleep(baseDelay * 1.3);
+        if (char === " ") await sleep(baseDelay * 1.2);
+        if (isSpecialCharacter(char)) await sleep(baseDelay * 2.2);
+        if (isUpperCase(char)) await sleep(baseDelay * 1.8);
+        if (isPunctuation(char)) await sleep(baseDelay * 1.3);
+      }
     }
 
     if (Array.isArray(texts)) {
       const nextText = textArray[i + 1];
-      const nextIsPunctuationOnly = typeof nextText === "string" && /^[.,!?;:\-()"']+$/.test(nextText.trim());
+      const nextIsPunctuationOnly = typeof nextText === "string" && /^[.,!?;:()"'-]+$/.test(nextText.trim());
 
       if (i < textArray.length - 1) {
         if (!nextIsPunctuationOnly) {
