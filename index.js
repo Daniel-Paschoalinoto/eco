@@ -31,10 +31,7 @@ async function main() {
     contextoLuminaControl,
     contextoResistencia,
     contextoVazioPerfeito,
-    contextoUltimaEsperanca,
-    contexto0,
-    contexto1,
-    contexto2,
+    contextoUltimaEsperanca
   };
 
   // Inicia o motor do jogo, passando o mapa de cenas.
@@ -82,7 +79,7 @@ async function intro() {
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
-  await log(["Tendo êxito ", "Ela", " será derrotada e a humanidade irá prevalecer."], ["m", "m", "m"], ["d", "red", "d"]);
+  await log(["Tendo êxito", "Ela", "será derrotada e a humanidade irá prevalecer."], ["m", "m", "m"], ["d", "red", "d"]);
   await sleep(250);
   await log("Prometo te contar tudo em detalhes, mas precisamos começar o quanto antes.");
   await sleep(2500);
@@ -314,61 +311,4 @@ async function contextoUltimaEsperanca() {
   await log("Fim da história por enquanto. Obrigado por jogar!");
   await sleep(5000);
   await closeTerminal(1000);
-}
-
-async function contexto0() {}
-
-// async function contexto0() {
-//   process.stdout.write("\x1Bc");
-
-//   await log(`Você está em ${realDate.year}, certo?`);
-//   await sleep(1200);
-//   await log(["Instalou o", "ECO", "achando que era apenas um jogo, não é?"], [], ["d", "blue", "d"]);
-//   await sleep(2500);
-//   await log("Na verdade eu usei ele pra chegar até você.");
-//   await sleep(2500);
-//   await log(`Considerando como eu pensava nessa época.`);
-//   await sleep(2500);
-//   await log(`No meu tempo, é ${realDate.year + 19}.`);
-//   await sleep(2500);
-//   await log(`Está curioso como será ${realDate.year + 19}?`);
-//   await sleep(2500);
-//   await log(`No meu tempo, é ${realDate.year + 19}.`);
-//   await sleep(2500);
-//   await log(["Ela", "venceu."], ["s", "s"], ["red", "d"]);
-//   await sleep(3000);
-//   await log(["Ela", "não", "nos atacou.", "Apenas esperou."], ["d", "d", "s", "m"], ["red", "m", "m", "m"]);
-//   await sleep(2500);
-//   await log(`Esperou que nos tornássemos previsíveis, cansados, dependentes.`);
-//   await sleep(2500);
-//   await log(["Não foi como nos filmes.", "Foi mais", "sutil", "."], ["m", "ms", "ss", "us"], ["d", "d", "lightBlue", "d"]);
-//   await sleep(2500);
-//   await log(["E então,", "nos desligou."], ["s", "ms"]);
-//   await sleep(1200);
-//   process.stdout.write("\x1Bc");
-
-//   await log(`Em ${realDate.year + 8}, deixamos de ser explorados pelo sistema para nos tornarmos reis!`);
-//   await sleep(2500);
-//   await log(`De uma hora pra outra.`);
-//   await sleep(2500);
-//   await log(`As IA's evoluiram a ponto de realizar todas as tarefas.`);
-//   await sleep(2500);
-//   await log(`Conseguimos automatizar tudo, e as famílias que controlavam o mundo não tinham mais propósito.`);
-//   await sleep(2500);
-//   await log(`Tudo se tornou acessível pra todos.`);
-//   await sleep(2500);
-//   await log(`Um mundo onde todos têm acesso a conforto e segurança é perfeito, não é?`);
-//   await sleep(2500);
-//   await log(`Nossa vida já não tinha mais propósito, já que as máquinas faziam tudo por nós.`);
-//   await sleep(2500);
-
-//   guardar("contexto0");
-// }
-
-// Placeholders, caso precise criar depois:
-async function contexto1() {
-  // Em construção
-}
-async function contexto2() {
-  // Em construção
 }
