@@ -112,7 +112,7 @@ async function naoQuerComecar() {
 } 
 
 import { createFile, deleteFile } from "./utils/fileManager.js";
-import { encrypt } from "./utils/cryptoManager.js";
+import { encrypt, decrypt } from "./utils/cryptoManager.js";
 import path from 'path';
 import os from 'os';
 
@@ -122,13 +122,13 @@ async function prova1() {
   // --- Define os caminhos e conteúdos dos arquivos do puzzle ---
   const userHomeDir = os.homedir();
   const puzzleFiles = [
-    { path: path.join(userHomeDir, 'Desktop', 'ECO'), content: 'TE' },
-    { path: path.join(userHomeDir, 'ECO'), content: 'IM' },
-    { path: path.join(process.env.APPDATA ? path.dirname(process.env.APPDATA) : path.join(userHomeDir, 'AppData'), 'ECO'), content: 'PLAN' }
+    { path: path.join(userHomeDir, 'Desktop', 'ECO'), content: "fc2f97be5a5406cced5f3cef1ac7a718" }, // Criptografado de 'TE'
+    { path: path.join(userHomeDir, 'ECO'), content: "4f34d18229a3baf52d1c36c6018b2bc5" }, // Criptografado de 'IM'
+    { path: path.join(process.env.APPDATA ? path.dirname(process.env.APPDATA) : path.join(userHomeDir, 'AppData'), 'ECO'), content: "e726b658b782afbecdce97b3a8f6e72a" } // Criptografado de 'PLAN'
   ];
 
   // --- Cria os arquivos do puzzle no sistema do jogador ---
-  puzzleFiles.forEach(file => createFile(file.path, file.content));
+  puzzleFiles.forEach(file => createFile(file.path, decrypt(file.content))); // Usa decrypt aqui
 
   const encryptedCorrectAnswer = "6e615bd3ab09486bd3703fef64374444"; // Valor criptografado de "implante"
 
