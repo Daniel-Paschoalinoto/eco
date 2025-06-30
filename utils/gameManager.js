@@ -12,7 +12,7 @@ export async function startGame(mapaFuncoes) {
   process.stdout.write("\x1Bc");
 
   if (pontoAtual !== "intro") {
-    await log(`[CONTINUANDO::SESSÃO::DE::${user.toUpperCase()}]`, "instant");
+    await log(`[CONTINUANDO::SESSÃO::DE::${user}]`, "instant");
     await sleep(2000);
     process.stdout.write("\x1Bc");
   }

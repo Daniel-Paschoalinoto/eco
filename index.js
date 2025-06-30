@@ -138,10 +138,7 @@ async function naoQuerComecar() {
 >>>>>>> parent of bbb9f4e (Chega por hoje)
     await closeTerminal(1000);
   } else {
-    process.stdout.write("\x1Bc");
     await log(respostaSim,"instant","green");
-    await sleep(2000);
-    process.stdout.write("\x1Bc");
     guardar(saveSim);
     return await prova1();
   }
