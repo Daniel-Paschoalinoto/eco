@@ -23,9 +23,9 @@ import { startGame } from "./utils/gameManager.js";
 // Ponto de entrada
 async function main() {
   if (!hasRunBefore()) {
+    await log("[PROTOCOLO::ECO::INICIANDO::EM::10::SEGUNDOS]", "instant");
     await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse) de acordo com sua resolução...", "instant");
-    await log("[PROTOCOLO::ECO::INICIANDO]", "instant");
-    await sleep(5000);
+    await sleep(10000);
     markRunCompleted();
   }
 
