@@ -33,7 +33,7 @@ async function main() {
   // O gameManager usará isso para navegar na história.
   const mapaFuncoes = {
     intro,
-    retorno,
+    naoAceitouProva,
     prova1,
     contextoImplantes,
     contextoLuminaRise,
@@ -96,27 +96,26 @@ async function intro() {
   await sleep(2500);
   process.stdout.write("\x1Bc");
 
-  return await confirmacao();
+  return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva", "prova1");
 }
 
-async function retorno() {
+async function naoAceitouProva() {
   await log("Seu retorno foi uma escolha inteligente.");
   await sleep(2500);
-  return await confirmacao();
+  return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva", "prova1");
 }
 
-async function confirmacao() {
-  const resposta = await askLog("Podemos começar?");
+async function confirmacao(pergunta, respostaNao, respostaSim, saveNao, saveSim) {
+  const resposta = await askLog(pergunta);
   if (!respostasAceitas.includes(resposta.toLowerCase())) {
     process.stdout.write("\x1Bc"); // Limpa a tela antes da mensagem de erro
-    await log("Nenhuma confirmação detectada. Finalizando...", "instant", "red");
+    await log(respostaNao, "instant", "red");
     await sleep(2000);
-    process.stdout.write("\x1Bc");
-    await log(["O tempo é curto,", "<SLEEP:1000>", "indico que não demore."]);
-    guardar("retorno");
+    guardar(saveNao);
     await closeTerminal(1000);
   } else {
-    guardar("prova1");
+    await log(respostaSim,"instant","green");
+    guardar(saveSim);
     return await prova1();
   }
 }
@@ -149,12 +148,8 @@ async function prova1() {
   let isFirstAttempt = true; // Flag para controlar a primeira exibição
 
   do {
-    process.stdout.write("\x1Bc");
-
     const hintSpeed = isFirstAttempt ? "f" : "instant"; // Define a velocidade com base na tentativa
 
-    await log("[CONHEÇA::O::AMBIENTE]", hintSpeed);
-    await log("", hintSpeed);
     await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.", hintSpeed);
     await log("", hintSpeed);
     await log(

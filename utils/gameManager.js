@@ -3,6 +3,7 @@ import { carregar } from "./saveManager.js";
 import { playSound } from "./soundManager.js";
 import { log } from "./textManager.js";
 import sleep from "./sleep.js";
+import { user } from "./nameGetter.js";
 
 export async function startGame(mapaFuncoes) {
   const pontoAtual = carregar() || "intro";
@@ -11,7 +12,7 @@ export async function startGame(mapaFuncoes) {
   process.stdout.write("\x1Bc");
 
   if (pontoAtual !== "intro") {
-    await log(`[CONTINUANDO::SESSÃO]`, "f");
+    await log(`[CONTINUANDO::SESSÃO::DE::${user}]`, "instant");
     await sleep(2000);
     process.stdout.write("\x1Bc");
   }
