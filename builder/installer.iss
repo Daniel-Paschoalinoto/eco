@@ -4,7 +4,7 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 [Setup]
 AppName=ECO - Fragmento do Amanhã
 AppVerName=ECO - Fragmento do Amanhã
-AppVersion=985091
+AppVersion=0.1.1
 DefaultDirName={autopf}\ECO
 AppPublisher=Daniel Paschoalinoto
 WindowShowCaption=ECO - Fragmento do Amanhã
@@ -56,6 +56,10 @@ Filename: "{userdesktop}\ECO.lnk"; \
 Name: "{userdesktop}\ECO"; Filename: "wt.exe"; \
     Parameters: "--maximized -d ""{app}"" node ""{app}\index.js"""; \
     IconFilename: "{app}\ECO64.ico";
+
+Name: "{userstartmenu}\ECO - Fragmento do Amanhã"; Filename: "wt.exe"; \
+    Parameters: "--maximized -d ""{app}"" node ""{app}\index.js"""; \
+    IconFilename: "{app}\assets\icons\ECO64.ico"
 
 [UninstallDelete]
 Type: files; Name: "{userdesktop}\ECO.lnk"
