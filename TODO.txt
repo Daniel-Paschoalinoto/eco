@@ -1,9 +1,7 @@
 Remov a fonte 20 do perfil do wt       OK
-
-Criar um menu inicial para avisar o usuário sobre, usar fones, controlar o tamanho da letra do terminal com ctrl + scroll etc
-resolver pro 0.2.0
+Criar um menu inicial para avisar o usuário sobre, usar fones, controlar o tamanho da letra do terminal com ctrl + scroll etc - OK
 testar o 0.1.0 com windows 11
-
+Criar load e save e tornar perguntas genéricas, e save genérico para reuso.
 
 
 ////////testes Illichs

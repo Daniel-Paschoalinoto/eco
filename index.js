@@ -23,8 +23,8 @@ import { startGame } from "./utils/gameManager.js";
 async function main() {
   if (!hasRunBefore()) {
     await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse) de acordo com sua resolução...", "instant");
-    await log("[PROTOCOLO::ECO::INICIANDO]")
-    await sleep(5000)
+    await log("[PROTOCOLO::ECO::INICIANDO]");
+    await sleep(5000);
     markRunCompleted();
   }
 
@@ -32,7 +32,7 @@ async function main() {
   // O gameManager usará isso para navegar na história.
   const mapaFuncoes = {
     intro,
-    naoQuerComecar,
+    retorno,
     prova1,
     contextoImplantes,
     contextoLuminaRise,
@@ -85,7 +85,7 @@ async function intro() {
   await sleep(2500);
   await log("Alguns (como o desenvolvedor dessa ferramenta), serão inspirados a criar.");
   await sleep(2500);
-  await log("E outros como você, consumirão essas criações para se aprender, e se preparar para o momento decisivo.");
+  await log("E outros como você, consumirão essas criações para aprender e se preparar para o momento decisivo.");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
@@ -95,24 +95,24 @@ async function intro() {
   await sleep(2500);
   process.stdout.write("\x1Bc");
 
-  const resposta = await askLog("Podemos começar?");
-  if (!respostasAceitas.includes(resposta.toLowerCase())) {
-    await log(["Pro seu bem,", "<SLEEP:1000>", "indico que não demore."]);
-    guardar("naoQuerComecar");
-    await closeTerminal(1000);
-  } else {
-    guardar("prova1");
-    return await prova1();
-  }
+  return await confirmacao();
 }
 
-async function naoQuerComecar() {
-  await log("Escolha inteligente, ter retornado.");
+async function retorno() {
+  await log("Seu retorno foi uma escolha inteligente.");
   await sleep(2500);
+  return await confirmacao();
+}
+
+async function confirmacao() {
   const resposta = await askLog("Podemos começar?");
   if (!respostasAceitas.includes(resposta.toLowerCase())) {
-    await log("Ok, até mais.");
-    guardar("naoQuerComecar");
+    process.stdout.write("\x1Bc"); // Limpa a tela antes da mensagem de erro
+    await log("Nenhuma confirmação detectada. Finalizando...", "instant", "red");
+    await sleep(2000);
+    process.stdout.write("\x1Bc");
+    await log(["O tempo é curto,", "<SLEEP:1000>", "indico que não demore."]);
+    guardar("retorno");
     await closeTerminal(1000);
   } else {
     guardar("prova1");
