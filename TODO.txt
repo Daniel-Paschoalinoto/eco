@@ -1,4 +1,11 @@
-///////////////////Illichs
+Remov a fonte 20 do perfil do wt
+Criar um menu inicial para avisar o usuário sobre, usar fones, controlar o tamanho da letra do terminal com ctrl + scroll etc
+resolver pro 0.2.0
+testar o 0.1.0 com windows 11
+
+
+
+////////testes Illichs
 Windows 10
 tirar impedimento de Windows barrando aplicação - exetando assumindo risco
 não puxou nome do usuário (verificar usuário Windows, não do cmd), considerar OneDrive em Windows 10
@@ -20,5 +27,3 @@ incluir no uninstall emoção do save         OK
 
 ícone na barratde tarefas é do  terminal.
 
-
-LIMITE 105 CARACTERES
