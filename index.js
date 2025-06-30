@@ -26,6 +26,8 @@ async function main() {
     await log("[PROTOCOLO::ECO::INICIANDO::EM::10::SEGUNDOS]", "instant");
     await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse) de acordo com sua resolução...", "instant");
     await sleep(10000);
+    await log("[PROTOCOLO::ECO::INICIANDO]")
+    await sleep(5000)
     markRunCompleted();
   }
 
@@ -34,6 +36,7 @@ async function main() {
   const mapaFuncoes = {
     intro,
     naoAceitouProva,
+    naoQuerComecar,
     prova1,
     contextoImplantes,
     contextoLuminaRise,
@@ -86,7 +89,7 @@ async function intro() {
   await sleep(2500);
   await log("Alguns (como o desenvolvedor dessa ferramenta), serão inspirados a criar.");
   await sleep(2500);
-  await log("E outros como você, consumirão essas criações para aprender e se preparar para o momento decisivo.");
+  await log("E outros como você, consumirão essas criações para se aprender, e se preparar para o momento decisivo.");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
@@ -96,6 +99,7 @@ async function intro() {
   await sleep(2500);
   process.stdout.write("\x1Bc");
 
+<<<<<<< HEAD
   return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva", "prova1");
 }
 
@@ -112,6 +116,26 @@ async function confirmacao(pergunta, respostaNao, respostaSim, saveNao, saveSim)
     await log(respostaNao, "instant", "red");
     await sleep(2000);
     guardar(saveNao);
+=======
+  const resposta = await askLog("Podemos começar?");
+  if (!respostasAceitas.includes(resposta.toLowerCase())) {
+    await log(["Pro seu bem,", "<SLEEP:1000>", "indico que não demore."]);
+    guardar("naoQuerComecar");
+    await closeTerminal(1000);
+  } else {
+    guardar("prova1");
+    return await prova1();
+  }
+}
+
+async function naoQuerComecar() {
+  await log("Escolha inteligente, ter retornado.");
+  await sleep(2500);
+  const resposta = await askLog("Podemos começar?");
+  if (!respostasAceitas.includes(resposta.toLowerCase())) {
+    await log("Ok, até mais.");
+    guardar("naoQuerComecar");
+>>>>>>> parent of bbb9f4e (Chega por hoje)
     await closeTerminal(1000);
   } else {
     process.stdout.write("\x1Bc");
