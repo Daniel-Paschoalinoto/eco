@@ -1,4 +1,4 @@
-// utils/inputManager.js
+//utils/inputManager.js
 import { log } from './textManager.js';
 
 /**

@@ -1,3 +1,4 @@
+//utils/colors.js
 export const colors = {
   // Cores primárias
   red: { ansi: "\x1b[31m", rgb: [255, 100, 100] },         // Vermelho (mais suave)

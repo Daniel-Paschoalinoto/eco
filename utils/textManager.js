@@ -1,3 +1,4 @@
+//utils/textManager.js
 import sleep from "./sleep.js"; // Função de sleep já existente
 import { colors } from "./colors.js";
 

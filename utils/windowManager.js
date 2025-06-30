@@ -1,3 +1,4 @@
+//utils/windowManager.js
 import { colors } from './colors.js';
 import { runCommand } from './runCommand.js';
 

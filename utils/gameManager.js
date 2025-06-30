@@ -1,3 +1,4 @@
+//utils/gameManager.js
 import { carregar } from "./saveManager.js";
 import { playSound } from "./soundManager.js";
 import { log } from "./textManager.js";

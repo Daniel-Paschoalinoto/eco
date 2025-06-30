@@ -1,3 +1,4 @@
+//utils/nameGetter.js
 import { execSync } from "child_process";
 
 const formatName = (name) => {

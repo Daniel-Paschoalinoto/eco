@@ -1,3 +1,4 @@
+//utils/runCommand.js
 import { spawn } from 'child_process';
 // Helper to spawn a process and collect output without shell to avoid DEP0190 warning
 export function runCommand(command, args) {

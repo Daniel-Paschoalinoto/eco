@@ -1,3 +1,4 @@
+//utils/cryptoManager.js
 import crypto from "crypto";
 
 // As mesmas chaves usadas no saveManager para consistência
