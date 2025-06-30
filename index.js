@@ -14,12 +14,18 @@ import { askLog } from "./utils/inputManager.js";
 import { playSound, stopSound, stopAllSounds } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 import { colors } from "./utils/colors.js";
-import { carregar, guardar, apagar } from "./utils/saveManager.js";
+import { carregar, guardar, apagar, hasRunBefore, markRunCompleted } from "./utils/saveManager.js";
 
 import { startGame } from "./utils/gameManager.js";
 
 // Ponto de entrada
 async function main() {
+  if (!hasRunBefore()) {
+    await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse)...", "instant");
+    await sleep(5000);
+    markRunCompleted();
+  }
+
   // O mapa de funções define todas as "cenas" possíveis do jogo.
   // O gameManager usará isso para navegar na história.
   const mapaFuncoes = {
@@ -146,14 +152,14 @@ async function prova1() {
   do {
     process.stdout.write("\x1Bc");
 
-    const hintSpeed = isFirstAttempt ? "m" : "instant"; // Define a velocidade com base na tentativa
+    const hintSpeed = isFirstAttempt ? "f" : "instant"; // Define a velocidade com base na tentativa
 
     await log("[CONHEÇA::O::AMBIENTE]", hintSpeed);
     await log("", hintSpeed);
     await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.", hintSpeed);
     await log("", hintSpeed);
     await log(
-      ["Espalhei 3 arquivos em seu sistema, onde seu conteúdo unido é o nome da tecnologia usada para", "Ela", "entrar em operação."],
+      ["Criei 3 arquivos em seu sistema, onde seu conteúdo organizado foi o nome da tecnologia usada para", "Ela", "surgir."],
       [hintSpeed, hintSpeed, hintSpeed],
       ["d", "red", "d"]
     );

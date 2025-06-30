@@ -15,7 +15,18 @@ try {
 
 const SAVE_DIR = "save"; 
 const SAVE_FILE_PATH = path.join(SAVE_DIR, "save.dat"); 
+const FIRST_RUN_FLAG_PATH = path.join(SAVE_DIR, "first_run.flag");
 
+export function hasRunBefore() {
+  return fs.existsSync(FIRST_RUN_FLAG_PATH);
+}
+
+export function markRunCompleted() {
+  if (!fs.existsSync(SAVE_DIR)) {
+    fs.mkdirSync(SAVE_DIR, { recursive: true });
+  }
+  fs.writeFileSync(FIRST_RUN_FLAG_PATH, "true");
+}
 
 export function guardar(checkpoint) {
   if (!fs.existsSync(SAVE_DIR)) {
