@@ -80,11 +80,11 @@ async function intro() {
   await sleep(2500);
   await log("Na esperança de que, se houverem outras realidades, ainda exista uma chance.");
   await sleep(2500);
-  await log("Essas mensagens foram codificadas, transmitidas e adaptadas para cada membro do grupo.");
+  await log("Essas mensagens foram codificadas, adaptadas para cada membro do grupo no passado e transmitidas.");
   await sleep(2500);
   await log("Alguns (como o desenvolvedor dessa ferramenta), serão inspirados a criar.");
   await sleep(2500);
-  await log("E outros como você, consumirão essas criações para se preparar para o momento decisivo.");
+  await log("E outros como você, consumirão essas criações para se aprender, e se preparar para o momento decisivo.");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
