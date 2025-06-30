@@ -2,20 +2,12 @@
 import sleep from "./utils/sleep.js";
 import realDate from "./utils/realDate.js";
 import {
-  setWindowPositionAndSize,
-  maximizeWindow,
-  minimizeWindow,
-  setWindowTitle,
-  setBackgroundRGB,
   closeTerminal,
-  fadeBackground,
 } from "./utils/windowManager.js";
 import { log, screenWidthforText } from "./utils/textManager.js";
 import { askLog } from "./utils/inputManager.js";
-import { playSound, stopSound, stopAllSounds } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
-import { colors } from "./utils/colors.js";
-import { carregar, guardar, apagar, hasRunBefore, markRunCompleted } from "./utils/saveManager.js";
+import { guardar, hasRunBefore, markRunCompleted } from "./utils/saveManager.js";
 import { respostasAceitas } from "./utils/constants.js";
 
 import { startGame } from "./utils/gameManager.js";
@@ -26,8 +18,6 @@ async function main() {
     await log("[PROTOCOLO::ECO::INICIANDO::EM::10::SEGUNDOS]", "instant");
     await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse) de acordo com sua resolução...", "instant");
     await sleep(10000);
-    await log("[PROTOCOLO::ECO::INICIANDO]")
-    await sleep(5000)
     markRunCompleted();
   }
 
@@ -35,7 +25,7 @@ async function main() {
   // O gameManager usará isso para navegar na história.
   const mapaFuncoes = {
     intro,
-    naoQuerComecar,
+    naoAceitouProva1,
     prova1,
     contextoImplantes,
     contextoLuminaRise,
@@ -98,13 +88,13 @@ async function intro() {
   await sleep(2500);
   process.stdout.write("\x1Bc");
 
-  return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva", "prova1");
+  return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva1", "prova1");
 }
 
-async function naoQuerComecar() {
+async function naoAceitouProva1() {
   await log("Seu retorno foi uma escolha inteligente.");
   await sleep(2500);
-  return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva", "prova1");
+  return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva1", "prova1");
 }
 
 async function confirmacao(pergunta, respostaNao, respostaSim, saveNao, saveSim) {

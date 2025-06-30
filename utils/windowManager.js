@@ -184,5 +184,3 @@ export function fadeBackground(from, to, steps = 10, delay = 100, loops = 1) {
 
   runFade();
 }
-
-
