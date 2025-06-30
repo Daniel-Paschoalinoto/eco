@@ -1,7 +1,7 @@
-## ECO - versão 0.2.0
+## ECO - versão 0.1.1
 
 Eco está em desenvolvimento =D  
-Tem sugestões ou idéias?  
+Tem sugestões ou idéias?
 
 Fale comigo!  
 danielpaschoalinoto@gmail.com  
@@ -33,3 +33,5 @@ Sob os termos da licença CC BY-NC-ND 4.0, é **obrigatório** o reconhecimento 
 * A indicação da licença utilizada (CC BY-NC-ND 4.0).
 
 Para informações legais completas, consulte: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode) (disponível em diversos idiomas, incluindo português: [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt))
+
+Você também pode encontrar o texto completo da licença no arquivo [LICENSE](LICENSE) deste repositório.
