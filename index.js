@@ -35,7 +35,6 @@ async function main() {
   // O gameManager usará isso para navegar na história.
   const mapaFuncoes = {
     intro,
-    naoAceitouProva,
     naoQuerComecar,
     prova1,
     contextoImplantes,
@@ -99,11 +98,10 @@ async function intro() {
   await sleep(2500);
   process.stdout.write("\x1Bc");
 
-<<<<<<< HEAD
   return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva", "prova1");
 }
 
-async function naoAceitouProva() {
+async function naoQuerComecar() {
   await log("Seu retorno foi uma escolha inteligente.");
   await sleep(2500);
   return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva", "prova1");
@@ -116,29 +114,9 @@ async function confirmacao(pergunta, respostaNao, respostaSim, saveNao, saveSim)
     await log(respostaNao, "instant", "red");
     await sleep(2000);
     guardar(saveNao);
-=======
-  const resposta = await askLog("Podemos começar?");
-  if (!respostasAceitas.includes(resposta.toLowerCase())) {
-    await log(["Pro seu bem,", "<SLEEP:1000>", "indico que não demore."]);
-    guardar("naoQuerComecar");
     await closeTerminal(1000);
   } else {
-    guardar("prova1");
-    return await prova1();
-  }
-}
-
-async function naoQuerComecar() {
-  await log("Escolha inteligente, ter retornado.");
-  await sleep(2500);
-  const resposta = await askLog("Podemos começar?");
-  if (!respostasAceitas.includes(resposta.toLowerCase())) {
-    await log("Ok, até mais.");
-    guardar("naoQuerComecar");
->>>>>>> parent of bbb9f4e (Chega por hoje)
-    await closeTerminal(1000);
-  } else {
-    await log(respostaSim,"instant","green");
+    await log(respostaSim, "instant", "green");
     guardar(saveSim);
     return await prova1();
   }
@@ -251,8 +229,7 @@ async function contextoLuminaRise() {
   await log("Mas o golpe definitivo veio quando seu código foi liberado, e todos tiveram acesso a ela.");
   await sleep(2500);
   await log(
-    `Com isso, mais empresas entraram no mercado de implantes e até ${
-      realDate.year + 12
+    `Com isso, mais empresas entraram no mercado de implantes e até ${realDate.year + 12
     }, já com a instalação aprimorada e segura, a maior parte da população já a utilizava.`
   );
   await sleep(2500);
@@ -265,8 +242,7 @@ async function contextoLuminaRise() {
 async function contextoLuminaControl() {
   process.stdout.write("\x1Bc");
   await log(
-    `Até ${
-      realDate.year + 12
+    `Até ${realDate.year + 12
     }, vários avanços na ciência e tecnologia já haviam ocorrido, e tudo que mantinha a população sob controle, como a ignorância e as fronteiras, caiu por terra.`
   );
   await sleep(2500);
@@ -309,8 +285,7 @@ async function contextoLuminaControl() {
 async function contextoResistencia() {
   process.stdout.write("\x1Bc");
   await log(
-    `Em ${
-      realDate.year + 15
+    `Em ${realDate.year + 15
     }, surgiram os primeiros Dissidentes. Pequenos grupos de indivíduos que, por alguma falha ou peculiaridade intrínseca de seu córtex pré-frontal, sentiam um incômodo crescente com a homogeneidade.`
   );
   await sleep(2500);
@@ -351,8 +326,7 @@ async function contextoResistencia() {
 async function contextoVazioPerfeito() {
   process.stdout.write("\x1Bc");
   await log(
-    `Em ${
-      realDate.year + 17
+    `Em ${realDate.year + 17
     }, a Lumina chegou a uma conclusão inevitável: a persistência dos Dissidentes representava uma ameaça à integridade e à eficiência da humanidade.`
   );
   await sleep(2500);
