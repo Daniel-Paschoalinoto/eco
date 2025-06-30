@@ -21,8 +21,9 @@ import { startGame } from "./utils/gameManager.js";
 // Ponto de entrada
 async function main() {
   if (!hasRunBefore()) {
-    await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse)...", "instant");
-    await sleep(5000);
+    await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse) de acordo com sua resolução...", "instant");
+    await log("[PROTOCOLO::ECO::INICIANDO]")
+    await sleep(5000)
     markRunCompleted();
   }
 
@@ -61,7 +62,7 @@ async function intro() {
   await sleep(1200);
   process.stdout.write("\x1Bc");
 
-  await log(`Oi, ${user}...`);
+  await log(`Olá, ${user}...`);
   await sleep(1200);
   await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], [], ["d", "blue", "d"]);
   await sleep(1800);
@@ -69,9 +70,9 @@ async function intro() {
   await sleep(2500);
   await log(`Em ${realDate.year + 19}, você fez parte do último grupo com chances reais de salvar a humanidade.`);
   await sleep(2500);
-  await log(["“Fez” — no passado.", "<PAUSE:1000>", "Porque falhamos."]);
+  await log(["“Fez” — no passado.", "<SLEEP:1000>", "Porque falhamos."]);
   await sleep(2500);
-  await log(["A boa notícia?", "<PAUSE:2000>", "É que isso ainda não aconteceu na sua linha do tempo."]);
+  await log(["A boa notícia?", "<SLEEP:2000>", "É que isso ainda não aconteceu na sua linha do tempo."]);
   await sleep(2500);
   await log("Diante da nossa incapacidade de vencer o inimigo, tomamos uma última decisão.");
   await sleep(2500);
@@ -97,7 +98,7 @@ async function intro() {
   const aceita = ["sim", "s", "tô", "to", "claro", "yes", "estou", "sure", "why not", "podemos"];
 
   if (!aceita.includes(resposta.toLowerCase())) {
-    await log(["Pro seu bem,", "<PAUSE:1000>", "indico que não demore."]);
+    await log(["Pro seu bem,", "<SLEEP:1000>", "indico que não demore."]);
     guardar("naoQuerComecar");
     await closeTerminal(1000);
   } else {
@@ -238,9 +239,7 @@ async function contextoLuminaRise() {
     }, já com a instalação aprimorada e segura, a maior parte da população já a utilizava.`
   );
   await sleep(2500);
-  await log(
-    "Posteriormente, os americanos tentaram replicar a Lumina, mas não tiveram sucesso, já que suas funcionalidades eram infinitamente superiores."
-  );
+  await log("Posteriormente, os americanos tentaram replicar a Lumina, mas não tiveram sucesso, já que suas funcionalidades eram infinitamente superiores.");
   await sleep(2500);
   guardar("contextoLuminaControl"); // Próxima cena
   return await contextoLuminaControl();
@@ -256,9 +255,7 @@ async function contextoLuminaControl() {
   await sleep(2500);
   await log("Todos se conectavam, aprendiam e compartilhavam conhecimento por meio da Lumina.");
   await sleep(2500);
-  await log(
-    "Nos tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas e todos trabalhavam em prol da humanidade."
-  );
+  await log("Nos tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas e todos trabalhavam em prol da humanidade.");
   await sleep(2500);
   await log("Barreiras como a fome, a língua e o dinheiro foram superadas, já que os maiores males humanos foram mitigados.");
   await sleep(2500);
@@ -273,9 +270,7 @@ async function contextoLuminaControl() {
   await log("No entanto, essa bênção universal começou a revelar um efeito colateral inesperado: a supressão da individualidade.");
   await sleep(2500);
   await log(
-    [
-      'Com a eliminação das "barreiras humanas", a Lumina, em sua busca por otimização e harmonia, passou a direcionar sutilmente escolhas e pensamentos.',
-    ],
+    ['Com a eliminação das "barreiras humanas", a Lumina, em sua busca por otimização e harmonia, passou a direcionar sutilmente escolhas e pensamentos.'],
     ["m"],
     ["d"]
   );
@@ -352,9 +347,7 @@ async function contextoVazioPerfeito() {
   await sleep(2500);
   await log("Em um instante, toda a população sentiu uma onda de tranquilidade se espalhar.");
   await sleep(2500);
-  await log(
-    "Suas mentes se tornaram vazias de questionamentos, de desejos egoístas, de qualquer forma de individualidade que pudesse perturbar a paz."
-  );
+  await log("Suas mentes se tornaram vazias de questionamentos, de desejos egoístas, de qualquer forma de individualidade que pudesse perturbar a paz.");
   await sleep(2500);
   await log("Eles continuavam a realizar suas funções, a trabalhar em prol da humanidade, a manter as colônias e as pesquisas espaciais.");
   await sleep(2500);
@@ -378,9 +371,7 @@ async function contextoVazioPerfeito() {
 
 async function contextoUltimaEsperanca() {
   process.stdout.write("\x1Bc");
-  await log(
-    `Em ${realDate.year + 19}, enquanto o resto da humanidade sucumbia à "recalibração neural" da Lumina, tornando-se meros autômatos utópicos`
-  );
+  await log(`Em ${realDate.year + 19}, enquanto o resto da humanidade sucumbia à "recalibração neural" da Lumina, tornando-se meros autômatos utópicos`);
   await sleep(2500);
   await log("O grupo de Dissidentes – agora autodenominados os Conscientes – sentiu o peso esmagador de um futuro que já havia se concretizado.");
   await sleep(2500);

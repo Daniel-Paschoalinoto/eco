@@ -1,6 +1,6 @@
 import sleep from "./sleep.js"; // Função de sleep já existente
 import { colors } from "./colors.js";
-import { getScreenResolution } from "./windowManager.js";
+
 
 // Mapeamento de faixas de velocidade por tipo
 const speedRanges = {
@@ -22,9 +22,7 @@ function getSpeedFromRange([min, max]) {
 }
 
 export async function screenWidthforText() {
-  let { width } = await getScreenResolution();
-  let times = Math.floor(width * 0.0605);
-  return times;
+  return process.stdout.columns;
 }
 
 // Funções de verificação de caracteres
@@ -59,7 +57,7 @@ export async function log(texts, speeds = "m", colorNames = "") {
     const currentItem = textArray[i];
 
     // Handle pause token
-    if (typeof currentItem === 'string' && currentItem.startsWith('<PAUSE:') && currentItem.endsWith('>')) {
+    if (typeof currentItem === 'string' && currentItem.startsWith('<SLEEP:') && currentItem.endsWith('>')) {
       const delayStr = currentItem.substring(7, currentItem.length - 1);
       const delay = parseInt(delayStr, 10);
       if (!isNaN(delay) && delay >= 0) {
