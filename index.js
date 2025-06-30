@@ -23,7 +23,7 @@ import { startGame } from "./utils/gameManager.js";
 async function main() {
   if (!hasRunBefore()) {
     await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse) de acordo com sua resolução...", "instant");
-    await log("[PROTOCOLO::ECO::INICIANDO]");
+    await log("[PROTOCOLO::ECO::INICIANDO]", "instant");
     await sleep(5000);
     markRunCompleted();
   }
