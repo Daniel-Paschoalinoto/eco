@@ -15,6 +15,7 @@ import { playSound, stopSound, stopAllSounds } from "./utils/soundManager.js";
 import { user } from "./utils/nameGetter.js";
 import { colors } from "./utils/colors.js";
 import { carregar, guardar, apagar, hasRunBefore, markRunCompleted } from "./utils/saveManager.js";
+import { respostasAceitas } from "./utils/constants.js";
 
 import { startGame } from "./utils/gameManager.js";
 
@@ -95,9 +96,7 @@ async function intro() {
   process.stdout.write("\x1Bc");
 
   const resposta = await askLog("Podemos começar?");
-  const aceita = ["sim", "s", "tô", "to", "claro", "yes", "estou", "sure", "why not", "podemos"];
-
-  if (!aceita.includes(resposta.toLowerCase())) {
+  if (!respostasAceitas.includes(resposta.toLowerCase())) {
     await log(["Pro seu bem,", "<SLEEP:1000>", "indico que não demore."]);
     guardar("naoQuerComecar");
     await closeTerminal(1000);
@@ -111,9 +110,7 @@ async function naoQuerComecar() {
   await log("Escolha inteligente, ter retornado.");
   await sleep(2500);
   const resposta = await askLog("Podemos começar?");
-  const aceita = ["sim", "s", "tô", "to", "claro", "yes", "estou", "sure", "why not", "podemos"];
-
-  if (!aceita.includes(resposta.toLowerCase())) {
+  if (!respostasAceitas.includes(resposta.toLowerCase())) {
     await log("Ok, até mais.");
     guardar("naoQuerComecar");
     await closeTerminal(1000);
