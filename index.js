@@ -114,7 +114,10 @@ async function confirmacao(pergunta, respostaNao, respostaSim, saveNao, saveSim)
     guardar(saveNao);
     await closeTerminal(1000);
   } else {
+    process.stdout.write("\x1Bc");
     await log(respostaSim,"instant","green");
+    await sleep(2000);
+    process.stdout.write("\x1Bc");
     guardar(saveSim);
     return await prova1();
   }
