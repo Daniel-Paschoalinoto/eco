@@ -1,4 +1,4 @@
-## ECO - versão 0.1.1
+## ECO - versão 0.4.5
 
 Eco está em desenvolvimento =D  
 Tem sugestões ou idéias?

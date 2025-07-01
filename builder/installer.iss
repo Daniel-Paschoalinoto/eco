@@ -4,7 +4,7 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 [Setup]
 AppName=ECO - Fragmento do Amanhã
 AppVerName=ECO - Fragmento do Amanhã
-AppVersion=0.1.1
+AppVersion=0.4.5
 DefaultDirName={autopf}\ECO
 AppPublisher=Daniel Paschoalinoto
 WindowShowCaption=ECO - Fragmento do Amanhã
@@ -25,8 +25,8 @@ UninstallDisplayIcon={app}\assets\icons\ECO32.ico
 
 VersionInfoCompany=Daniel Paschoalinoto
 VersionInfoProductName=ECO - Fragmento do Amanhã
-VersionInfoVersion=1.0
-VersionInfoProductVersion=1.0
+VersionInfoVersion=0.4.5
+VersionInfoProductVersion=0.4.5
 VersionInfoDescription=Instalador do ECO
 
 [Files]

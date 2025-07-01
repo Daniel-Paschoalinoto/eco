@@ -8,10 +8,13 @@ import { user } from "./nameGetter.js";
 export async function startGame(mapaFuncoes) {
   const pontoAtual = carregar() || "avisos";
 
-  playSound("Dark_Shadows.mp3", true, 20);
   process.stdout.write("\x1Bc");
 
   if (pontoAtual !== "avisos") {
+    playSound("Dark_Shadows.mp3", true, 20);
+  }
+
+  if (pontoAtual !== "intro" && pontoAtual !== "avisos") {
     await log(`[CONTINUANDO::SESSÃO::DE::${user.toUpperCase()}]`, "instant");
     await sleep(2000);
     process.stdout.write("\x1Bc");
@@ -26,4 +29,3 @@ export async function startGame(mapaFuncoes) {
     await mapaFuncoes.avisos();
   }
 }
-

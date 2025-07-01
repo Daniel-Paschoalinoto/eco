@@ -9,10 +9,12 @@ import { guardar } from "./utils/saveManager.js"
 import { startGame } from "./utils/gameManager.js";
 import { createFile, deleteFile } from "./utils/fileManager.js";
 import { encrypt, decrypt } from "./utils/cryptoManager.js";
-import { minimizeWindow, maximizeWindow } from "./utils/windowManager.js";
+import { minimizeWindow, maximizeWindow, closeTerminal } from "./utils/windowManager.js";
+import { playSound } from "./utils/soundManager.js";
 import path from "path";
 import os from "os";
 import { runCommand } from './utils/runCommand.js';
+import { respostasAceitas } from "./utils/constants.js";
 
 // Ponto de entrada
 async function main() {
@@ -45,20 +47,39 @@ main();
 
 async function avisos() {
   await log(["ECO - Fragmento do Amanhã", "salva seu progresso automaticamente."], ["instant", "instant"], ["blue", "d"])
-  await sleep(2000);
-  process.stdout.write("\x1Bc");
-  await minimizeWindow()
-  await runCommand("cmd", ["/c", "start", "https://docs.google.com/forms/d/1EqzaO7YNXgI-Kmd_GynpIOuzKyW6p6jFiOMjPuLC3gk"]);
-  await sleep(1000);
-  await maximizeWindow();
+  await sleep(5000);
+  await pedirFeeback()
   await log("Ajuste o tamanho do texto com [Ctrl + scroll do mouse].", "instant");
+  await log("É recomendado o uso de fones durante o jogo.", "instant");
+  await log("Não se trata de um conteúdo de horror ou jump scare, então relaxe (ou não) e aprecie.", "instant");
   await log("Essa mensagem será exibida apenas 1 vez.", "instant");
-  await sleep(15000);
-  await log("[PROTOCOLO::ECO::INICIANDO::EM::30::SEGUNDOS]", "instant", "cyan");
-  await sleep(30000);
+  await sleep(10000);
+  await log("[PROTOCOLO::ECO::INICIANDO::EM::20::SEGUNDOS]", "instant", "cyan");
+  await sleep(20000);
   guardar("loading")
   process.stdout.write("\x1Bc");
+  playSound("Dark_Shadows.mp3", true, 20);
   return await loading()
+}
+
+async function pedirFeeback() {
+  process.stdout.write("\x1Bc");
+  const resposta = await askLog("Posso abrir o formulário de avaliação no seu navegador? Responda[s/n]", "instant");
+  if (respostasAceitas.includes(resposta.toLowerCase())) {
+    process.stdout.write("\x1Bc");
+    await log("Obrigado! Abrindo pesquisa...Aguarde um momento.", "instant", "green");
+    await sleep(2000);
+    await minimizeWindow()
+    await runCommand("cmd", ["/c", "start", "https://docs.google.com/forms/d/1EqzaO7YNXgI-Kmd_GynpIOuzKyW6p6jFiOMjPuLC3gk"]);
+    await maximizeWindow();
+    await log("Avalie quando puder.");
+    await sleep(2000);
+    process.stdout.write("\x1Bc");
+  } else {
+    await log(`Tudo bem. Continuando.`, "instant", "cyan");
+    await sleep(2000);
+    process.stdout.write("\x1Bc");
+  }
 }
 
 async function loading() {
@@ -93,13 +114,13 @@ async function intro() {
   await sleep(2500);
   await log("Desenvolver uma tecnologia que permita que mensagens cruzem a camada temporal.");
   await sleep(2500);
-  await log("Utilizamos os estudos mais recentes na esperança de que, se houverem outras realidades, ainda exista uma chance.");
+  await log("Utilizamos os estudos mais recentes na esperança de que, ainda exista uma chance.");
   await sleep(2500);
-  await log("Essas mensagens foram codificadas, adaptadas para cada membro do grupo no passado e transmitidas.");
+  await log("Essas mensagens foram codificadas, adaptadas para cada membro do grupo e transmitidas.");
   await sleep(2500);
   await log("Alguns (como o desenvolvedor dessa ferramenta), serão inspirados a criar.");
   await sleep(2500);
-  await log("E outros como você, consumirão essas criações para aprender conceito essenciais para nossa vitória.");
+  await log("E outros como você, consumirão essas criações para aprender conceitos essenciais.");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
@@ -174,8 +195,8 @@ async function atividade1() {
   await log("Resposta correta.", "instant", "green");
   await sleep(2500)
   process.stdout.write("\x1Bc");
-  guardar("naoAceitouAtividade2");
-  return await naoAceitouAtividade2();
+  guardar("contextoImplantes");
+  return await contextoImplantes();
 }
 
 async function contextoImplantes() {
@@ -193,10 +214,11 @@ async function contextoImplantes() {
   await sleep(2500);
   await log("O que tornou possível a projeção de informações diretamente no campo de visão do usuário.");
   await sleep(2500);
-  await log("Nessa época, o produto não era acessível a todos e tinha altíssimo custo, além de riscos a vida em sua instalação.");
+  await log("Nessa época, o produto não era acessível pois tinha altíssimo custo, além de riscos à vida em sua instalação.");
   await sleep(2500);
   await log("Precisaremos te colocar a frente dos demais, quando os implantes começarem.");
   await sleep(2500);
+  process.stdout.write("\x1Bc");
   return await confirmacao("Está pronto?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouAtividade2", atividade2);
 }
 
@@ -264,29 +286,37 @@ async function contextoLuminaRise() {
   await log([`Em ${realDate.year + 8}, vários conglomerados, até então excluídos das práticas com IA, uniram-se aos Chineses para criar a`, `Lumina.`], [], ["d", "green"]);
   await sleep(2500);
   await log("Diferente de tudo o que se conhecia.");
-  await sleep(2500);
+  await sleep(1300);
   await log("Essa IA combinava o potencial dos implantes neurais com um método de aprimoramento desenvolvido por neurocientistas.");
   await sleep(2500);
-  await log(`Não era nada parecido com as IAs emergentes que vocês tem em ${realDate.year}.`);
+  await log(`Não era nada parecido com as IAs emergentes que tínhamos em ${realDate.year}.`);
   await sleep(2500);
-  await log("Por meio de microestímulos elétricos e sequencias, ela era capaz de desbloquear e amplificar habilidades cognitivas e motoras.");
+  await log("Por meio de microestímulos elétricos sequências, ela era capaz de desbloquear e amplificar habilidades cognitivas e motoras.");
   await sleep(2500);
-  await log("Os Estados Unidos condenaram sua criação, alegando falta de segurança e risco de perda de controle.");
+  await log("Os Estados Unidos condenaram sua criação, alegando riscos à segurança.");
   await sleep(2500);
   await log("Mas para muitos CEOs e corporações, aquilo parecia apenas uma tentativa desesperada de não perder o domínio do mercado.");
   await sleep(2500);
-  await log("O golpe definitivo veio quando o código seu código foi publicado e todos passaram a ter acesso.");
+  await log("O golpe definitivo veio quando seu código foi publicado e todos passaram a ter acesso.");
   await sleep(2500);
-  await log(`Com isso, novas empresas ingressaram no mercado de implantes e, até ${realDate.year + 10}, com o processo de instalação já seguro.`);
+  await log(`Com isso, novas empresas ingressaram no mercado de implantes e até ${realDate.year + 10}, com o processo de instalação já seguro e acessível.`);
   await sleep(2500);
-  await log(`A maioria da população já utilizava a tecnologia.`);
+  await log(`A vasta maioria da população mundial já utilizava a combinação de tecnologias.`);
   await sleep(2500);
-  await log("Os americanos tentaram replicá-la, mas falharam. A Lumina era simplesmente... muito além.");
+  await log(["Os americanos tentaram replicá-la, mas falharam. A", "Lumina", "era simplesmente... muito além."],[],["d","green","d"]);
   await sleep(2500);
-  guardar("atividade3");
-  return await contextoLuminaControl();
+  guardar("avisos");
+  return await teste045();
 }
 
+async function teste045() {
+  process.stdout.write("\x1Bc");
+  await log([`Você conseguiu chegar até aqui?`, "Parabéns!"], [], ["d", "green"]);
+  await sleep(2500)
+  await pedirFeeback()
+  await log(`Obrigado por testar!Fechando o terminal em 3.`);
+  await closeTerminal(3000)
+}
 
 async function contextoLuminaControl() {
   process.stdout.write("\x1Bc");
