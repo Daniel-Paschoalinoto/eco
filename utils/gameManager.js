@@ -6,24 +6,24 @@ import sleep from "./sleep.js";
 import { user } from "./nameGetter.js";
 
 export async function startGame(mapaFuncoes) {
-  const pontoAtual = carregar() || "intro";
+  const pontoAtual = carregar() || "avisos";
 
   playSound("Dark_Shadows.mp3", true, 20);
   process.stdout.write("\x1Bc");
 
-  if (pontoAtual !== "intro") {
+  if (pontoAtual !== "avisos") {
     await log(`[CONTINUANDO::SESSÃO::DE::${user.toUpperCase()}]`, "instant");
     await sleep(2000);
     process.stdout.write("\x1Bc");
   }
 
-  const proximaFuncao = mapaFuncoes[pontoAtual] || mapaFuncoes.intro;
+  const proximaFuncao = mapaFuncoes[pontoAtual] || mapaFuncoes.avisos;
   if (proximaFuncao) {
     await proximaFuncao();
   } else {
     console.error(`Erro: Ponto de controle '${pontoAtual}' não encontrado no mapa de funções.`);
     await log("Ocorreu um erro ao carregar o jogo. Reiniciando do início.");
-    await mapaFuncoes.intro();
+    await mapaFuncoes.avisos();
   }
 }
 

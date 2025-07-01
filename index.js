@@ -5,7 +5,7 @@ import { log, screenWidthforText } from "./utils/textManager.js";
 import { askLog } from "./utils/inputManager.js";
 import { user } from "./utils/nameGetter.js";
 import { confirmacao } from "./utils/inputManager.js";
-import { guardar, hasRunBefore, markRunCompleted } from "./utils/saveManager.js"
+import { guardar } from "./utils/saveManager.js"
 import { startGame } from "./utils/gameManager.js";
 import { createFile, deleteFile } from "./utils/fileManager.js";
 import { encrypt, decrypt } from "./utils/cryptoManager.js";
@@ -14,16 +14,11 @@ import os from "os";
 
 // Ponto de entrada
 async function main() {
-  if (!hasRunBefore()) {
-    await log("[PROTOCOLO::ECO::INICIANDO::EM::10::SEGUNDOS]", "instant");
-    await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse) de acordo com sua resolução...", "instant");
-    await sleep(10000);
-    markRunCompleted();
-  }
-
   // O mapa de funções define todas as "cenas" possíveis do jogo.
   // O gameManager usará isso para navegar na história.
   const mapaFuncoes = {
+    avisos,
+    loading,
     intro,
     naoAceitouProva1,
     prova1,
@@ -44,7 +39,18 @@ async function main() {
 // ====================================================================
 main();
 
-async function intro() {
+async function avisos() {
+  await log("ECO - Fragmento do Amanhã, salva seu progresso automaticamente.", "instant")
+  await log("Ajuste o tamanho do texto com (ctrl + scroll do mouse).", "instant");
+  await sleep(5000);
+  await log("[PROTOCOLO::ECO::INICIANDO::EM::15::SEGUNDOS]", "instant","blue");
+  await sleep(10000);
+  guardar("loading")
+  process.stdout.write("\x1Bc");
+  return await loading()
+}
+
+async function loading() {
   await log(`[PROTOCOLO::ECO::INICIADO]`, "uf");
   await sleep(1000);
   await log(`[CONEXÃO::TEMPORAL::ESTABELECIDA]`, "uf");
@@ -54,8 +60,12 @@ async function intro() {
   await log("▓".repeat(await screenWidthforText()), "uf");
   await log(`[CARREGAMENTO::CONCLUÍDO]`, "uf", "green");
   await sleep(1200);
+  guardar("intro")
   process.stdout.write("\x1Bc");
+  return await intro()
+}
 
+async function intro() {
   await log(`Olá, ${user}...`);
   await sleep(1200);
   await log([`Se você está lendo isso, significa que o protocolo`, `ECO`, `funcionou.`], [], ["d", "blue", "d"]);
@@ -97,14 +107,7 @@ async function naoAceitouProva1() {
   return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouProva1", prova1);
 }
 
-
-
-
-
-// ... (o resto das suas importações)
-
 async function prova1() {
-  // --- Define os caminhos e conteúdos dos arquivos do puzzle ---
   const userHomeDir = os.homedir();
   const puzzleFiles = [
     { path: path.join(userHomeDir, "Desktop", "ECO"), content: "fc2f97be5a5406cced5f3cef1ac7a718" }, // Criptografado de 'TE'
@@ -115,7 +118,6 @@ async function prova1() {
     }, // Criptografado de 'PLAN'
   ];
 
-  // --- Cria os arquivos do puzzle no sistema do jogador ---
   puzzleFiles.forEach((file) => createFile(file.path, decrypt(file.content))); // Usa decrypt aqui
 
   const encryptedCorrectAnswer = "6e615bd3ab09486bd3703fef64374444"; // Valor criptografado de "implante"
