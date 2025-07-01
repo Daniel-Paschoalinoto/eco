@@ -78,7 +78,7 @@ async function intro() {
   await sleep(2500);
   await log("Alguns (como o desenvolvedor dessa ferramenta), serão inspirados a criar.");
   await sleep(2500);
-  await log("E outros como você, consumirão essas criações para se aprender, e se preparar para o momento decisivo.");
+  await log("E outros como você, consumirão essas criações para aprender, e se preparar para o momento decisivo.");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
@@ -88,27 +88,32 @@ async function intro() {
   await sleep(2500);
   process.stdout.write("\x1Bc");
 
-  return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva1", "prova1");
+  return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouProva1", prova1);
 }
 
 async function naoAceitouProva1() {
   await log("Seu retorno foi uma escolha inteligente.");
   await sleep(2500);
-  return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "[INICIANDO::ATIVIDADE::CONHEÇA::O::AMBIENTE]", "naoAceitouProva1", "prova1");
+  return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "Boa Escolha!Vamos ao que interessa.", "naoAceitouProva1", prova1);
 }
 
-async function confirmacao(pergunta, respostaNao, respostaSim, saveNao, saveSim) {
+async function confirmacao(pergunta, respostaNao, respostaSim, textoSaveNao, proximaFuncao) {
   const resposta = await askLog(pergunta);
   if (!respostasAceitas.includes(resposta.toLowerCase())) {
     process.stdout.write("\x1Bc"); // Limpa a tela antes da mensagem de erro
     await log(respostaNao, "instant", "red");
     await sleep(2000);
-    guardar(saveNao);
+    guardar(textoSaveNao);
     await closeTerminal(1000);
   } else {
-    await log(respostaSim, "instant", "green");
-    guardar(saveSim);
-    return await prova1();
+    process.stdout.write("\x1Bc");
+    if (respostaSim) {
+      await log(respostaSim, "m", "green");
+      await sleep(2000);
+      process.stdout.write("\x1Bc");
+    }
+    guardar(proximaFuncao.name);
+    return await proximaFuncao();
   }
 }
 
@@ -142,6 +147,9 @@ async function prova1() {
   do {
     const hintSpeed = isFirstAttempt ? "f" : "instant"; // Define a velocidade com base na tentativa
 
+    process.stdout.write("\x1Bc");
+    await log("[ATIVIDADE 1 - CONHEÇA::O::AMBIENTE]", "instant", "yellow");
+    await log("", hintSpeed);
     await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.", hintSpeed);
     await log("", hintSpeed);
     await log(
@@ -150,11 +158,11 @@ async function prova1() {
       ["d", "red", "d"]
     );
     await log("", hintSpeed);
-    await log("Dica 1: O primeiro arquivo está salvo aonde você trabalha.", hintSpeed);
+    await log(["Dica 1:", "O primeiro arquivo está salvo aonde você trabalha."], [hintSpeed, hintSpeed], ["yellow", "d"]);
     await log("", hintSpeed);
-    await log("Dica 2: O segundo está onde tudo que você acessa diariamente fica, mas nesse nível você não costuma mexer.", hintSpeed);
+    await log(["Dica 2:", "O segundo está onde tudo que você acessa diariamente fica, mas nesse nível você não costuma mexer."], [hintSpeed, hintSpeed], ["yellow", "d"]);
     await log("", hintSpeed);
-    await log("Dica 3: O terceiro está onde todas as suas interações com as aplicações ficam salvas.", hintSpeed);
+    await log(["Dica 3:", "O terceiro está onde todas as suas interações com as aplicações ficam salvas."], [hintSpeed, hintSpeed], ["yellow", "d"]);
     await log("", hintSpeed);
 
     isFirstAttempt = false; // Após a primeira exibição, define como false
@@ -170,9 +178,7 @@ async function prova1() {
 
   // --- Limpa os arquivos após o puzzle ser resolvido ---
   puzzleFiles.forEach((file) => deleteFile(file.path));
-
-  await log("Correto. Você aprende rápido.");
-  await sleep(2000);
+  process.stdout.write("\x1Bc");
   guardar("contextoImplantes");
   return await contextoImplantes();
 }
@@ -181,17 +187,11 @@ async function contextoImplantes() {
   process.stdout.write("\x1Bc");
   await log(`Em ${realDate.year + 5}, os implantes neurais começaram a ser comercializados pelos Norte Americanos.`);
   await sleep(2500);
-  await log(
-    "Com eles, era possível controlar dispositivos, acessar a internet e IAs e interagir em redes sociais apenas com o pensamento — sem a necessidade de telas ou aparelhos físicos."
-  );
+  await log("Com eles, era possível controlar dispositivos, acessar a internet e IAs e interagir em redes sociais apenas com o pensamento — sem a necessidade de telas ou aparelhos físicos.");
   await sleep(2500);
-  await log(
-    "A interface neural era instalada no córtex pré-frontal, região associada ao planejamento, tomada de decisões e controle da atenção, permitindo uma integração direta entre intenção e ação digital."
-  );
+  await log("A interface neural era instalada no córtex pré-frontal, região associada ao planejamento, tomada de decisões e controle da atenção, permitindo uma integração direta entre intenção e ação digital.");
   await sleep(2500);
-  await log(
-    "Além disso, o implante incluía uma conexão secundária com o nervo óptico, permitindo a projeção de informações diretamente no campo de visão do usuário."
-  );
+  await log("Além disso, o implante incluía uma conexão secundária com o nervo óptico, permitindo a projeção de informações diretamente no campo de visão do usuário.");
   await sleep(2500);
   await log("Nessa época, o produto não era acessível a todos e tinha altíssimo custo, além de riscos anatômicos em sua instalação.");
   await sleep(2500);
