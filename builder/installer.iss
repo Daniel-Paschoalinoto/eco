@@ -58,9 +58,9 @@ Name: "{userdesktop}\ECO"; Filename: "wt.exe"; \
     IconFilename: "{app}\ECO64.ico";
 
 Name: "{userstartmenu}\ECO - Fragmento do Amanhã"; Filename: "wt.exe"; \
-    Parameters: "--maximized -d ""{app}"" node ""{app}\index.js"""; \
+    Parameters: "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""{app}"" node ""{app}\index.js"""; \
     IconFilename: "{app}\assets\icons\ECO64.ico"
-
+    
 [UninstallDelete]
 Type: files; Name: "{userdesktop}\ECO.lnk"
 Type: filesandordirs; Name: "{app}\save"
