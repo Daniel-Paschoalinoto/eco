@@ -1,5 +1,9 @@
 //utils/inputManager.js
 import { log } from './textManager.js';
+import { guardar } from './saveManager.js';
+import sleep from './sleep.js';
+import { closeTerminal } from './windowManager.js';
+import { respostasAceitas } from "./utils/constants.js";
 
 /**
  * Gerencia stdin em modo raw permanente, com listener "noop" que descarta tudo.
@@ -107,4 +111,24 @@ export async function askLog(texts, speeds = "m", colorNames = "") {
     stdin.removeListener('data', noop);
     stdin.on('data', onData);
   });
+}
+
+export async function confirmacao(pergunta, respostaNao, respostaSim, textoSaveNao, proximaFuncao) {
+  const resposta = await askLog(pergunta);
+  if (!respostasAceitas.includes(resposta.toLowerCase())) {
+    process.stdout.write("\x1Bc"); // Limpa a tela antes da mensagem de erro
+    await log(respostaNao, "instant", "red");
+    await sleep(2000);
+    guardar(textoSaveNao);
+    await closeTerminal(1000);
+  } else {
+    process.stdout.write("\x1Bc");
+    if (respostaSim) {
+      await log(respostaSim, "m", "green");
+      await sleep(2000);
+      process.stdout.write("\x1Bc");
+    }
+    guardar(proximaFuncao.name);
+    return await proximaFuncao();
+  }
 }
