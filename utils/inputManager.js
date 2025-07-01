@@ -3,7 +3,7 @@ import { log } from './textManager.js';
 import { guardar } from './saveManager.js';
 import sleep from './sleep.js';
 import { closeTerminal } from './windowManager.js';
-import { respostasAceitas } from "./utils/constants.js";
+import { respostasAceitas } from "./constants.js";
 
 /**
  * Gerencia stdin em modo raw permanente, com listener "noop" que descarta tudo.
