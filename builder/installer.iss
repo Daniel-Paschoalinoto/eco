@@ -132,6 +132,7 @@ begin
     '    "font" = @{' + #13#10 +
     '        "cellHeight" = "2"' + #13#10 +
     '        "face" = "Cascadia Code"' + #13#10 +
+    '        "size" = 20' + #13#10 +
     '    }' + #13#10 +
     '    "guid" = "{a3f1b894-fa11-4f25-8c38-ec0a0f4e3410}"' + #13#10 +
     '    "hidden" = $false' + #13#10 +
@@ -230,12 +231,12 @@ function InitializeUninstall(): Boolean;
 var
   ResultCode: Integer;
 begin
-  if MsgBox('Quer remover o Node.js? Caso escolha SIM, aguarde...', mbConfirmation, MB_YESNO) = IDYES then
+  if MsgBox('Quer remover o Node.js? Caso escolha SIM aguarde...', mbConfirmation, MB_YESNO) = IDYES then
   begin
     Exec('cmd.exe', '/C winget uninstall --id OpenJS.NodeJS --silent', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   end;
 
-  if MsgBox('Quer remover o Windows Terminal? Caso escolha SIM, aguarde...', mbConfirmation, MB_YESNO) = IDYES then
+  if MsgBox('Quer remover o Windows Terminal? Caso escolha SIM aguarde...', mbConfirmation, MB_YESNO) = IDYES then
   begin
     Exec('cmd.exe', '/C winget uninstall --id Microsoft.WindowsTerminal --silent', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   end;
