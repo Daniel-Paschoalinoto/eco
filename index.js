@@ -64,7 +64,7 @@ async function avisos() {
 
 async function pedirFeeback() {
   process.stdout.write("\x1Bc");
-  const resposta = await askLog("Posso abrir o formulário de avaliação no seu navegador? Responda[s/n]", "instant");
+  const resposta = await askLog("Posso abrir o formulário de avaliação no seu navegador?", "instant");
   if (respostasAceitas.includes(resposta.toLowerCase())) {
     process.stdout.write("\x1Bc");
     await log("Obrigado! Abrindo pesquisa...Aguarde um momento.", "instant", "green");
@@ -171,7 +171,7 @@ async function atividade1() {
       ["d", "red", "d"]
     );
     await log("", hintSpeed);
-    await log(["Dica 1:", "O primeiro arquivo está salvo aonde você trabalha."], [hintSpeed, hintSpeed], ["cyan", "d"]);
+    await log(["Dica 1:", "O primeiro arquivo está salvo onde você trabalha."], [hintSpeed, hintSpeed], ["cyan", "d"]);
     await log("", hintSpeed);
     await log(["Dica 2:", "O segundo está onde tudo que você acessa diariamente fica, mas nesse nível você não costuma mexer."], [hintSpeed, hintSpeed], ["cyan", "d"]);
     await log("", hintSpeed);
@@ -223,7 +223,7 @@ async function contextoImplantes() {
 }
 
 async function naoAceitouAtividade2() {
-  await log(`Deixar seu treinamento pra depois, definitivamente não é uma boa decisão. A não ser que queira virar apenas um ECO.`);
+  await log(`Deixar seu treinamento pra depois, definitivamente não é uma boa decisão.`);
   await sleep(2500);
   await log(`A não ser que queira virar apenas um ECO.`);
   await sleep(2500);
