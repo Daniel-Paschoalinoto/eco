@@ -20,8 +20,8 @@ AlwaysShowDirOnReadyPage=yes
 PrivilegesRequired=admin
 Compression=lzma2
 SolidCompression=yes
-SetupIconFile=..\assets\icons\ECO32.ico
-UninstallDisplayIcon={app}\assets\icons\ECO32.ico
+SetupIconFile=..\assets\icons\ECO.ico
+UninstallDisplayIcon={app}\assets\icons\ECO.ico
 
 VersionInfoCompany=Daniel Paschoalinoto
 VersionInfoProductName=ECO - Fragmento do Amanhã
@@ -55,11 +55,11 @@ Filename: "{userdesktop}\ECO.lnk"; \
 [Icons]
 Name: "{userdesktop}\ECO"; Filename: "wt.exe"; \
     Parameters: "--maximized -d ""{app}"" node ""{app}\index.js"""; \
-    IconFilename: "{app}\ECO64.ico";
+    IconFilename: "{app}\ECO.ico";
 
 Name: "{userstartmenu}\ECO - Fragmento do Amanhã"; Filename: "wt.exe"; \
     Parameters: "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""{app}"" node ""{app}\index.js"""; \
-    IconFilename: "{app}\assets\icons\ECO64.ico"
+    IconFilename: "{app}\assets\icons\ECO.ico"
     
 [UninstallDelete]
 Type: files; Name: "{userdesktop}\ECO.lnk"
@@ -123,7 +123,7 @@ begin
   
   SaveStringToFile(PSFile,
     '$configPath = "' + WTConfigPath + '"' + #13#10 +
-    '$iconPath = "' + ExpandConstant('{app}\assets\icons\ECO32.ico') + '"' + #13#10 +
+    '$iconPath = "' + ExpandConstant('{app}\assets\icons\ECO.ico') + '"' + #13#10 +
     '' + #13#10 +
     '$newProfile = @{' + #13#10 +
     '    "colorScheme" = "Campbell"' + #13#10 +
@@ -201,7 +201,7 @@ begin
       '$s = (New-Object -COM WScript.Shell).CreateShortcut("' + ShortcutPath + '")' + #13#10 +
       '$s.TargetPath         = "wt.exe"' + #13#10 +
       '$s.Arguments          = "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""' + ExpandConstant('{app}') + '"" node ""' + ExpandConstant('{app}\index.js') + '"""' + #13#10 +
-      '$s.IconLocation       = "' + ExpandConstant('{app}\assets\icons\ECO64.ico') + '"' + #13#10 +
+      '$s.IconLocation       = "' + ExpandConstant('{app}\assets\icons\ECO.ico') + '"' + #13#10 +
       '$s.WorkingDirectory   = "' + ExpandConstant('{app}') + '"' + #13#10 +
       '$s.WindowStyle        = 1' + #13#10 +
       '$s.Save()' + #13#10 +
