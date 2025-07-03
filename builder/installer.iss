@@ -21,6 +21,8 @@ PrivilegesRequired=admin
 Compression=lzma2
 SolidCompression=yes
 SetupIconFile=..\assets\icons\ECO.ico
+WizardImageFile=..\assets\icons\ECO.bmp
+WizardSmallImageFile=..\assets\icons\ECO-mini.bmp
 UninstallDisplayIcon={app}\assets\icons\ECO.ico
 
 VersionInfoCompany=Daniel Paschoalinoto

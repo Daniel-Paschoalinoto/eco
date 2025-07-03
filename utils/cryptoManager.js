@@ -1,6 +1,9 @@
 //utils/cryptoManager.js
 import crypto from "crypto";
 
+//Poxa, porque está mexendo aqui? Os problemas do jogo são mais simples do que montar um script pra quebrar essas chaves.
+//Vai jogar ok?
+
 // As mesmas chaves usadas no saveManager para consistência
 const PASSWORD = "arouca";
 const SALT = "cisne";
