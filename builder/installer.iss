@@ -227,3 +227,20 @@ begin
     Exec('powershell.exe', '-ExecutionPolicy Bypass -File "' + PSFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   end;
 end;
+
+function InitializeUninstall(): Boolean;
+var
+  ResultCode: Integer;
+begin
+  if MsgBox('Quer remover o Node.js? Caso escolha SIM, aguarde...', mbConfirmation, MB_YESNO) = IDYES then
+  begin
+    Exec('cmd.exe', '/C winget uninstall --id OpenJS.NodeJS --silent', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end;
+
+  if MsgBox('Quer remover o Windows Terminal? Caso escolha SIM, aguarde...', mbConfirmation, MB_YESNO) = IDYES then
+  begin
+    Exec('cmd.exe', '/C winget uninstall --id Microsoft.WindowsTerminal --silent', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end;
+
+  Result := True;
+end;
