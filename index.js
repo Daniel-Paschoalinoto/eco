@@ -49,10 +49,14 @@ async function avisos() {
   await log(["ECO - Fragmento do Amanhã", "salva seu progresso automaticamente."], ["instant", "instant"], ["blue", "d"])
   await sleep(5000);
   await pedirFeeback()
+  await log("Avisos antes de começar:", "instant","cyan");
+  await log("");
   await log("Ajuste o tamanho do texto com [Ctrl + scroll do mouse].", "instant");
+  await log("");
   await log("É recomendado o uso de fones durante o jogo.", "instant");
-  await log("Não se trata de um conteúdo de horror ou jump scare, então relaxe (ou não) e aprecie.", "instant");
+  await log("");
   await log("Essa mensagem será exibida apenas 1 vez.", "instant");
+  await log("");
   await sleep(10000);
   await log("[PROTOCOLO::ECO::INICIANDO::EM::20::SEGUNDOS]", "instant", "cyan");
   await sleep(20000);
@@ -303,7 +307,7 @@ async function contextoLuminaRise() {
   await sleep(2500);
   await log(`A vasta maioria da população mundial já utilizava a combinação de tecnologias.`);
   await sleep(2500);
-  await log(["Os americanos tentaram replicá-la, mas falharam. A", "Lumina", "era simplesmente... muito além."],[],["d","green","d"]);
+  await log(["Os americanos tentaram replicá-la, mas falharam. A", "Lumina", "era simplesmente... muito além."], [], ["d", "green", "d"]);
   await sleep(2500);
   guardar("avisos");
   return await teste045();

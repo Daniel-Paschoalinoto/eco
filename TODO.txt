@@ -7,11 +7,8 @@ testar o 0.1.0 com windows 11
 
 
 ////////testes Illichs
-Windows 10
 tirar impedimento de Windows barrando aplicação - exetando assumindo risco - Inclusão aviso
-não puxou nome do usuário (verificar usuário Windows, não do cmd), considerar OneDrive em Windows 10
-
-Users/One Drive/Nome do usuário/Área de trabalho
+não puxou nome do usuário (verificar usuário Windows, não do cmd), considerar OneDrive em Windows 10 - ok
 
 pegou taanho da tela ok
 
