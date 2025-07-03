@@ -49,13 +49,18 @@ async function avisos() {
   await log(["ECO - Fragmento do Amanhã", "salva seu progresso automaticamente."], ["instant", "instant"], ["blue", "d"])
   await sleep(5000);
   await pedirFeeback()
-  await log("Ajuste o tamanho do texto com [Ctrl + scroll do mouse].", "instant");
+  await log("Avisos antes de começar:","instant", "cyan")
+  await log("");
+  await sleep(1000);
+  await log(["Ajuste o tamanho do texto com","[Ctrl + scroll do mouse]"], ["instant","instant"],["d","cyan"]);
+  await log("");
   await log("É recomendado o uso de fones durante o jogo.", "instant");
-  await log("Não se trata de um conteúdo de horror ou jump scare, então relaxe (ou não) e aprecie.", "instant");
+  await log("");
   await log("Essa mensagem será exibida apenas 1 vez.", "instant");
+  await log("");
   await sleep(10000);
-  await log("[PROTOCOLO::ECO::INICIANDO::EM::20::SEGUNDOS]", "instant", "cyan");
-  await sleep(20000);
+  await log("[PROTOCOLO::ECO::INICIANDO::EM::10::SEGUNDOS]", "instant", "cyan");
+  await sleep(10000);
   guardar("loading")
   process.stdout.write("\x1Bc");
   playSound("Dark_Shadows.mp3", true, 20);
@@ -64,7 +69,7 @@ async function avisos() {
 
 async function pedirFeeback() {
   process.stdout.write("\x1Bc");
-  const resposta = await askLog("Posso abrir o formulário de avaliação no seu navegador? Responda[s/n]", "instant");
+  const resposta = await askLog("Posso abrir o formulário de avaliação no seu navegador?", "instant");
   if (respostasAceitas.includes(resposta.toLowerCase())) {
     process.stdout.write("\x1Bc");
     await log("Obrigado! Abrindo pesquisa...Aguarde um momento.", "instant", "green");
@@ -171,7 +176,7 @@ async function atividade1() {
       ["d", "red", "d"]
     );
     await log("", hintSpeed);
-    await log(["Dica 1:", "O primeiro arquivo está salvo aonde você trabalha."], [hintSpeed, hintSpeed], ["cyan", "d"]);
+    await log(["Dica 1:", "O primeiro arquivo está salvo onde você trabalha."], [hintSpeed, hintSpeed], ["cyan", "d"]);
     await log("", hintSpeed);
     await log(["Dica 2:", "O segundo está onde tudo que você acessa diariamente fica, mas nesse nível você não costuma mexer."], [hintSpeed, hintSpeed], ["cyan", "d"]);
     await log("", hintSpeed);
@@ -223,7 +228,7 @@ async function contextoImplantes() {
 }
 
 async function naoAceitouAtividade2() {
-  await log(`Deixar seu treinamento pra depois, definitivamente não é uma boa decisão. A não ser que queira virar apenas um ECO.`);
+  await log(`Deixar seu treinamento pra depois, definitivamente não é uma boa decisão.`);
   await sleep(2500);
   await log(`A não ser que queira virar apenas um ECO.`);
   await sleep(2500);
@@ -249,7 +254,7 @@ async function atividade2() {
     await log("", hintSpeed);
     await log(`E no momento não temos acesso a informações que possam acelerar a instalação.`, hintSpeed);
     await log("", hintSpeed);
-    await log(`Porém te passarei um comando que será essencial, para evitar monitoramento.`, hintSpeed);
+    await log(`Porém, te passarei um comando que será essencial, para evitar monitoramento.`, hintSpeed);
     await log("", hintSpeed);
     await log(`Sem ele, todas as suas ações serão registradas.`, hintSpeed);
     await log("", hintSpeed);
@@ -346,7 +351,7 @@ async function contextoLuminaControl() {
   await sleep(2500);
   await log("Cientistas chegavam às mesmas conclusões quase simultaneamente e até mesmo relacionamentos pessoais adquiriam um tom de otimização social, onde conflitos e idiossincrasias eram suavemente corrigidos pela rede neural.");
   await sleep(2500);
-  guardar("contextoResistencia"); // Próxima cena
+  guardar("contextoResistencia"); 
   return await contextoResistencia();
 }
 
