@@ -147,7 +147,7 @@ begin
     'try {' + #13#10 +
     '    # Carrega o JSON existente ou cria um novo' + #13#10 +
     '    if (Test-Path $configPath) {' + #13#10 +
-    '        $json = Get-Content $configPath -Raw | ConvertFrom-Json' + #13#10 + 
+    '        $json = Get-Content $configPath -Raw | ConvertFrom-Json' + #13#10 +
     '    } else {' + #13#10 +
     '        $json = @{ profiles = @{ list = @() } }' + #13#10 +
     '    }' + #13#10 +
@@ -184,36 +184,35 @@ end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-  PSFile, ShortcutPathDesktop, ShortcutPathMenu, PowerShellScript: string;
+  PSFile, ShortcutPath, Command: string;
   ResultCode: Integer;
 begin
   if CurStep = ssPostInstall then
   begin
-    ShortcutPathDesktop := ExpandConstant('{userdesktop}\ECO.lnk');
-    ShortcutPathMenu := ExpandConstant('{userstartmenu}\ECO - Fragmento do Amanhã.lnk');
+    ShortcutPath := ExpandConstant('{userdesktop}\ECO.lnk');
 
     AddToWindowsDefenderWhitelist(ExpandConstant('{app}'));
-    AddWindowsTerminalProfile;
+    
+    AddWindowsTerminalProfile; // Adiciona o novo perfil ao Windows Terminal
 
-    PSFile := ExpandConstant('{tmp}\SetAdminFlag.ps1');
+    PSFile := ExpandConstant('{tmp}\CreateShortcut.ps1');
 
-    PowerShellScript :=
-      'function Set-ShortcutAsAdmin($shortcutPath) {' + #13#10 +
-      '  if (Test-Path $shortcutPath) {' + #13#10 +
-      '    [byte[]]$bytes = [System.IO.File]::ReadAllBytes($shortcutPath)' + #13#10 +
-      '    $bytes[0x15] = $bytes[0x15] -bor 0x20' + #13#10 +
-      '    [System.IO.File]::WriteAllBytes($shortcutPath, $bytes)' + #13#10 +
-      '  }' + #13#10 +
-      '}' + #13#10 +
-      'Set-ShortcutAsAdmin "' + ShortcutPathDesktop + '"' + #13#10 +
-      'Set-ShortcutAsAdmin "' + ShortcutPathMenu + '"';
-
-    SaveStringToFile(PSFile, PowerShellScript, False);
-
+    SaveStringToFile(PSFile,
+      '$s = (New-Object -COM WScript.Shell).CreateShortcut("' + ShortcutPath + '")' + #13#10 +
+      '$s.TargetPath         = "wt.exe"' + #13#10 +
+      '$s.Arguments          = "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""' + ExpandConstant('{app}') + '"" node ""' + ExpandConstant('{app}\index.js') + '"""' + #13#10 +
+      '$s.IconLocation       = "' + ExpandConstant('{app}\assets\icons\ECO64.ico') + '"' + #13#10 +
+      '$s.WorkingDirectory   = "' + ExpandConstant('{app}') + '"' + #13#10 +
+      '$s.WindowStyle        = 1' + #13#10 +
+      '$s.Save()' + #13#10 +
+      '[byte[]]$bytes = [System.IO.File]::ReadAllBytes("' + ShortcutPath + '")' + #13#10 +
+      '$bytes[0x15] = $bytes[0x15] -bor 0x20' + #13#10 +
+      '[System.IO.File]::WriteAllBytes("' + ShortcutPath + '", $bytes)'
+    , False);
+    
     Exec('powershell.exe', '-ExecutionPolicy Bypass -File "' + PSFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   end;
 end;
-
 
 function InitializeUninstall(): Boolean;
 var

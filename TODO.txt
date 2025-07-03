@@ -25,34 +25,5 @@ o arquivo não foi criado na área de trabalho.
 
 incluir no uninstall emoção do save         OK
 
-ícone na barratde tarefas é do  terminal. (NOK)
+ícone na barratde tarefas é do  terminal.
 
-ILLICSHS SUGERIU INFORMAÇÕES ANTES DE COMEÇAR
-
-C:\Users\user\OneDriveÁrea de Trabalho>
-
-
-////TEstes Suleiman
-INstalação foi demorada
-Pediu pra reiniciar o PC.
-Percepção do usuário é que não deveria ter dado problema.
-
-Nome do dispositivo	BOOK-LBBU41QFGC
-Processador	Intel(R) Core(TM) Ultra 7 155H   3.80 GHz
-RAM instalada	16.0 GB (utilizável: 15.6 GB)
-ID do dispositivo	4D70E708-3D4B-466E-84F4-3A27AC1FC5EE
-ID do Produto	00342-43480-96864-AAOEM
-Tipo de sistema	Sistema operacional de 64 bits, processador baseado em x64
-Caneta e toque	Suporte a toque com 10 pontos de toque
-
-PERGUNTE A VERSÃO
-
-link do iniciar não pediu administrador  OK
-
-corrigir onde no começo ok
-achou o texto lento (mas entendeu que se n estivesse testando isso n seria um problema.)
-
-onde não tem A       OK
-excluir linha de a não ser que queira virar apenas um Eco duplicada
-
-Porém na atividade 2 tem vírgula
