@@ -48,7 +48,7 @@ Filename: "winget"; Parameters: "install --id Microsoft.WindowsTerminal --exact 
     StatusMsg: "Instalando o Windows Terminal..."; Check: not IsWTInstalled; Flags: runhidden
 
 Filename: "winget"; Parameters: "install --id OpenJS.NodeJS --silent --accept-package-agreements --accept-source-agreements"; \
-    StatusMsg: "Instalando o Node.js..."; Check: not IsNodeInstalled; Flags: runhidden
+    StatusMsg: "Instalando o Node.js, pode ser necessário reiniciar o computador..."; Check: not IsNodeInstalled; Flags: runhidden
 
 [Icons]
 Name: "{userdesktop}\ECO"; Filename: "wt.exe"; \
