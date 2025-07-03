@@ -55,7 +55,7 @@ Filename: "{userdesktop}\ECO.lnk"; \
 [Icons]
 Name: "{userdesktop}\ECO"; Filename: "wt.exe"; \
     Parameters: "--maximized -d ""{app}"" node ""{app}\index.js"""; \
-    IconFilename: "{app}\ECO.ico";
+    IconFilename: "{app}\assets\icons\ECO.ico";
 
 Name: "{userstartmenu}\ECO - Fragmento do Amanhã"; Filename: "wt.exe"; \
     Parameters: "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""{app}"" node ""{app}\index.js"""; \
@@ -184,49 +184,46 @@ end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-  PSFile, ShortcutPath, Command: string;
+  PSFile, ShortcutDesktop, ShortcutStartMenu: string;
   ResultCode: Integer;
 begin
   if CurStep = ssPostInstall then
   begin
-    ShortcutPath := ExpandConstant('{userdesktop}\ECO.lnk');
-
     AddToWindowsDefenderWhitelist(ExpandConstant('{app}'));
-    
-    AddWindowsTerminalProfile; // Adiciona o novo perfil ao Windows Terminal
+    AddWindowsTerminalProfile;
 
-    PSFile := ExpandConstant('{tmp}\CreateShortcut.ps1');
+    ShortcutDesktop := ExpandConstant('{userdesktop}\ECO.lnk');
+    ShortcutStartMenu := ExpandConstant('{userstartmenu}\ECO - Fragmento do Amanhã.lnk');
+    PSFile := ExpandConstant('{tmp}\CreateShortcuts.ps1');
 
     SaveStringToFile(PSFile,
-      '$s = (New-Object -COM WScript.Shell).CreateShortcut("' + ShortcutPath + '")' + #13#10 +
-      '$s.TargetPath         = "wt.exe"' + #13#10 +
-      '$s.Arguments          = "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""' + ExpandConstant('{app}') + '"" node ""' + ExpandConstant('{app}\index.js') + '"""' + #13#10 +
-      '$s.IconLocation       = "' + ExpandConstant('{app}\assets\icons\ECO.ico') + '"' + #13#10 +
-      '$s.WorkingDirectory   = "' + ExpandConstant('{app}') + '"' + #13#10 +
-      '$s.WindowStyle        = 1' + #13#10 +
-      '$s.Save()' + #13#10 +
-      '[byte[]]$bytes = [System.IO.File]::ReadAllBytes("' + ShortcutPath + '")' + #13#10 +
+      '$WshShell = New-Object -ComObject WScript.Shell' + #13#10 +
+
+      '# Área de Trabalho' + #13#10 +
+      '$desktop = $WshShell.CreateShortcut("' + ShortcutDesktop + '")' + #13#10 +
+      '$desktop.TargetPath = "wt.exe"' + #13#10 +
+      '$desktop.Arguments = "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""' + ExpandConstant('{app}') + '"" node ""' + ExpandConstant('{app}\index.js') + '"""' + #13#10 +
+      '$desktop.IconLocation = "' + ExpandConstant('{app}\assets\icons\ECO.ico') + '"' + #13#10 +
+      '$desktop.WorkingDirectory = "' + ExpandConstant('{app}') + '"' + #13#10 +
+      '$desktop.Save()' + #13#10 +
+
+      '[byte[]]$bytes = [System.IO.File]::ReadAllBytes("' + ShortcutDesktop + '")' + #13#10 +
       '$bytes[0x15] = $bytes[0x15] -bor 0x20' + #13#10 +
-      '[System.IO.File]::WriteAllBytes("' + ShortcutPath + '", $bytes)'
+      '[System.IO.File]::WriteAllBytes("' + ShortcutDesktop + '", $bytes)' + #13#10 +
+
+      '# Menu Iniciar' + #13#10 +
+      '$startmenu = $WshShell.CreateShortcut("' + ShortcutStartMenu + '")' + #13#10 +
+      '$startmenu.TargetPath = "wt.exe"' + #13#10 +
+      '$startmenu.Arguments = "--maximized -p ""ECO - Fragmento do Amanhã"" -d ""' + ExpandConstant('{app}') + '"" node ""' + ExpandConstant('{app}\index.js') + '"""' + #13#10 +
+      '$startmenu.IconLocation = "' + ExpandConstant('{app}\assets\icons\ECO.ico') + '"' + #13#10 +
+      '$startmenu.WorkingDirectory = "' + ExpandConstant('{app}') + '"' + #13#10 +
+      '$startmenu.Save()' + #13#10 +
+
+      '[byte[]]$bytes2 = [System.IO.File]::ReadAllBytes("' + ShortcutStartMenu + '")' + #13#10 +
+      '$bytes2[0x15] = $bytes2[0x15] -bor 0x20' + #13#10 +
+      '[System.IO.File]::WriteAllBytes("' + ShortcutStartMenu + '", $bytes2)'
     , False);
-    
+
     Exec('powershell.exe', '-ExecutionPolicy Bypass -File "' + PSFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   end;
-end;
-
-function InitializeUninstall(): Boolean;
-var
-  ResultCode: Integer;
-begin
-  if MsgBox('Quer remover o Node.js? Se escolher Sim aguarde...', mbConfirmation, MB_YESNO) = IDYES then
-  begin
-    Exec('cmd.exe', '/C winget uninstall --id OpenJS.NodeJS --silent', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  end;
-
-  if MsgBox('Quer remover o Windows Terminal? Se escolher Sim aguarde...', mbConfirmation, MB_YESNO) = IDYES then
-  begin
-    Exec('cmd.exe', '/C winget uninstall --id Microsoft.WindowsTerminal --silent', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  end;
-
-  Result := True;
 end;
