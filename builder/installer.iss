@@ -227,10 +227,41 @@ begin
   end;
 end;
 
+procedure RemoveWindowsTerminalProfile;
+var
+  WTConfigPath, PSFile: string;
+  ResultCode: Integer;
+begin
+  WTConfigPath := ExpandConstant('{localappdata}\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json');
+  PSFile := ExpandConstant('{tmp}\RemoveWTProfile.ps1');
+
+  SaveStringToFile(PSFile,
+    '$configPath = "' + WTConfigPath + '"' + #13#10 +
+    'try {' + #13#10 +
+    '  if (Test-Path $configPath) {' + #13#10 +
+    '    $json = Get-Content $configPath -Raw | ConvertFrom-Json' + #13#10 +
+    '    if ($json.profiles -and $json.profiles.list) {' + #13#10 +
+    '      $json.profiles.list = $json.profiles.list | Where-Object { $_.name -ne "ECO - Fragmento do Amanhã" -and $_.guid -ne "{a3f1b894-fa11-4f25-8c38-ec0a0f4e3410}" }' + #13#10 +
+    '      $json | ConvertTo-Json -Depth 10 | Out-File $configPath -Encoding utf8 -Force' + #13#10 +
+    '      Write-Host "Perfil ECO removido com sucesso."' + #13#10 +
+    '    }' + #13#10 +
+    '  }' + #13#10 +
+    '} catch {' + #13#10 +
+    '  Write-Host "Erro ao remover perfil ECO: $_"' + #13#10 +
+    '  exit 1' + #13#10 +
+    '}', False);
+
+  Exec('powershell.exe', '-ExecutionPolicy Bypass -File "' + PSFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  if ResultCode <> 0 then
+    MsgBox('Não foi possível remover o perfil do Windows Terminal.', mbInformation, MB_OK);
+end;
+
+
 function InitializeUninstall(): Boolean;
 var
   ResultCode: Integer;
 begin
+  RemoveWindowsTerminalProfile;
   if MsgBox('Quer remover o Node.js? Caso escolha SIM aguarde...', mbConfirmation, MB_YESNO) = IDYES then
   begin
     Exec('cmd.exe', '/C winget uninstall --id OpenJS.NodeJS --silent', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
