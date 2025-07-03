@@ -50,10 +50,6 @@ Filename: "winget"; Parameters: "install --id Microsoft.WindowsTerminal --exact 
 Filename: "winget"; Parameters: "install --id OpenJS.NodeJS --silent --accept-package-agreements --accept-source-agreements"; \
     StatusMsg: "Instalando o Node.js..."; Check: not IsNodeInstalled; Flags: runhidden
 
-Filename: "{userdesktop}\ECO.lnk"; \
-    Description: "Iniciar ECO - Fragmento do Amanhã"; \
-    Flags: postinstall nowait shellexec skipifsilent
-
 [Icons]
 Name: "{userdesktop}\ECO"; Filename: "wt.exe"; \
     Parameters: "--maximized -d ""{app}"" node ""{app}\index.js"""; \
