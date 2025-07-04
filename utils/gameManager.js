@@ -15,7 +15,7 @@ export async function startGame(mapaFuncoes) {
   }
 
   if (pontoAtual !== "intro" && pontoAtual !== "avisos") {
-    await log(`[CONTINUANDO::SESSÃO::DE::${user.toUpperCase()}]`, "instant");
+    await log(`[CONTINUANDO::SESSÃO::DE::${user.toUpperCase()}]`, "instant","cyan");
     await sleep(2000);
     process.stdout.write("\x1Bc");
   }

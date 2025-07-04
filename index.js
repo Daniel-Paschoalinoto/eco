@@ -287,7 +287,7 @@ async function atividade2() {
 
 async function contextoLuminaRise() {
   process.stdout.write("\x1Bc");
-  await log([`Em ${realDate.year + 8}, vários conglomerados, até então excluídos das práticas com IA, uniram-se aos Chineses para criar a`, `Lumina.`], [], ["d", "green"]);
+  await log([`Em ${realDate.year + 8}, vários conglomerados, até então excluídos das práticas com IA, uniram-se aos Chineses para criar a`, `Lumina`,"."], [], ["d", "green","d"]);
   await sleep(2500);
   await log("Diferente de tudo o que se conhecia.");
   await sleep(1300);
@@ -295,7 +295,7 @@ async function contextoLuminaRise() {
   await sleep(2500);
   await log(`Não era nada parecido com as IAs emergentes que tínhamos em ${realDate.year}.`);
   await sleep(2500);
-  await log("Por meio de microestímulos elétricos sequências, ela era capaz de desbloquear e amplificar habilidades cognitivas e motoras.");
+  await log("Por meio de microestímulos elétricos sequênciais, ela era capaz de desbloquear e amplificar habilidades cognitivas e motoras.");
   await sleep(2500);
   await log("Os Estados Unidos condenaram sua criação, alegando riscos à segurança.");
   await sleep(2500);
