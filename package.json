@@ -1,0 +1,24 @@
+{
+  "name": "eco-fragmento-do-amanha",
+  "version": "0.4.9",
+  "description": "Projetinho de férias",
+  "homepage": "https://github.com/Daniel-Paschoalinoto/eco-fragmento-do-amanha#readme",
+  "bugs": {
+    "url": "https://github.com/Daniel-Paschoalinoto/eco-fragmento-do-amanha/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daniel-Paschoalinoto/eco-fragmento-do-amanha.git"
+  },
+  "license": "CC-BY-NC-ND-4.0",
+  "author": "Daniel Paschoalinoto",
+  "type": "module",
+  "main": "game.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node game.js",
+    "deploy": "git subtree push --prefix frontEnd origin gh-pages"
+  }
+}
