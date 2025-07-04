@@ -6,6 +6,7 @@ Usar o gh-pages para carregar o index.html do front e confirmar se não carrega 
 Atualizar página de testes com link direcionando para a nova página de downloads.
 Incluir no portfolio após tudo ok.
 Linkar release 0.4.9 e incluir no front.
+Incluir link no README para jogadores.
 
 GAMEDEV
 Pensar em atividade 3 e linkar decentemente com a narrativa.
