@@ -49,7 +49,7 @@ async function avisos() {
   await log(["ECO - Fragmento do Amanhã", "salva seu progresso automaticamente."], ["instant", "instant"], ["blue", "d"])
   await sleep(5000);
   await pedirFeeback()
-  await log("Avisos antes de começar:", "instant","cyan");
+  await log("Avisos antes de começar:", "instant", "cyan");
   await log("");
   await log("Ajuste o tamanho do texto com [Ctrl + scroll do mouse].", "instant");
   await log("");
@@ -165,7 +165,7 @@ async function atividade1() {
     const hintSpeed = isFirstAttempt ? "f" : "instant"; // Define a velocidade com base na tentativa
 
     process.stdout.write("\x1Bc");
-    await log("[ATIVIDADE 1 - CONHEÇA::O::AMBIENTE]", "instant", "cyan");
+    await log("[ATIVIDADE 1 - CONHEÇA::SEU::AMBIENTE]", "instant", "cyan");
     await log("", hintSpeed);
     await log("Você precisa conhecer seu ambiente de trabalho profundamente, independente de qual seja.", hintSpeed);
     await log("", hintSpeed);
@@ -247,7 +247,7 @@ async function atividade2() {
     const hintSpeed = isFirstAttempt ? "f" : "instant";
 
     process.stdout.write("\x1Bc");
-    await log("[ATIVIDADE 2 - MEMÓRIA::OU::FERRAMENTAS?]", "instant", "cyan");
+    await log("[ATIVIDADE 2 - IDENTIFIQUE::SUAS::FERRAMENTAS]", "instant", "cyan");
     await log("", hintSpeed);
     await log(`Lamentavelmente seu implante não estará entre os primeiros.`, hintSpeed);
     await log("", hintSpeed);
@@ -287,7 +287,7 @@ async function atividade2() {
 
 async function contextoLuminaRise() {
   process.stdout.write("\x1Bc");
-  await log([`Em ${realDate.year + 8}, vários conglomerados, até então excluídos das práticas com IA, uniram-se aos Chineses para criar a`, `Lumina`,"."], [], ["d", "green","d"]);
+  await log([`Em ${realDate.year + 8}, vários conglomerados, até então excluídos das práticas com IA, uniram-se aos Chineses para criar a`, `Lumina`, "."], [], ["d", "green", "d"]);
   await sleep(2500);
   await log("Diferente de tudo o que se conhecia.");
   await sleep(1300);
@@ -295,7 +295,7 @@ async function contextoLuminaRise() {
   await sleep(2500);
   await log(`Não era nada parecido com as IAs emergentes que tínhamos em ${realDate.year}.`);
   await sleep(2500);
-  await log("Por meio de microestímulos elétricos sequênciais, ela era capaz de desbloquear e amplificar habilidades cognitivas e motoras.");
+  await log("Por meio de microestímulos elétricos sequênciais, ela era capaz de desbloquear e amplificar habilidades cognitivas.");
   await sleep(2500);
   await log("Os Estados Unidos condenaram sua criação, alegando riscos à segurança.");
   await sleep(2500);
@@ -324,21 +324,27 @@ async function teste045() {
 
 async function contextoLuminaControl() {
   process.stdout.write("\x1Bc");
-  await log(`Até ${realDate.year + 12}, vários avanços na ciência e tecnologia já haviam ocorrido, e tudo que mantinha a população sob controle, como a ignorância e as fronteiras, caiu por terra.`);
+  await log(`Até ${realDate.year + 12}, vários avanços na ciência e tecnologia já haviam ocorrido.`);
+  await sleep(2500);
+  await log(`Tudo que mantinha a população sob controle, como os governos e as fronteiras, não parecia relevante.`);
   await sleep(2500);
   await log("Todos se conectavam, aprendiam e compartilhavam conhecimento por meio da Lumina.");
   await sleep(2500);
-  await log("Nos tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas e todos trabalhavam em prol da humanidade.");
+  await log("Rapidamente ficou claro a importância dos esforços de cada indivíduo, para a humanidade.");
+  await sleep(2500);
+  await log("Líderes e governantes não tinham mais o ímpeto de controlar.");
   await sleep(2500);
   await log("Barreiras como a fome, a língua e o dinheiro foram superadas, já que os maiores males humanos foram mitigados.");
   await sleep(2500);
-  await log(`Não havia motivos para Soberba, Avareza, Luxúria, Ira, Gula, Inveja ou Preguiça.`);
+  await log("Nôs tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas.");
   await sleep(2500);
   await log(`Era algo parecido com o que em ${realDate.year}, vocês chamariam de Comunismo, porém sem a necessidade de um Socialismo ou um líder.`);
   await sleep(2500);
   await log("A utopia alcançada pela Lumina era impressionante.");
   await sleep(2500);
   await log("A humanidade prosperava em um cenário de conhecimento compartilhado e propósito comum.");
+  await sleep(2500);
+  await log("Tudo devido ao conhecimento, tudo devido a Lumina.");
   await sleep(2500);
   await log("No entanto, essa bênção universal começou a revelar um efeito colateral inesperado: a supressão da individualidade.");
   await sleep(2500);
