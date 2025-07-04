@@ -1,0 +1,228 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  background-color: transparent;
+  position: relative;
+  z-index: 0;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  z-index: -1;
+  transform: scale(1.1);
+  image-rendering: pixelated;
+}
+
+.container {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5.6vh;
+  background-color: rgba(7, 16, 94, 0.8);
+  z-index: 10;
+  font-family: 'Quicksand', sans-serif;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-size: 1.2em;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.version {
+  font-weight: normal;
+}
+
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 10vh 0 8vh 0;
+  box-sizing: border-box;
+  text-align: center;
+  background: transparent;
+}
+
+.game-icon {
+  width: 256px;
+  height: 256px;
+  user-select: none;
+  pointer-events: none;
+  margin-bottom: 1rem;
+}
+
+.download-container {
+  margin-bottom: 2rem;
+}
+
+.js-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.5rem;
+  margin-bottom: 2vh;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  background-color: #4f46e5;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.7);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.js-download-btn:hover {
+  background-color: #4338ca;
+  box-shadow: 0 15px 20px -5px rgba(67, 56, 202, 0.8);
+}
+
+.video-container {
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5.6vh;
+  background-color: rgba(7, 16, 94, 0.8);
+  text-align: center;
+  padding: 0 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+footer img {
+  filter: invert(1);
+  display: block;
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+/* Tablets and smaller desktops */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  header, footer {
+    height: 7vh; /* Slightly taller for better touch targets */
+    font-size: 1em;
+  }
+
+  header .container, footer .container {
+    padding: 0 15px;
+  }
+
+  main {
+    gap: 1.5rem;
+    padding: 8vh 0 6vh 0;
+  }
+
+  .game-icon {
+    width: 180px;
+    height: 180px;
+  }
+
+  .js-download-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+
+  .video-container {
+    max-width: 90%; /* Adjust max-width for smaller screens */
+  }
+
+  footer img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.8rem;
+  }
+
+  header, footer {
+    height: 8vh; /* Even taller for mobile */
+    font-size: 0.9em;
+  }
+
+  header .container, footer .container {
+    padding: 0 10px;
+  }
+
+  main {
+    gap: 1rem;
+    padding: 10vh 0 8vh 0; /* Adjust padding to account for taller header/footer */
+  }
+
+  .game-icon {
+    width: 120px;
+    height: 120px;
+  }
+
+  .js-download-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .video-container {
+    max-width: 95%; /* Almost full width on very small screens */
+  }
+
+  footer img {
+    width: 30px;
+    height: 30px;
+  }
+}
