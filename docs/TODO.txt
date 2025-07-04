@@ -1,0 +1,14 @@
+04/07/2025
+
+DEV
+Ajustar nome do repositório e reclonar.
+Usar o gh-pages para carregar o index.html do front e confirmar se não carrega nada externo.
+Atualizar página de testes com link direcionando para a nova página de downloads.
+Incluir no portfolio após tudo ok.
+Linkar release 0.4.9 e incluir no front.
+
+GAMEDEV
+Pensar em atividade 3 e linkar decentemente com a narrativa.
+Testar, testar e testar.
+Melhorar narrativa considerando tamanho do terminal.
+Incluir opção no começo para os créditos.

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECO - Fragmento do Amanhã</title>
+  <link rel="icon" href="assets/images/ECO32.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <span>ECO - Fragmento do Amanhã</span>
+      <span class="version">Versão 0.4.9</span>
+    </div>
+  </header>
+
+  <main>
+    <img src="assets/images/ECO256.ico" alt="ECO Icon" class="game-icon" draggable="false" />
+    <div class="download-container">
+      <a href="https://github.com/Daniel-Paschoalinoto/testes-eco/releases/download/0.4.9/ECO.exe"
+         class="js-download-btn"
+         onclick="gtag('event', 'download_eco', { 'file_name': 'ECO.exe', 'file_version': '0.4.9', 'platform': 'Windows 10-11' });">
+        Baixar ECO para Windows 10 / 11
+      </a>
+    </div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/NUzYm4sUFHU" title="Como instalar o ECO" allowfullscreen></iframe>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <a href="https://github.com/Daniel-Paschoalinoto" target="_blank">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" alt="GitHub" draggable="false" />
+      </a>
+    </div>
+  </footer>
+
+  <audio id="click-sound" src="assets/audio/click.mp3" preload="auto"></audio>
+  <script src="js/main.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TV4K395FPY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-TV4K395FPY");
+    </script>
+</body>
+</html>
