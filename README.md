@@ -33,8 +33,8 @@ Versão 0.4.9 - 04/07/2025
 ## Para Devs
 
 - O projeto é apenas para Windows 10 e 11.
-- Sinta-se a vontade para fuçar e caso queira entender algo ou colabora é só me contatar.
-- Fiz questão de manter o `runWithWT.js`, pois me ajudou a debuggar sem perder a imersão e manter a criatividade.
+- Sinta-se a vontade para fuçar e caso queira entender algo ou colaborar é só me contatar.
+- Fiz questão de manter o `.vscode/runWithWT.js`, pois me ajudou a debuggar sem perder a imersão e manter a criatividade.
 
 #### Build
 
