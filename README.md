@@ -16,6 +16,9 @@ Versão 0.4.9 - 04/07/2025
 - [installer.iss](./build/installer.iss), foi atualizado para refletir nova arquitetura.
 - Fiz a padronização dos paths em [/src/utils/paths.js](./src/utils/paths.js).
 - Fiz a inclusão do diretório [/frontEnd/](./frontEnd/) para utiliza-lo no GH-Pages.
+- No instalador, o link criado no meu iniciar pede admin.
+- As imagens do jogo agora são personalizadas no intalador.
+- ECO.ico tem todas as resoluções necessárias.
 
 ## Tecnologias utilizadas
 
