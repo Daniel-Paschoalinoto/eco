@@ -26,9 +26,9 @@ Versão 0.4.9 - 04/07/2025
 - [Node.js](https://nodejs.org/pt) como RunTime.
 - [Windows-Terminal](https://github.com/microsoft/terminal) como interface de execução.
 
-## Para jogadores
+## Para Jogadores
 
-- Sugiro fortemente que acesse (incluir), tem um vídeo demonstrando a instalação.
+- Sugiro que acesse [o site oficial](https://daniel-paschoalinoto.github.io/eco-fragmento-do-amanha/), tem um vídeo demonstrando a instalação.
 
 ## Para Devs
 
