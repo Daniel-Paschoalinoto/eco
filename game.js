@@ -60,7 +60,7 @@ async function avisos() {
   await log("");
   await log("É recomendado o uso de fones durante o jogo.", "instant");
   await log("");
-  await log("Essa mensagem será exibida apenas 1 vez.", "instant");
+  await log("Esta mensagem será exibida apenas uma vez.", "instant");
   await log("");
   await sleep(10000);
   await log("[PROTOCOLO::ECO::INICIANDO::EM::20::SEGUNDOS]", "instant", "cyan");
