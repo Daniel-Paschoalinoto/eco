@@ -3,19 +3,15 @@ import fs from 'fs';
 import path from 'path';
 import { PATHS } from './paths.js';
 
-// Agora, um array para guardar todos os processos de som ativos
 const activeSoundProcesses = new Set();
 
-let resolvedPaths; // Variável para armazenar os caminhos resolvidos
-
-// Função para inicializar os caminhos de forma assíncrona
+let resolvedPaths;
 async function initializePaths() {
   if (!resolvedPaths) {
     resolvedPaths = await PATHS;
   }
 }
 
-// Chamada para inicializar os caminhos assim que o módulo for carregado
 initializePaths();
 
 function getSoundFilePath(soundFile) {
@@ -29,13 +25,6 @@ function getSoundFilePath(soundFile) {
   return foundPath;
 }
 
-/**
- * Toca um som (ou música), possibilitando várias instâncias simultâneas.
- * @param {string} soundFile – nome do arquivo de áudio
- * @param {boolean} isLoop – se deve repetir infinitamente
- * @param {number} volume – volume de 0 a 100
- * @returns {ChildProcess} – o processo criado, caso queira parar individualmente
- */
 export function playSound(
   soundFile,
   isLoop = false,
@@ -57,25 +46,15 @@ export function playSound(
     stdio: ['ignore', 'pipe', 'pipe']
   });
 
-  // adiciona ao conjunto de processos ativos
   activeSoundProcesses.add(child);
 
-  // Ao sair, remove do conjunto
   const cleanup = () => activeSoundProcesses.delete(child);
   child.on('exit', cleanup);
   child.on('error', cleanup);
 
-  // listeners opcionais de debug
-  child.stdout.on('data', data => console.log(`mpg123 stdout: ${data}`));
-  child.stderr.on('data', data => console.error(`mpg123 stderr: ${data}`));
-
   return child;
 }
 
-/**
- * Para um som específico (recebido ao chamar playSound).
- * @param {ChildProcess} soundProcess
- */
 export function stopSound(soundProcess) {
   if (!soundProcess || soundProcess.killed) return;
   try {

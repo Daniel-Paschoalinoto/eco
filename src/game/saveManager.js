@@ -1,31 +1,25 @@
+//src/game/saveManager.js
 import fs from "fs";
 import { PATHS } from "../utils/paths.js";
 import { encrypt, decrypt } from "../utils/cryptoManager.js";
 
 let env = "prod"; 
-let resolvedPathsCache = null; // Cache para armazenar os caminhos resolvidos
+let resolvedPathsCache = null;
 
-/**
- * Garante que os caminhos de PATHS sejam resolvidos e armazena em cache.
- * Também tenta ler o arquivo de ambiente após a resolução dos caminhos.
- * @returns {Promise<object>} O objeto de caminhos resolvidos.
- */
 async function getResolvedPaths() {
   if (!resolvedPathsCache) {
     resolvedPathsCache = await PATHS;
-    // Tenta ler o arquivo de ambiente APÓS os caminhos estarem resolvidos
     try {
       env = fs.readFileSync(resolvedPathsCache.ENV_FILE, "utf8").trim();
     } catch (error) {
-      // Se o arquivo de ambiente não existir ou não puder ser lido, 'env' permanece 'prod'
-      console.warn("Não foi possível ler o ENV_FILE, usando 'prod' como padrão.", error.message);
+      // console.warn("Não foi possível ler o ENV_FILE, usando 'prod' como padrão.", error.message);
     }
   }
   return resolvedPathsCache;
 }
 
 export async function guardar(checkpoint) {
-  const paths = await getResolvedPaths(); // Garante que os caminhos estejam resolvidos
+  const paths = await getResolvedPaths();
 
   if (!fs.existsSync(paths.SAVE_DIR)) {
     fs.mkdirSync(paths.SAVE_DIR, { recursive: true });
@@ -46,7 +40,7 @@ export async function guardar(checkpoint) {
 }
 
 export async function carregar() {
-  const paths = await getResolvedPaths(); // Garante que os caminhos estejam resolvidos
+  const paths = await getResolvedPaths();
 
   if (!fs.existsSync(paths.SAVE_FILE)) {
     return null;
@@ -75,7 +69,7 @@ export async function carregar() {
 }
 
 export async function apagar() {
-  const paths = await getResolvedPaths(); // Garante que os caminhos estejam resolvidos
+  const paths = await getResolvedPaths();
   if (fs.existsSync(paths.SAVE_FILE)) {
     fs.unlinkSync(paths.SAVE_FILE);
   }

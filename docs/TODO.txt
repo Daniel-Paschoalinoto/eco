@@ -9,7 +9,17 @@ Linkar release 0.4.9 e incluir no front. OK
 Incluir link no README para jogadores. OK
 
 GAMEDEV
-Pensar em atividade 3 e linkar decentemente com a narrativa.
-Testar, testar e testar.
-Melhorar narrativa considerando tamanho do terminal.
-Incluir opção no começo para os créditos.
+Pensar em atividade 3 e linkar decentemente com a narrativa. OK
+Testar, testar e testar. OK
+Melhorar narrativa considerando tamanho do terminal. OK
+Incluir opção no começo para os créditos. NOK
+============================================================================================================
+04/07/2025 NOITE
+
+DEV
+Incluir opção no começo para os créditos. NOK
+Criar opção de idioma (considerar tempo de implementação e tradução)
+
+GAMEDEV
+Linkar narrativa 4 e criar atividade 4.
+Avaliar tempos de esperas entre mensagens e speeds.

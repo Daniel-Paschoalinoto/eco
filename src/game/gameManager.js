@@ -1,17 +1,19 @@
-//utils/gameManager.js
+//src/game/gameManager.js
 import { carregar } from "./saveManager.js";
 import { playSound } from "../utils/soundManager.js";
 import { log } from "../utils/textManager.js";
 import sleep from "../utils/sleep.js";
 import { user } from "../utils/nameGetter.js";
+import { setBackgroundMusicProcess } from "./musicState.js";
 
 export async function startGame(mapaFuncoes) {
-  const pontoAtual = await carregar() || "avisos"; // Adicionado await aqui
+  const pontoAtual = await carregar() || "avisos";
 
   process.stdout.write("\x1Bc");
 
   if (pontoAtual !== "avisos") {
-    playSound("Dark_Shadows.mp3", true, 20);
+    const music = playSound("Dark_Shadows.mp3", true, 20);
+    setBackgroundMusicProcess(music);
   }
 
   if (pontoAtual !== "intro" && pontoAtual !== "avisos") {

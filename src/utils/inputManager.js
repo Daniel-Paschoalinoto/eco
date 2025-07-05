@@ -5,24 +5,13 @@ import sleep from './sleep.js';
 import { closeTerminal } from './windowManager.js';
 import { respostasAceitas } from "./constants.js";
 
-/**
- * Gerencia stdin em modo raw permanente, com listener "noop" que descarta tudo.
- * Durante askLog, esse listener é temporariamente substituído pelo listener que captura a resposta.
- */
 const stdin = process.stdin;
 stdin.setRawMode(true);
 stdin.resume();
 
-// listener padrão que descarta qualquer tecla
 function noop() {}
 stdin.on('data', noop);
 
-/**
- * Exibe prompt via log(), depois lê teclas em modo raw, gerenciando edição de linha,
- * retornando a string quando Enter for pressionado.
- * Suporta movimentação de cursor (setas esquerda/direita), backspace, delete, inserção no meio.
- * As setas para cima e para baixo e a tecla ESC são ignoradas.
- */
 export async function askLog(texts, speeds = "m", colorNames = "") {
   await log(texts, speeds, colorNames);
 
@@ -101,7 +90,7 @@ export async function askLog(texts, speeds = "m", colorNames = "") {
           // echo char + tail
           const tail = input.slice(cursor + char.length);
           process.stdout.write(char + tail);
-          // move cursor back over tail
+          // move back over tail
           if (tail.length > 0) process.stdout.write(`\x1b[${tail.length}D`);
           cursor += char.length;
           break;
@@ -116,7 +105,7 @@ export async function askLog(texts, speeds = "m", colorNames = "") {
 export async function confirmacao(pergunta, respostaNao, respostaSim, textoSaveNao, proximaFuncao) {
   const resposta = await askLog(pergunta);
   if (!respostasAceitas.includes(resposta.toLowerCase())) {
-    process.stdout.write("\x1Bc"); // Limpa a tela antes da mensagem de erro
+    process.stdout.write("\x1Bc");
     await log(respostaNao, "instant", "red");
     await sleep(2000);
     guardar(textoSaveNao);
@@ -131,4 +120,31 @@ export async function confirmacao(pergunta, respostaNao, respostaSim, textoSaveN
     guardar(proximaFuncao.name);
     return await proximaFuncao();
   }
+}
+
+export async function askWithTimeout(texts, expectedKey, timeout, speeds = "instant", colorNames = "") {
+  await log(texts, speeds, colorNames);
+
+  return new Promise(resolve => {
+    let timeoutId = null;
+
+    const onData = (buffer) => {
+      clearTimeout(timeoutId);
+      stdin.removeListener('data', onData);
+      stdin.on('data', noop);
+
+      const input = buffer.toString('utf8').toLowerCase();
+      resolve(input === expectedKey.toLowerCase());
+    };
+
+    timeoutId = setTimeout(() => {
+      stdin.removeListener('data', onData);
+      stdin.on('data', noop);
+      process.stdout.write('\n'); 
+      resolve(false);
+    }, timeout);
+
+    stdin.removeListener('data', noop);
+    stdin.on('data', onData);
+  });
 }

@@ -2,15 +2,15 @@
 import sleep from "./src/utils/sleep.js";
 import realDate from "./src/utils/realDate.js";
 import { log, screenWidthforText } from "./src/utils/textManager.js";
-import { askLog } from "./src/utils/inputManager.js";
+import { askLog, confirmacao, askWithTimeout } from "./src/utils/inputManager.js";
 import { user } from "./src/utils/nameGetter.js";
-import { confirmacao } from "./src/utils/inputManager.js";
 import { guardar } from "./src/game/saveManager.js"
 import { startGame } from "./src/game/gameManager.js";
 import { createFile, deleteFile } from "./src/utils/fileManager.js";
 import { encrypt, decrypt } from "./src/utils/cryptoManager.js";
 import { minimizeWindow, maximizeWindow, closeTerminal } from "./src/utils/windowManager.js";
-import { playSound } from "./src/utils/soundManager.js";
+import { playSound, stopSound, stopAllSounds } from "./src/utils/soundManager.js";
+import { getBackgroundMusicProcess, setBackgroundMusicProcess } from "./src/game/musicState.js";
 import { PATHS } from "./src/utils/paths.js";
 import { runCommand } from './src/utils/runCommand.js';
 import { respostasAceitas } from "./src/utils/constants.js";
@@ -23,9 +23,11 @@ async function main() {
     naoAceitouAtividade1,
     atividade1,
     contextoImplantes,
-    atividade2,
     naoAceitouAtividade2,
+    atividade2,
     contextoLuminaRise,
+    naoAceitouAtividade3,
+    atividade3,
     contextoLuminaControl,
     contextoResistencia,
     contextoVazioPerfeito,
@@ -53,7 +55,8 @@ async function avisos() {
   await sleep(20000);
   await guardar("loading")
   process.stdout.write("\x1Bc");
-  playSound("Dark_Shadows.mp3", true, 20);
+  const music = playSound("Dark_Shadows.mp3", true, 20);
+  setBackgroundMusicProcess(music);
   return await loading()
 }
 
@@ -239,7 +242,7 @@ async function atividade2() {
     await log(`E no momento não temos acesso a informações que possam acelerar a instalação.`, hintSpeed);
     await log("", hintSpeed);
     await log(`Porém te passarei um comando que será essencial, para evitar monitoramento.`, hintSpeed);
-  await log("", hintSpeed);
+    await log("", hintSpeed);
     await log(`Sem ele, todas as suas ações serão registradas.`, hintSpeed);
     await log("", hintSpeed);
     await log(["Utilize as ferramentas ao seu dispor para memorizar o comando e digite-o."], [hintSpeed], ["cyan"]);
@@ -292,17 +295,95 @@ async function contextoLuminaRise() {
   await sleep(2500);
   await log(["Os americanos tentaram replicá-la, mas falharam. A", "Lumina", "era simplesmente... muito além."], [], ["d", "green", "d"]);
   await sleep(2500);
-  await guardar("avisos");
-  return await teste049();
+  process.stdout.write("\x1Bc");
+  return await confirmacao("Está pronto para um novo conceito?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouAtividade3", atividade3);
 }
 
-async function teste049() {
+async function naoAceitouAtividade3() {
+  await log(`Não temos tempo...`);
+  await sleep(2500);
+  await log(`Para que você esteja pronto precisamos terminar o quanto antes.`);
+  await sleep(2500);
+  return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouAtividade3", atividade3);
+}
+
+async function atividade3() {
+  process.stdout.write("\x1Bc");
+  await log("[ATIVIDADE 3 - RECONHEÇA::OS::PADRÕES]", "instant", "cyan");
+  await log("");
+  await sleep(2000);
+  await log(["Para compreender os microestímulos gerados pela", "Lumina", "você emulará seu comportamento."], ["f"], ["d", "green", "d"]);
+  await log("");
+  await sleep(2000);
+  await log("O cérebro humano só evoluiu devido aos padrões perfeitos que ela utilizava.", "f");
+  await log("");
+  await sleep(2000);
+  await log("Silenciando ambiente para aumentar seu foco.", "f");
+  await log("");
+  await sleep(2000);
+  stopAllSounds();
+  await log("Digite a tecla solicitada e reconheça os padrões.", "f");
+  await sleep(4000);
+
+  const ENCRYPTED_SEQUENCE = "6058b34d612c5ab58489ed8cd02495dfafd07793735aeb4d3c5389b0dfb9b0066fcd330d09923ca7ecb62589759efde58866dd9b3918a344c6c728d3ffcc8b2c55549d9364c92074906f3aacb7e2ab66c903d9f22ad43b0b683715262fd2ba70fe8294caac906ddd37291402618d4b3cc28c41a52b5da543d1b48cd741af2abb";
+  const tempoParaPressionar = 500;
+  const intervaloEntreTeclas = 250;
+
+  let sequenciaCompleta = false;
+  let tentativas = 1
+  do {
+    process.stdout.write("\x1Bc");
+    await log(["Prepare-se:", "<SLEEP:2500>", "3", "<SLEEP:500>", "2", "<SLEEP:500>", "1", "<SLEEP:500>"], ["instant"], ["cyan"]);
+    process.stdout.write("\x1Bc");
+
+
+    let sucessoNaTentativa = true;
+    const sequencia = JSON.parse(decrypt(ENCRYPTED_SEQUENCE));
+
+    for (const tecla of sequencia) {
+      process.stdout.write("\x1Bc");
+      const sucesso = await askWithTimeout(`[ ${tecla.toUpperCase()} ]`, tecla, tempoParaPressionar, "instant", "yellow");
+
+      if (sucesso) {
+        playSound("metronomo.mp3", false, 20);
+        await sleep(intervaloEntreTeclas);
+      } else {
+        process.stdout.write("\x1Bc");
+        await log("Tente novamente.", "instant", "cyan")
+        await sleep(1000);
+        stopAllSounds();
+        tentativas++
+        sucessoNaTentativa = false;
+        break;
+      }
+    }
+
+    if (sucessoNaTentativa) {
+      sequenciaCompleta = true;
+    }
+
+  } while (!sequenciaCompleta);
+
+  // Conclusão da atividade
+  stopAllSounds(); // Parar todos os sons ao final da atividade
+  process.stdout.write("\x1Bc");
+  await sleep(3000);
+  await log("Você reconheceu os padrões. Podemos continuar.", [], "cyan");
+  await sleep(3000);
+  await guardar("atividade3");
+  stopAllSounds()
+  return await teste051();
+}
+
+
+
+async function teste051() {
   process.stdout.write("\x1Bc");
   await log([`Você conseguiu chegar até aqui?`, "Parabéns!"], [], ["d", "green"]);
   await sleep(2500)
   await pedirFeeback()
-  await log(`Obrigado por testar!Fechando o terminal em 3.`);
-  await closeTerminal(3000)
+  await log(["Obrigado por testar!Fechando o terminal em 3","<SLEEP:1000>", "2", "<SLEEP:1000>", "1", "<SLEEP:1000>"]);
+  await closeTerminal()
 }
 
 async function contextoLuminaControl() {
@@ -407,7 +488,4 @@ async function contextoUltimaEsperanca() {
   await sleep(2500);
   await log('Sua única esperança agora reside na mensagem enviada, a última chance de despertar um "eu" no passado para lutar e evitar que o "Vazio Perfeito" se torne o destino final de toda a humanidade.');
   await sleep(2500);
-  await guardar("fimDoJogo");
-  await log("Fim da história por enquanto. Obrigado por jogar!");
-  await sleep(5000);
 }

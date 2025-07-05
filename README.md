@@ -1,4 +1,4 @@
-## ECO - Fragmento do Amanha - versão 0.4.9
+## ECO - Fragmento do Amanha - versão 0.5.1
 
 **ECO - Fragmento do Amanhã** está em desenvolvimento 😊  
 É meu projeto de férias, criado para compor meu [portfólio](https://daniel-paschoalinoto.github.io/portfolio/).  
@@ -19,6 +19,11 @@ Versão 0.4.9 - 04/07/2025
 - No instalador, o link criado no meu iniciar pede admin.
 - As imagens do jogo agora são personalizadas no intalador.
 - ECO.ico tem todas as resoluções necessárias.
+
+Versão 0.5.1 - 04/07/2025
+
+- Gerenciamento de som foi melhorado e [musicState.js](./src/game/musicState.js) foi incluído.
+- Atividade 3 foi criada e teste 049 foi convertido para 051.
 
 ## Tecnologias utilizadas
 
