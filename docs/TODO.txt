@@ -19,6 +19,7 @@ Incluir opção no começo para os créditos. NOK
 DEV
 Incluir opção no começo para os créditos. NOK
 Criar opção de idioma (considerar tempo de implementação e tradução)
+Incluir SPDX? E etiquetar arquivos com licença.
 
 GAMEDEV
 Linkar narrativa 4 e criar atividade 4.
