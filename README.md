@@ -2,28 +2,9 @@
 
 **ECO - Fragmento do Amanhã** está em desenvolvimento 😊  
 É meu projeto de férias, criado para compor meu [portfólio](https://daniel-paschoalinoto.github.io/portfolio/).  
-Tem sugestões ou idéias?
 
 Fale comigo!  
 danielpaschoalinoto@gmail.com.
-
-## Updates
-
-Versão 0.5.1 - 04/07/2025
-
-- Gerenciamento de som foi melhorado e [musicState.js](./src/game/musicState.js) foi incluído.
-- Atividade 3 foi criada e teste 049 foi convertido para 051.
-
-Versão 0.4.9 - 04/07/2025
-
-- Repositório será publicado oficialmente.
-- Organizei minha mess.
-- [installer.iss](./build/installer.iss), foi atualizado para refletir nova arquitetura.
-- Fiz a padronização dos paths em [/src/utils/paths.js](./src/utils/paths.js).
-- Fiz a inclusão do diretório [/frontEnd/](./frontEnd/) para utiliza-lo no GH-Pages.
-- No instalador, o link criado no meu iniciar pede admin.
-- As imagens do jogo agora são personalizadas no intalador.
-- ECO.ico tem todas as resoluções necessárias.
 
 ## Tecnologias utilizadas
 
@@ -38,8 +19,7 @@ Versão 0.4.9 - 04/07/2025
 ## Para Devs
 
 - O projeto é apenas para Windows 10 e 11.
-- Sinta-se a vontade para fuçar e caso queira entender algo ou colaborar é só me contatar.
-- Fiz questão de manter o `.vscode/runWithWT.js`, pois me ajudou a debuggar sem perder a imersão e manter a criatividade.
+- Sinta-se à vontade para explorar o código, respeitando os termos da licença.
 
 #### Build
 

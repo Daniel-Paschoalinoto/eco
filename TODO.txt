@@ -1,0 +1,10 @@
+05/07/2025
+
+DEV
+Criar opção de idioma???(considerar tempo de implementação e tradução)
+Incluir opção no começo para os créditos.
+
+GAMEDEV
+Linkar narrativa 4 e criar atividade 4.
+Avaliar tempos de esperas entre mensagens e speeds.
+

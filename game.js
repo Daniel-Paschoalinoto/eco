@@ -1,3 +1,15 @@
+// SPDX-License-Identifier: CC-BY-NC-ND-4.0
+//
+// ECO - Fragmento do Amanhã
+// Autor: Daniel Paschoalinoto
+// Licenciado sob a Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional
+// https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.pt
+//
+// Você pode compartilhar este arquivo, desde que:
+// - Não o utilize para fins comerciais;
+// - Não o modifique nem crie obras derivadas;
+// - Atribua o crédito corretamente ao autor original.
+
 //index.js
 import sleep from "./src/utils/sleep.js";
 import realDate from "./src/utils/realDate.js";
@@ -370,21 +382,21 @@ async function atividade3() {
   await sleep(3000);
   await log("Você reconheceu os padrões. Podemos continuar.", [], "cyan");
   await sleep(3000);
-  await guardar("atividade3");
+  await guardar("contextoLuminaControl");
   stopAllSounds()
   return await teste051();
 }
 
 
 
-async function teste051() {
-  process.stdout.write("\x1Bc");
-  await log([`Você conseguiu chegar até aqui?`, "Parabéns!"], [], ["d", "green"]);
-  await sleep(2500)
-  await pedirFeeback()
-  await log(["Obrigado por testar!Fechando o terminal em 3","<SLEEP:1000>", "2", "<SLEEP:1000>", "1", "<SLEEP:1000>"]);
-  await closeTerminal()
-}
+// async function teste051() {
+//   process.stdout.write("\x1Bc");
+//   await log([`Você conseguiu chegar até aqui?`, "Parabéns!"], [], ["d", "green"]);
+//   await sleep(2500)
+//   await pedirFeeback()
+//   await log(["Obrigado por testar!Fechando o terminal em 3","<SLEEP:1000>", "2", "<SLEEP:1000>", "1", "<SLEEP:1000>"]);
+//   await closeTerminal()
+// }
 
 async function contextoLuminaControl() {
   process.stdout.write("\x1Bc");
