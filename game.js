@@ -324,7 +324,7 @@ async function atividade3() {
   await log("[ATIVIDADE 3 - RECONHEÇA::OS::PADRÕES]", "instant", "cyan");
   await log("");
   await sleep(2000);
-  await log(["Para compreender os microestímulos gerados pela", "Lumina", "você emulará seu comportamento."], ["f"], ["d", "green", "d"]);
+  await log(["Para compreender os microestímulos gerados pela", "Lumina", "você emulará sua precisão."], ["f"], ["d", "green", "d"]);
   await log("");
   await sleep(2000);
   await log("O cérebro humano só evoluiu devido aos padrões perfeitos que ela utilizava.", "f");
@@ -342,7 +342,6 @@ async function atividade3() {
   const intervaloEntreTeclas = 250;
 
   let sequenciaCompleta = false;
-  let tentativas = 1
   do {
     process.stdout.write("\x1Bc");
     await log(["Prepare-se:", "<SLEEP:2500>", "3", "<SLEEP:500>", "2", "<SLEEP:500>", "1", "<SLEEP:500>"], ["instant"], ["cyan"]);
@@ -364,7 +363,6 @@ async function atividade3() {
         await log("Tente novamente.", "instant", "cyan")
         await sleep(1000);
         stopAllSounds();
-        tentativas++
         sucessoNaTentativa = false;
         break;
       }
@@ -376,11 +374,9 @@ async function atividade3() {
 
   } while (!sequenciaCompleta);
 
-  // Conclusão da atividade
-  stopAllSounds(); // Parar todos os sons ao final da atividade
   process.stdout.write("\x1Bc");
   await sleep(3000);
-  await log("Você reconheceu os padrões. Podemos continuar.", [], "cyan");
+  await log("Você reconheceu os padrões. Podemos continuar.", [], "green");
   await sleep(3000);
   await guardar("contextoLuminaControl");
   stopAllSounds()
@@ -402,8 +398,6 @@ async function contextoLuminaControl() {
   process.stdout.write("\x1Bc");
   await log(`Até ${realDate.year + 12}, vários avanços na ciência e tecnologia já haviam ocorrido.`);
   await sleep(2500);
-  await log(`Tudo que mantinha a população sob controle, como os governos e as fronteiras, não parecia relevante.`);
-  await sleep(2500);
   await log("Todos se conectavam, aprendiam e compartilhavam conhecimento por meio da Lumina.");
   await sleep(2500);
   await log("Rapidamente ficou claro a importância dos esforços de cada indivíduo, para a humanidade.");
@@ -414,13 +408,11 @@ async function contextoLuminaControl() {
   await sleep(2500);
   await log("Nôs tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas.");
   await sleep(2500);
-  await log(`Era algo parecido com o que em ${realDate.year}, vocês chamariam de Comunismo, porém sem a necessidade de um Socialismo ou um líder.`);
-  await sleep(2500);
   await log("A utopia alcançada pela Lumina era impressionante.");
   await sleep(2500);
   await log("A humanidade prosperava em um cenário de conhecimento compartilhado e propósito comum.");
   await sleep(2500);
-  await log("Tudo devido ao conhecimento, tudo devido a Lumina.");
+  await log("Tudo devido ao aprimoramento, tudo devido a Lumina.");
   await sleep(2500);
   await log("No entanto, essa bênção universal começou a revelar um efeito colateral inesperado: a supressão da individualidade.");
   await sleep(2500);
