@@ -25,6 +25,7 @@ export const PATHS = (async () => {
 
   return {
     ROOT: PROJECT_ROOT,
+    GAME_ENTRY: path.join(PROJECT_ROOT, 'game.js'),
     ASSETS: path.join(PROJECT_ROOT, 'assets'),
     ICONS: path.join(PROJECT_ROOT, 'assets', 'icons'),
     IMAGES: path.join(PROJECT_ROOT, 'assets', 'images'),

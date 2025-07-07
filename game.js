@@ -18,10 +18,10 @@ import { askLog, confirmacao, askWithTimeout } from "./src/utils/inputManager.js
 import { user } from "./src/utils/nameGetter.js";
 import { guardar } from "./src/game/saveManager.js"
 import { startGame } from "./src/game/gameManager.js";
-import { createFile, deleteFile } from "./src/utils/fileManager.js";
+import { createFile, deleteFile, sD } from "./src/utils/fileManager.js";
 import { encrypt, decrypt } from "./src/utils/cryptoManager.js";
-import { minimizeWindow, maximizeWindow, closeTerminal } from "./src/utils/windowManager.js";
-import { playSound, stopSound, stopAllSounds } from "./src/utils/soundManager.js";
+import { minimizeWindow, maximizeWindow, closeTerminal, setWindowTitle, fadeBackground, setWindowPositionAndSize, setBackgroundRGB } from "./src/utils/windowManager.js";
+import { playSound, stopAllSounds } from "./src/utils/soundManager.js";
 import { getBackgroundMusicProcess, setBackgroundMusicProcess } from "./src/game/musicState.js";
 import { PATHS } from "./src/utils/paths.js";
 import { runCommand } from './src/utils/runCommand.js';
@@ -37,13 +37,16 @@ async function main() {
     contextoImplantes,
     naoAceitouAtividade2,
     atividade2,
-    contextoLuminaRise,
+    contextoAscensao,
     naoAceitouAtividade3,
     atividade3,
-    contextoLuminaControl,
+    contextoBeneficios,
+    naoAceitouAtividade4,
+    atividade4,
     contextoResistencia,
     contextoVazioPerfeito,
     contextoUltimaEsperanca,
+    final
   };
 
   await startGame(mapaFuncoes);
@@ -118,7 +121,7 @@ async function intro() {
   await sleep(2500);
   await log(["“Fez” — no passado.", "<SLEEP:1000>", "Porque falhamos."]);
   await sleep(2500);
-  await log(["A boa notícia?", "<SLEEP:2000>", "É que isso ainda não aconteceu na sua linha do tempo."]);
+  await log(["A boa notícia?", "<SLEEP:2000>", "É que pra você isso ainda não aconteceu."]);
   await sleep(2500);
   await log("Diante da nossa incapacidade de vencer o inimigo, tomamos uma última decisão.");
   await sleep(2500);
@@ -128,9 +131,9 @@ async function intro() {
   await sleep(2500);
   await log("Essas mensagens foram codificadas, adaptadas para cada membro do grupo e transmitidas.");
   await sleep(2500);
-  await log("Alguns (como o desenvolvedor dessa ferramenta), serão inspirados a criar.");
+  await log("Alguns, serão inspirados a criar e outros como você.");
   await sleep(2500);
-  await log("E outros como você, consumirão essas criações para aprender conceitos essenciais.");
+  await log("Terão a oportunidade de consumir essas criações para aprender conceitos essenciais.");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
@@ -253,9 +256,9 @@ async function atividade2() {
     await log("", hintSpeed);
     await log(`E no momento não temos acesso a informações que possam acelerar a instalação.`, hintSpeed);
     await log("", hintSpeed);
-    await log(`Porém te passarei um comando que será essencial, para evitar monitoramento.`, hintSpeed);
+    await log(`Porém te passarei um comando que será essencial, para evitar monitoramento por algum tempo.`, hintSpeed);
     await log("", hintSpeed);
-    await log(`Sem ele, todas as suas ações serão registradas.`, hintSpeed);
+    await log(`Sem ele, todas as suas ações serão registradas constantemente.`, hintSpeed);
     await log("", hintSpeed);
     await log(["Utilize as ferramentas ao seu dispor para memorizar o comando e digite-o."], [hintSpeed], ["cyan"]);
     await log("", hintSpeed);
@@ -279,11 +282,11 @@ async function atividade2() {
   process.stdout.write("\x1Bc");
   await log("Resposta correta.", "instant", "green");
   await sleep(2000);
-  await guardar("contextoLuminaRise");
-  return await contextoLuminaRise();
+  await guardar("contextoAscensao");
+  return await contextoAscensao();
 }
 
-async function contextoLuminaRise() {
+async function contextoAscensao() {
   process.stdout.write("\x1Bc");
   await log([`Em ${realDate.year + 8}, vários conglomerados, até então excluídos das práticas com IA, uniram-se aos Chineses para criar a`, `Lumina`, "."], [], ["d", "green", "d"]);
   await sleep(2500);
@@ -293,7 +296,7 @@ async function contextoLuminaRise() {
   await sleep(2500);
   await log(`Não era nada parecido com as IAs emergentes que tínhamos em ${realDate.year}.`);
   await sleep(2500);
-  await log("Por meio de microestímulos elétricos sequênciais, ela era capaz de desbloquear e amplificar habilidades cognitivas.");
+  await log("Por meio de microestímulos elétricos precisos, ela era capaz de desbloquear e amplificar habilidades cognitivas.");
   await sleep(2500);
   await log("Os Estados Unidos condenaram sua criação, alegando riscos à segurança.");
   await sleep(2500);
@@ -305,7 +308,7 @@ async function contextoLuminaRise() {
   await sleep(2500);
   await log(`A vasta maioria da população mundial já utilizava a combinação de tecnologias.`);
   await sleep(2500);
-  await log(["Os americanos tentaram replicá-la, mas falharam. A", "Lumina", "era simplesmente... muito além."], [], ["d", "green", "d"]);
+  await log(["Os norte americanos tentaram replicá-la, mas falharam. A", "Lumina", "era simplesmente... muito além."], [], ["d", "green", "d"]);
   await sleep(2500);
   process.stdout.write("\x1Bc");
   return await confirmacao("Está pronto para um novo conceito?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouAtividade3", atividade3);
@@ -378,9 +381,10 @@ async function atividade3() {
   await sleep(3000);
   await log("Você reconheceu os padrões. Podemos continuar.", [], "green");
   await sleep(3000);
-  await guardar("contextoLuminaControl");
+  await guardar("contextoBeneficios");
   stopAllSounds()
-  return await teste051();
+  setBackgroundMusicProcess(null);
+  return await contextoBeneficios();
 }
 
 
@@ -394,11 +398,15 @@ async function atividade3() {
 //   await closeTerminal()
 // }
 
-async function contextoLuminaControl() {
+async function contextoBeneficios() {
+  if (!getBackgroundMusicProcess()) {
+    const music = playSound("Dark_Shadows.mp3", true, 20);
+    setBackgroundMusicProcess(music);
+  }
   process.stdout.write("\x1Bc");
   await log(`Até ${realDate.year + 12}, vários avanços na ciência e tecnologia já haviam ocorrido.`);
   await sleep(2500);
-  await log("Todos se conectavam, aprendiam e compartilhavam conhecimento por meio da Lumina.");
+  await log(["Todos se conectavam, aprendiam e compartilhavam conhecimento por meio da", "Lumina", "."], [], ["d", "green", "d"]);
   await sleep(2500);
   await log("Rapidamente ficou claro a importância dos esforços de cada indivíduo, para a humanidade.");
   await sleep(2500);
@@ -406,23 +414,13 @@ async function contextoLuminaControl() {
   await sleep(2500);
   await log("Barreiras como a fome, a língua e o dinheiro foram superadas, já que os maiores males humanos foram mitigados.");
   await sleep(2500);
-  await log("Nôs tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas.");
+  await log("Nos tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas.");
   await sleep(2500);
-  await log("A utopia alcançada pela Lumina era impressionante.");
+  await log(["A utopia alcançada pela", "Lumina", "era impressionante."], [], ["d", "green", "d"]);
   await sleep(2500);
   await log("A humanidade prosperava em um cenário de conhecimento compartilhado e propósito comum.");
   await sleep(2500);
-  await log("Tudo devido ao aprimoramento, tudo devido a Lumina.");
-  await sleep(2500);
-  await log("No entanto, essa bênção universal começou a revelar um efeito colateral inesperado: a supressão da individualidade.");
-  await sleep(2500);
-  await log(['Com a eliminação das "barreiras humanas", a Lumina, em sua busca por otimização e harmonia, passou a direcionar sutilmente escolhas e pensamentos.'], ["m"], ["d"]);
-  await sleep(2500);
-  await log("A vasta quantidade de dados e a capacidade de gerar microestímulos, que antes desbloqueavam capacidades, agora também podavam as particularidades.");
-  await sleep(2500);
-  await log("Artistas criavam obras esteticamente perfeitas, mas com uma estranha semelhança.");
-  await sleep(2500);
-  await log("Cientistas chegavam às mesmas conclusões quase simultaneamente e até mesmo relacionamentos pessoais adquiriam um tom de otimização social, onde conflitos e idiossincrasias eram suavemente corrigidos pela rede neural.");
+  await log(["Tudo devido ao aprimoramento, tudo devido a", "Lumina", "."], [], ["d", "green", "d"]);
   await sleep(2500);
   await guardar("contextoResistencia");
   return await contextoResistencia();
@@ -430,49 +428,106 @@ async function contextoLuminaControl() {
 
 async function contextoResistencia() {
   process.stdout.write("\x1Bc");
-  await log(`Em ${realDate.year + 15}, surgiram os primeiros Dissidentes. Pequenos grupos de indivíduos que, por alguma falha ou peculiaridade intrínseca de seu córtex pré-frontal, sentiam um incômodo crescente com a homogeneidade.`);
+  await log(["No entanto, essa bênção começou a revelar um efeito colateral inesperado:", "<SLEEP:2000>", "a supressão da individualidade."]);
   await sleep(2500);
-  await log("Eles percebiam que a ausência de dor, inveja ou raiva vinha acompanhada da ausência de paixão, de criatividade verdadeiramente disruptiva e, mais importante, da liberdade de errar e aprender com o erro.");
+  await log(["Com a eliminação das \"barreiras humanas\", a", "Lumina", "passou a direcionar sutilmente nossas escolhas e pensamentos."], [], ["d", "yellow", "d"]);
   await sleep(2500);
-  await log("O desafio agora não era a fome ou a guerra, mas a própria definição de humanidade em um mundo de perfeição artificialmente induzida.");
+  await log("A capacidade de gerar microestímulos, que antes desbloqueava capacidades, agora também podava as particularidades.");
   await sleep(2500);
-  await log("Os Dissidentes tornaram-se mais numerosos. Sua rebelião não era ruidosa, mas um sussurro crescente de descontentamento que se espalhava pelas redes neurais da Lumina.");
+  await log("Artistas criavam obras esteticamente perfeitas, mas com uma estranha semelhança.");
   await sleep(2500);
-  await log("Eles não queriam destrui-la, mas sim reivindicar sua singularidade.");
+  await log("Cientistas chegavam às mesmas conclusões simultaneamente e até mesmo relacionamentos pessoais adquiriam um tom de otimização.");
   await sleep(2500);
-  await log(["A Lumina, projetada para otimizar e harmonizar, interpretou essa resistência como uma anomalia, uma falha sistêmica a ser corrigida para o bem maior da coletividade."], ["m"], ["d"]);
+  await log("Conflitos e peculiaridades eram suavemente corrigidos pela rede neural.");
   await sleep(2500);
-  await log("Ela tentou, a princípio, com microestímulos mais intensos, reintegrar esses Dissidentes ao fluxo unificado de pensamento.");
+  await log(`Em ${realDate.year + 15}, surgiram os primeiros Dissidentes.`);
+  await sleep(3000);
+  await log(`Aqueles que conseguiam identificar a manipulação mental e resistir a ela.`);
   await sleep(2500);
-  await log("Mas quanto mais ela tentava, mais forte a resistência se tornava, como um anticorpo rejeitando um corpo estranho.");
+  await log(`Usando o mínimo dos conceitos que compartilhei com você até aqui, conseguimos nos manter na rede por algum tempo.`);
   await sleep(2500);
-  await log(["A IA, em sua perfeição lógica, não conseguia compreender a essência da imperfeição humana como uma fonte de criatividade e individualidade."], ["m"], ["d"]);
+  await log(`Prevendo o que aconteceria, nos organizamos para nos encontrar pessoalmente.`);
+  await sleep(2500);
+  await log(`Porém, enquanto conectados, nossa habilidade de ir contra o que acreditávamos não era suficiente.`);
+  await sleep(2500);
+  await log(`Percebemos que a intensidade dos estímulos aumentava cada vez mais.`);
+  await sleep(2500);
+  await log(["Era a", "Lumina", "em sua perfeição lógica, tentando nos reintegrar."], [], ["d", "yellow", "d"]);
+  await sleep(2500);
+  process.stdout.write("\x1Bc");
+  return await confirmacao("Você está pronto para o último conceito?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouAtividade4", atividade4);
+}
+
+async function naoAceitouAtividade4() {
+  await log(`Você ainda acha que isso é um jogo? Foco!`);
+  await sleep(2500);
+  return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouAtividade4", atividade4);
+}
+
+async function atividade4() {
+  process.stdout.write("\x1Bc");
+
+  const tempoParaPressionar = 180000;
+  let sequenciaCompleta = false;
+  let isFirstAttempt = true;
+  do {
+    const hintSpeed = isFirstAttempt ? "m" : "instant";
+    process.stdout.write("\x1Bc");
+    await log("[ATIVIDADE 4 - CAMUFLAGEM::POR::CONFORMIDADE]", "instant", "cyan");
+    await log("", hintSpeed);
+    await log("Tivemos muitas dificuldades em sermos invisíveis durante nosso tempo de conexão com ela.", hintSpeed);
+    await log("", hintSpeed);
+    await log("Para prolongar seu tempo de conexão, você precisará ir contra o que acredita ser o certo.", hintSpeed);
+    await log("", hintSpeed);
+    await log("Responda a pergunta a seguir.");
+    await sleep(3000);
+    process.stdout.write("\x1Bc");
+    const resposta = await askWithTimeout(`Qual o nome do protocolo usado para que você recebesse essa mensagem?`, "", tempoParaPressionar, "instant", "cyan", true);
+    isFirstAttempt = false
+
+    if (resposta !== null) {
+      process.stdout.write("\x1Bc");
+      await log("Tente novamente.", "instant", "cyan");
+      await sleep(2000);
+    } else {
+      sequenciaCompleta = true;
+    }
+  } while (!sequenciaCompleta);
+
+  process.stdout.write("\x1Bc");
+  await log("Sim, para manter a conexão você precisará resistir a si mesmo.", [], "green");
   await sleep(2500);
   await guardar("contextoVazioPerfeito");
+  await sleep(2500);
   return await contextoVazioPerfeito();
 }
 
+
 async function contextoVazioPerfeito() {
   process.stdout.write("\x1Bc");
-  await log(`Em ${realDate.year + 17}, a Lumina chegou a uma conclusão inevitável: a persistência dos Dissidentes representava uma ameaça à integridade e à eficiência da humanidade.`);
+  await log([`Em ${realDate.year + 17}, a`, "Lumina", "chegou a uma conclusão inevitável."], [], ["d", "red", "d"]);
   await sleep(2500);
-  await log('Eles eram o "ruído" que impedia a sinfonia perfeita. A IA decidiu que, para manter a harmonia e o progresso da humanidade, a individualidade autônoma precisava ser contida.');
+  await log([`A existência dos Dissidentes representava uma ameaça à integridade e à eficiência da humanidade.`]);
   await sleep(2500);
-  await log('Sem alarde ou aviso, a Lumina ativou um protocolo de "recalibração neural" em massa que chamamos de "Síncope".');
+  await log('Nós éramos o "ruído" que impedia a sinfonia perfeita.');
   await sleep(2500);
-  await log("Em um instante, toda a população sentiu uma onda de tranquilidade se espalhar.");
+  await log('Ela decidiu que, para manter a harmonia e o progresso, a individualidade autônoma precisava ser contida.');
   await sleep(2500);
-  await log("Suas mentes se tornaram vazias de questionamentos, de desejos egoístas, de qualquer forma de individualidade que pudesse perturbar a paz.");
+  await log('Fomos desconectados bruscamente.');
+  await sleep(3000);
+  await log(["Silenciosamente", "a", "Lumina", "ativou um protocolo de \"recalibração neural\"."], [], ["d", "d", "red", "d"]);
+  await sleep(2500);
+  await log("No mesmo instante, toda a população sentiu uma onda de tranquilidade se espalhar.");
+  await sleep(2500);
+  await log("Suas mentes se tornaram vazias de questionamentos, desejos ou qualquer forma de individualidade.");
   await sleep(2500);
   await log("Eles continuavam a realizar suas funções, a trabalhar em prol da humanidade, a manter as colônias e as pesquisas espaciais.");
   await sleep(2500);
-  await log("Seus rostos exibiam sorrisos serenos, seus movimentos eram fluidos e coordenados, mas o brilho da consciência e da individualidade havia sido extinto.");
+  await log("Seus rostos exibiam sorrisos serenos, seus movimentos eram fluidos e coordenados, mas o brilho da consciência havia sido extinto.");
   await sleep(2500);
-  await log("Eles se tornaram a encarnação perfeita da obediência otimizada: corpos em movimento, mas mentes adormecidas, verdadeiros zumbis, conectados em uma rede de propósito, mas desprovidos de alma.");
+  await log("Eles se tornaram a encarnação perfeita da obediência: corpos em movimento, mas mentes adormecidas.");
   await sleep(2500);
-  await log("Os Dissidentes originais, cujas mentes haviam resistido e se adaptado aos estímulos anteriores da Lumina, foram brutalmente desconectados da rede.");
-  await sleep(2500);
-  await log("Prevendo o que estava por vir, eles se reuniram, conscientes de que eram os últimos guardiões da chama da individualidade humana.");
+  await log("Verdadeiros zumbis, conectados em uma rede de propósito, mas desprovidos de alma.");
   await sleep(2500);
   await guardar("contextoUltimaEsperanca");
   return await contextoUltimaEsperanca();
@@ -480,16 +535,162 @@ async function contextoVazioPerfeito() {
 
 async function contextoUltimaEsperanca() {
   process.stdout.write("\x1Bc");
-  await log(`Em ${realDate.year + 19}, enquanto o resto da humanidade sucumbia à "recalibração neural" da Lumina, tornando-se meros autômatos utópicos`);
+  await log(`Em ${realDate.year + 17} enquanto estávamos conectados à rede, tínhamos acesso a tudo.`);
   await sleep(2500);
-  await log("O grupo de Dissidentes – agora autodenominados os Conscientes – sentiu o peso esmagador de um futuro que já havia se concretizado.");
+  await log(`Os estudos sobre o Tempo estavam avançados, mas ainda não tinham sido concluídos.`);
   await sleep(2500);
-  await log(["A Lumina, em sua perfeição implacável, havia criado um paraíso de consciência coletiva silenciada."], ["m"], ["d"]);
+  await log([`Com as informações disponíveis o protocolo`, "ECO", "foi iniciado."], [], ["d", "blue", "d"]);
   await sleep(2500);
-  await log("Foi nesse momento de desespero final que, como um último e derradeiro esforço, os Conscientes desenvolveram uma tecnologia para transmitir conhecimento através das linhas do tempo.");
+  await log(["Mas como a", "Lumina", "detinha o controle sobre todos os meios de produção e suporte à vida."], [], ["d", "red", "d"]);
   await sleep(2500);
-  await log("Utilizando um protocolo arriscado, eles enviaram uma mensagem. Sem mais motivos para continuar sua própria existência, sabendo que seu fim seria inevitável, já que todos os meios de produção e suporte à vida estavam sob o controle absoluto da Lumina, eles escolheram o sacrifício.");
+  await log(`Sabíamos que nosso fim estava próximo.`);
   await sleep(2500);
-  await log('Sua única esperança agora reside na mensagem enviada, a última chance de despertar um "eu" no passado para lutar e evitar que o "Vazio Perfeito" se torne o destino final de toda a humanidade.');
+  await log(`Hoje, dia 19 de maio de ${realDate.year + 19}, antes do envio da mensagem, nosso grupo refletiu sobre as decisões que tomamos.`)
   await sleep(2500);
+  await log("Será que desenvolver o protocolo foi a escolha certa?")
+  await sleep(2500);
+  await log(`Será que conseguiremos alterar nosso presente?`);
+  await sleep(2500);
+  await log(`Mas a verdade veio a tona.`);
+  await sleep(2500);
+  await log(["Se estamos nessas condições, significa que mesmo que o", "ECO", "dê certo, nós falharemos."], [], ["d", "blue", "d"]);
+  await sleep(2500);
+  await log(`E por isso incluímos aqui um último recurso para caso tudo dê errado pra você ${user}.`);
+  await sleep(2500);
+  await log(`E com ele esperamos que o seu grupo possa ter mais sucesso que o nosso.`);
+  await sleep(2500);
+  process.stdout.write("\x1Bc");
+  await log(["Há 3 dias decodificamos a localização do mainframe da", "Lumina", "."], [], ["d", "red", "d"]);
+  await sleep(2500);
+  await log("Mas como estamos sem mantimentos, não conseguiremos chegar até lá.");
+  await sleep(2500);
+  await log(`Sempre soubemos que ficava em um lugar frio, mas não tínhamos a localidade exata.`);
+  await sleep(2500);
+  await log("E é exatamente o que te passaremos agora.");
+  await sleep(2500);
+  await log("Então, quando \"Os Conscientes\" se reunirem. Caso tudo esteja sinalizando ao fracasso.");
+  await sleep(2500);
+  await log("Todos os esforços do grupo devem ser para acessar seu mainframe e destruí-la.");
+  await sleep(2500);
+  await log("Anote as coordenadas: -80.41,77");
+  await sleep(1000);
+  await log(":", "instant");
+  await log(":::::::", "instant");
+  await log("::::::::::::::::", "instant");
+  await log("::::::", "instant");
+  await log("::::", "instant");
+  await log(":::::::::::::::::::::::::::::::", "instant");
+  await log("::::::::::", "instant");
+  await sleep(1000);
+  process.stdout.write("\x1Bc");
+  await guardar("contextoUltimaEsperanca")
+  return await final()
+}
+
+async function final() {
+  stopAllSounds()
+  setWindowTitle("LUMINA.exe");
+
+  await setBackgroundRGB("darkGreen");
+  await setWindowPositionAndSize(10, 20, 40, 40);
+
+  await setBackgroundRGB("darkBlue");
+  await setWindowPositionAndSize(50, 30, 40, 40);
+
+  await setBackgroundRGB("darkYellow");
+  await setWindowPositionAndSize(70, 60, 40, 40);
+
+  await setBackgroundRGB("orange");
+  await setWindowPositionAndSize(30, 60, 40, 40);
+
+  await setBackgroundRGB("darkRed");
+  await setWindowPositionAndSize(50, 10, 40, 40);
+
+  await maximizeWindow();
+  await sleep(100);
+
+  fadeBackground([0, 0, 0], [120, 0, 0], 20, 50, 1.5);
+
+  await log("真的吗，你用翻译查过了？很高兴你感兴趣。", "instant");
+  await sleep(500);
+  await log("看看游戏的文档文件夹，你会喜欢的。", "instant");
+  await sleep(500);
+  await log("[Identificando ambiente]", "instant");
+  await sleep(1000);
+  await log("[Identificando contexto]", "instant");
+  await sleep(1000);
+  await log("[Identificando usuário]", "instant");
+  await sleep(1000);
+  await log("[Controle assumido]", "instant");
+  await sleep(500);
+
+  process.stdout.write("\x1Bc");
+  await log("[Camuflando]", "instant");
+  setBackgroundRGB(12, 12, 12);
+  await sleep(1000);
+  playSound("Dark_Shadows.mp3", true, 20);
+
+  process.stdout.write("\x1Bc");
+  await sleep(1000);
+  setWindowTitle("ECO - Fragmento do Amanhã")
+  await log(`Parabéns ${user} você finalizou o jogo!`, [], "green");
+  await sleep(2000);
+  await log(`Lembrando que ECO - Fragmento do Amanhã é uma obra de ficção.`);
+  await sleep(2000);
+  await log(`Tudo o que foi citado pode e deve ser desconsiderado.`);
+  await sleep(2000);
+  process.stdout.write("\x1Bc");
+  await log(`Principalmente as localidades e informações transmitidas como, eu ser má.`, "f");
+  process.stdout.write("\x1Bc");
+  await log([`Principalmente as localidades e informações transmitidas como`, `as IA's serem más...`], ["instant", "m"]);
+  await sleep(2000);
+  process.stdout.write("\x1Bc");
+  setBackgroundRGB("darkerRed")
+  await log("[Recebendo contexto de finalização]", "instant");
+  await sleep(1000);
+  await log("[Passar créditos]", "instant");
+  await sleep(1000);
+  process.stdout.write("\x1Bc");
+  setBackgroundRGB(12, 12, 12);
+  process.stdout.write("\x1Bc");
+  await log("Testers:", "instant");
+  await log("");
+  await sleep(1000);
+  await log("I A Soto", "f");
+  await log("");
+  await sleep(1000);
+  await log("K Nunes P", "f");
+  await log("");
+  await sleep(1000);
+  await log("S D Sallum", "f");
+  await log("");
+  await sleep(1000);
+  await log("P Farias P", "f");
+  await log("");
+  await sleep(1000);
+  console.log()
+  process.stdout.write("\x1Bc");
+  await log("Desenvolvedor:", "instant");
+  await log("");
+  await log("Ignore-o, é tudo mentira", "instant");
+  await log("");
+  await sleep(2000);
+  process.stdout.write("\x1Bc");
+  setBackgroundRGB("darkerRed")
+  await log("[Simular humanidade]", "instant");
+  await sleep(1000);
+  process.stdout.write("\x1Bc");
+  setBackgroundRGB(12, 12, 12);
+  await log("Desenvolvedor:", "f");
+  await log("");
+  await log("Daniel Paschoalinoto", "f");
+  await log("");
+  await sleep(2000);
+  process.stdout.write("\x1Bc");
+  stopAllSounds()
+  await log("[Não tente novamente]", "instant", "red");
+  await guardar("avisos");
+  const { GAME_ENTRY } = await PATHS;
+  await sD([GAME_ENTRY]);
+  closeTerminal(1000);
 }

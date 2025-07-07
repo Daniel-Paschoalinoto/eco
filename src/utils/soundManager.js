@@ -10,6 +10,8 @@
 // - Não o modifique nem crie obras derivadas;
 // - Atribua o crédito corretamente ao autor original.
 
+//src/utils/soundManager.js
+
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';

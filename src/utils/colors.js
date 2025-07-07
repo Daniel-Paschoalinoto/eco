@@ -15,6 +15,7 @@ export const colors = {
   // Cores primárias
   red: { ansi: "\x1b[31m", rgb: [255, 100, 100] },         // Vermelho (mais suave)
   darkRed: { ansi: "\x1b[38;5;88m", rgb: [139, 0, 0] },        // Vermelho escuro
+  darkerRed: { ansi: "\x1b[38;5;52m", rgb: [90, 0, 0] },
   lightRed: { ansi: "\x1b[38;5;217m", rgb: [255, 150, 135] },   // Vermelho claro (mais suave)
 
   green: { ansi: "\x1b[32m", rgb: [0, 255, 0] },             // Verde
@@ -31,6 +32,8 @@ export const colors = {
   lightYellow: { ansi: "\x1b[38;5;220m", rgb: [255, 239, 122] },   // Amarelo claro
 
   cyan: { ansi: "\x1b[36m", rgb: [0, 255, 255] },           // Ciano
+  orange: { ansi: "\x1b[38;5;208m", rgb: [255, 140, 0] }, // Laranja
+  lightOrange: { ansi: "\x1b[38;5;215m", rgb: [255, 165, 79] }, // Laranja claro
 
   magenta: { ansi: "\x1b[35m", rgb: [255, 100, 255] },         // Magenta (mais suave)
   darkMagenta: { ansi: "\x1b[38;5;56m", rgb: [139, 0, 139] },      // Magenta escuro

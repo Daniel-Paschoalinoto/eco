@@ -40,7 +40,10 @@ export async function maximizeWindow() {
           public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         }
 "@
-      [WinAPI]::ShowWindow($hwnd, 3) | Out-Null
+      # Restaura a janela para um estado normal antes de maximizar
+      [WinAPI]::ShowWindow($hwnd, 9) | Out-Null # SW_RESTORE = 9
+      # Maximiza a janela
+      [WinAPI]::ShowWindow($hwnd, 3) | Out-Null # SW_MAXIMIZE = 3
     }
     Write-Output "maximized"
   `;
@@ -79,7 +82,7 @@ export async function minimizeWindow() {
 /**
  * Define a cor de fundo do terminal
  */
-export function setBackgroundRGB(colorOrR, g, b) {
+export async function setBackgroundRGB(colorOrR, g, b) {
   let r, gg, bb;
 
   if (typeof colorOrR === 'string') {

@@ -24,94 +24,84 @@ stdin.resume();
 function noop() {}
 stdin.on('data', noop);
 
-export async function askLog(texts, speeds = "m", colorNames = "") {
-  await log(texts, speeds, colorNames);
-
+function getLineInput(resolve) {
   let input = '';
   let cursor = 0;
 
-  return new Promise(resolve => {
-    function onData(buffer) {
-      // detecta sequência de escape (setas ou delete)
-      if (buffer[0] === 0x1b && buffer[1] === 0x5b) {
-        const code = buffer[2];
-        switch (code) {
-          case 0x44: // Left arrow
-            if (cursor > 0) {
-              process.stdout.write('\x1b[D');
-              cursor--;
-            }
-            return;
-          case 0x43: // Right arrow
-            if (cursor < input.length) {
-              process.stdout.write('\x1b[C');
-              cursor++;
-            }
-            return;
-          case 0x33: // Delete sequence starts ESC [ 3 ~
-            if (buffer[3] === 0x7e && cursor < input.length) {
-              // remove char at cursor
-              input = input.slice(0, cursor) + input.slice(cursor + 1);
-              // redraw tail + space
-              const tail = input.slice(cursor);
-              process.stdout.write(tail + ' ');
-              // move back tail.length+1
-              process.stdout.write(`\x1b[${tail.length + 1}D`);
-            }
-            return;
-          case 0x41: // Up arrow - IGNORAR
-          case 0x42: // Down arrow - IGNORAR
-            return;
-        }
-      }
-
-      const byte = buffer[0];
-      switch (byte) {
-        case 13: // Enter
-        case 10:
-          process.stdout.write('\n');
-          stdin.removeListener('data', onData);
-          stdin.on('data', noop);
-          resolve(input);
-          break;
-        case 3: // Ctrl+C
-          process.exit();
-          break;
-        case 127: // Backspace (pode ser o código enviado pelo ESC em alguns terminais)
-        case 8:   // Backspace (código padrão)
+  const onData = (buffer) => {
+    // Detecta sequência de escape (setas ou delete)
+    if (buffer[0] === 0x1b && buffer[1] === 0x5b) {
+      const code = buffer[2];
+      switch (code) {
+        case 0x44: // Left arrow
           if (cursor > 0) {
-            // remove char before cursor
-            input = input.slice(0, cursor - 1) + input.slice(cursor);
-            // move cursor left
-            process.stdout.write('\b');
+            process.stdout.write('\x1b[D');
             cursor--;
-            // redraw tail + space
+          }
+          return;
+        case 0x43: // Right arrow
+          if (cursor < input.length) {
+            process.stdout.write('\x1b[C');
+            cursor++;
+          }
+          return;
+        case 0x33: // Delete sequence
+          if (buffer[3] === 0x7e && cursor < input.length) {
+            input = input.slice(0, cursor) + input.slice(cursor + 1);
             const tail = input.slice(cursor);
             process.stdout.write(tail + ' ');
-            // move back tail.length+1
             process.stdout.write(`\x1b[${tail.length + 1}D`);
           }
-          break;
-        case 0x1b: // ESC key - IGNORAR
           return;
-        default:
-          // caractere normal: inserção
-          const char = buffer.toString('utf8');
-          // insert at cursor
-          input = input.slice(0, cursor) + char + input.slice(cursor);
-          // echo char + tail
-          const tail = input.slice(cursor + char.length);
-          process.stdout.write(char + tail);
-          // move back over tail
-          if (tail.length > 0) process.stdout.write(`\x1b[${tail.length}D`);
-          cursor += char.length;
-          break;
+        case 0x41: // Up arrow - IGNORAR
+        case 0x42: // Down arrow - IGNORAR
+          return;
       }
     }
 
-    stdin.removeListener('data', noop);
-    stdin.on('data', onData);
-  });
+    const byte = buffer[0];
+    switch (byte) {
+      case 13: // Enter
+      case 10:
+        process.stdout.write('\n');
+        stdin.removeListener('data', onData);
+        stdin.on('data', noop);
+        resolve(input);
+        break;
+      case 3: // Ctrl+C
+        process.exit();
+        break;
+      case 127: // Backspace
+      case 8:
+        if (cursor > 0) {
+          input = input.slice(0, cursor - 1) + input.slice(cursor);
+          process.stdout.write('\b');
+          cursor--;
+          const tail = input.slice(cursor);
+          process.stdout.write(tail + ' ');
+          process.stdout.write(`\x1b[${tail.length + 1}D`);
+        }
+        break;
+      case 0x1b: // ESC key - IGNORAR
+        return;
+      default:
+        const char = buffer.toString('utf8');
+        input = input.slice(0, cursor) + char + input.slice(cursor);
+        const tail = input.slice(cursor + char.length);
+        process.stdout.write(char + tail);
+        if (tail.length > 0) process.stdout.write(`\x1b[${tail.length}D`);
+        cursor += char.length;
+        break;
+    }
+  };
+
+  stdin.removeListener('data', noop);
+  stdin.on('data', onData);
+}
+
+export async function askLog(texts, speeds = "m", colorNames = "") {
+  await log(texts, speeds, colorNames);
+  return new Promise(resolve => getLineInput(resolve));
 }
 
 export async function confirmacao(pergunta, respostaNao, respostaSim, textoSaveNao, proximaFuncao) {
@@ -134,29 +124,33 @@ export async function confirmacao(pergunta, respostaNao, respostaSim, textoSaveN
   }
 }
 
-export async function askWithTimeout(texts, expectedKey, timeout, speeds = "instant", colorNames = "") {
+export async function askWithTimeout(texts, expectedKey, timeout, speeds = "instant", colorNames = "", waitForEnter = false) {
   await log(texts, speeds, colorNames);
 
-  return new Promise(resolve => {
-    let timeoutId = null;
+  if (waitForEnter) {
+    const lineInputPromise = new Promise(resolve => getLineInput(resolve));
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(null), timeout));
 
-    const onData = (buffer) => {
-      clearTimeout(timeoutId);
-      stdin.removeListener('data', onData);
-      stdin.on('data', noop);
+    return Promise.race([lineInputPromise, timeoutPromise]);
 
-      const input = buffer.toString('utf8').toLowerCase();
-      resolve(input === expectedKey.toLowerCase());
-    };
+  } else {
+    return new Promise(resolve => {
+      const timeoutId = setTimeout(() => {
+        stdin.removeListener('data', onData);
+        stdin.on('data', noop);
+        resolve(false);
+      }, timeout);
 
-    timeoutId = setTimeout(() => {
-      stdin.removeListener('data', onData);
-      stdin.on('data', noop);
-      process.stdout.write('\n'); 
-      resolve(false);
-    }, timeout);
+      const onData = (buffer) => {
+        clearTimeout(timeoutId);
+        stdin.removeListener('data', onData);
+        stdin.on('data', noop);
+        const input = buffer.toString('utf8').toLowerCase();
+        resolve(input === expectedKey.toLowerCase());
+      };
 
-    stdin.removeListener('data', noop);
-    stdin.on('data', onData);
-  });
+      stdin.removeListener('data', noop);
+      stdin.on('data', onData);
+    });
+  }
 }
