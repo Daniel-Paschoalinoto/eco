@@ -45,8 +45,7 @@ async function main() {
     atividade4,
     contextoResistencia,
     contextoVazioPerfeito,
-    contextoUltimaEsperanca,
-    final
+    contextoUltimaEsperanca
   };
 
   await startGame(mapaFuncoes);
@@ -131,9 +130,7 @@ async function intro() {
   await sleep(2500);
   await log("Essas mensagens foram codificadas, adaptadas para cada membro do grupo e transmitidas.");
   await sleep(2500);
-  await log("Alguns, serão inspirados a criar e outros como você.");
-  await sleep(2500);
-  await log("Terão a oportunidade de consumir essas criações para aprender conceitos essenciais.");
+  await log("Alguns, serão inspirados a criar e outros como você consumir essas criações para aprender conceitos essenciais. ");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
@@ -387,17 +384,6 @@ async function atividade3() {
   return await contextoBeneficios();
 }
 
-
-
-// async function teste051() {
-//   process.stdout.write("\x1Bc");
-//   await log([`Você conseguiu chegar até aqui?`, "Parabéns!"], [], ["d", "green"]);
-//   await sleep(2500)
-//   await pedirFeeback()
-//   await log(["Obrigado por testar!Fechando o terminal em 3","<SLEEP:1000>", "2", "<SLEEP:1000>", "1", "<SLEEP:1000>"]);
-//   await closeTerminal()
-// }
-
 async function contextoBeneficios() {
   if (!getBackgroundMusicProcess()) {
     const music = playSound("Dark_Shadows.mp3", true, 20);
@@ -414,7 +400,7 @@ async function contextoBeneficios() {
   await sleep(2500);
   await log("Barreiras como a fome, a língua e o dinheiro foram superadas, já que os maiores males humanos foram mitigados.");
   await sleep(2500);
-  await log("Nos tornamos mais longevos, o avanço espacial era sólido, já tinhamos colônias em outros planetas.");
+  await log("Nos tornamos mais longevos, o avanço espacial era sólido, já tínhamos colônias em outros planetas.");
   await sleep(2500);
   await log(["A utopia alcançada pela", "Lumina", "era impressionante."], [], ["d", "green", "d"]);
   await sleep(2500);
@@ -459,7 +445,7 @@ async function contextoResistencia() {
 }
 
 async function naoAceitouAtividade4() {
-  await log(`Você ainda acha que isso é um jogo? Foco!`);
+  await log(`Ainda acha que isso é só um jogo? Foque!`);
   await sleep(2500);
   return await confirmacao("Podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "", "naoAceitouAtividade4", atividade4);
 }
@@ -479,7 +465,7 @@ async function atividade4() {
     await log("", hintSpeed);
     await log("Para prolongar seu tempo de conexão, você precisará ir contra o que acredita ser o certo.", hintSpeed);
     await log("", hintSpeed);
-    await log("Responda a pergunta a seguir.");
+    await log("Responda à pergunta a seguir.");
     await sleep(3000);
     process.stdout.write("\x1Bc");
     const resposta = await askWithTimeout(`Qual o nome do protocolo usado para que você recebesse essa mensagem?`, "", tempoParaPressionar, "instant", "cyan", true);
@@ -551,7 +537,7 @@ async function contextoUltimaEsperanca() {
   await sleep(2500);
   await log(`Será que conseguiremos alterar nosso presente?`);
   await sleep(2500);
-  await log(`Mas a verdade veio a tona.`);
+  await log(`Mas a verdade veio à tona.`);
   await sleep(2500);
   await log(["Se estamos nessas condições, significa que mesmo que o", "ECO", "dê certo, nós falharemos."], [], ["d", "blue", "d"]);
   await sleep(2500);
@@ -609,7 +595,7 @@ async function final() {
   await maximizeWindow();
   await sleep(100);
 
-  fadeBackground([0, 0, 0], [120, 0, 0], 20, 50, 1.5);
+  fadeBackground([0, 0, 0], [120, 0, 0], 20, 50, 1.0);
 
   await log("真的吗，你用翻译查过了？很高兴你感兴趣。", "instant");
   await sleep(500);
@@ -668,7 +654,6 @@ async function final() {
   await log("P Farias P", "f");
   await log("");
   await sleep(1000);
-  console.log()
   process.stdout.write("\x1Bc");
   await log("Desenvolvedor:", "instant");
   await log("");
