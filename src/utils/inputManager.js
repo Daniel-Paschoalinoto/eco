@@ -21,6 +21,10 @@ const stdin = process.stdin;
 stdin.setRawMode(true);
 stdin.resume();
 
+process.on('SIGINT', () => {
+  // Do nothing to prevent process exit on Ctrl+C
+});
+
 function noop() {}
 stdin.on('data', noop);
 
@@ -59,6 +63,26 @@ function getLineInput(resolve) {
       }
     }
 
+    // Bloqueia teclas F1-F12 e outras sequências de escape
+    if (buffer[0] === 0x1b) {
+      // F1-F4 (SS3 sequences)
+      if (buffer[1] === 0x4f && (buffer[2] >= 0x50 && buffer[2] <= 0x53)) {
+        return;
+      }
+      // F5-F12 (CSI sequences)
+      if (buffer[1] === 0x5b) {
+        const code = buffer[2];
+        if (code === 0x31 && (buffer[3] === 0x35 || buffer[3] === 0x37 || buffer[3] === 0x38 || buffer[3] === 0x39) && buffer[4] === 0x7e) { // F5, F6, F7, F8
+          return;
+        }
+        if (code === 0x32 && (buffer[3] === 0x30 || buffer[3] === 0x31 || buffer[3] === 0x33 || buffer[3] === 0x34) && buffer[4] === 0x7e) { // F9, F10, F11, F12
+          return;
+        }
+      }
+      // Outras sequências de escape genéricas (ex: Alt+key)
+      return;
+    }
+
     const byte = buffer[0];
     switch (byte) {
       case 13: // Enter
@@ -69,7 +93,12 @@ function getLineInput(resolve) {
         resolve(input);
         break;
       case 3: // Ctrl+C
-        process.exit();
+        break;
+      case 19: // Ctrl+S - Bloqueado
+        break;
+      case 17: // Ctrl+Q - Bloqueado
+        break;
+      case 22: // Ctrl+V
         break;
       case 127: // Backspace
       case 8:
@@ -82,8 +111,6 @@ function getLineInput(resolve) {
           process.stdout.write(`\x1b[${tail.length + 1}D`);
         }
         break;
-      case 0x1b: // ESC key - IGNORAR
-        return;
       default:
         const char = buffer.toString('utf8');
         input = input.slice(0, cursor) + char + input.slice(cursor);

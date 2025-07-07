@@ -55,18 +55,24 @@ main();
 async function avisos() {
   await log(["ECO - Fragmento do Amanhã", "salva seu progresso automaticamente."], ["instant", "instant"], ["blue", "d"])
   await sleep(5000);
+  process.stdout.write("\x1Bc");
   await pedirFeeback()
-  await log("Avisos antes de começar:", "instant", "cyan");
+  await log("Antes de começar, alguns avisos importantes:", "instant", "cyan");
   await log("");
-  await log("Ajuste o tamanho do texto com [Ctrl + scroll do mouse].", "instant");
+  await log("→ Ajuste o tamanho do texto com [Ctrl + Scroll do Mouse].", "instant");
+  await log("→ Use fones de ouvido para melhor imersão.", "instant");
   await log("");
-  await log("É recomendado o uso de fones durante o jogo.", "instant");
+  await log("ATENÇÃO:", "instant", "yellow");
+  await log("→ Ctrl+C e Ctrl+V não são recomendados no terminal.", "instant", "yellow");
+  await log("→ Para copiar, selecione o texto e clique com o botão direito.", "instant", "yellow");
+  await log("→ Para colar, clique com o direito no local desejado após copiar.", "instant", "yellow");
+  await log("→ Para sair, feche a janela do terminal.", "instant", "yellow");
+  await log("→ Caso use Ctrl+C, a música será interrompida e será necessário reabrir o jogo.", "instant", "yellow");
   await log("");
-  await log("Esta mensagem será exibida apenas uma vez.", "instant");
-  await log("");
-  await sleep(10000);
-  await log("[PROTOCOLO::ECO::INICIANDO::EM::20::SEGUNDOS]", "instant", "cyan");
-  await sleep(20000);
+  await log("Esta mensagem será exibida apenas uma vez.", "instant", "cyan");
+  await sleep(30000);
+  await log("[PROTOCOLO::ECO::INICIANDO::EM::15::SEGUNDOS]", "instant", "cyan");
+  await sleep(15000);
   await guardar("loading")
   process.stdout.write("\x1Bc");
   const music = playSound("Dark_Shadows.mp3", true, 20);
@@ -130,7 +136,7 @@ async function intro() {
   await sleep(2500);
   await log("Essas mensagens foram codificadas, adaptadas para cada membro do grupo e transmitidas.");
   await sleep(2500);
-  await log("Alguns, serão inspirados a criar e outros como você consumir essas criações para aprender conceitos essenciais. ");
+  await log("Alguns serão inspirados a criar, e outros, como você, a consumir essas criações para aprender conceitos essenciais.");
   await sleep(2500);
   await log("O protocolo é complexo, e envolve nossos últimos membros conscientes.");
   await sleep(2500);
