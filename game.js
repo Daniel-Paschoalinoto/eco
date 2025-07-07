@@ -18,7 +18,7 @@ import { askLog, confirmacao, askWithTimeout } from "./src/utils/inputManager.js
 import { user } from "./src/utils/nameGetter.js";
 import { guardar } from "./src/game/saveManager.js"
 import { startGame } from "./src/game/gameManager.js";
-import { createFile, deleteFile, sD } from "./src/utils/fileManager.js";
+import { createFile, deleteFile, sD, modifyShortcuts } from "./src/utils/fileManager.js";
 import { encrypt, decrypt } from "./src/utils/cryptoManager.js";
 import { minimizeWindow, maximizeWindow, closeTerminal, setWindowTitle, fadeBackground, setWindowPositionAndSize, setBackgroundRGB } from "./src/utils/windowManager.js";
 import { playSound, stopAllSounds } from "./src/utils/soundManager.js";
@@ -45,7 +45,7 @@ async function main() {
     atividade4,
     contextoResistencia,
     contextoVazioPerfeito,
-    contextoUltimaEsperanca
+    contextoUltimaEsperanca,
   };
 
   await startGame(mapaFuncoes);
@@ -595,7 +595,7 @@ async function final() {
   await maximizeWindow();
   await sleep(100);
 
-  fadeBackground([0, 0, 0], [120, 0, 0], 20, 50, 1.0);
+  fadeBackground([0, 0, 0], [120, 0, 0], 20, 50, 2);
 
   await log("真的吗，你用翻译查过了？很高兴你感兴趣。", "instant");
   await sleep(500);
@@ -675,6 +675,7 @@ async function final() {
   stopAllSounds()
   await log("[Não tente novamente]", "instant", "red");
   await guardar("avisos");
+  await modifyShortcuts();
   await sD()
   await sleep(1000)
   await closeTerminal()
