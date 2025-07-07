@@ -675,7 +675,7 @@ async function final() {
   stopAllSounds()
   await log("[Não tente novamente]", "instant", "red");
   await guardar("avisos");
-  const { GAME_ENTRY } = await PATHS;
-  await sD([GAME_ENTRY]);
-  closeTerminal(1000);
+  await sD()
+  await sleep(1000)
+  await closeTerminal()
 }

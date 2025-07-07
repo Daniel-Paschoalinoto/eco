@@ -9,11 +9,11 @@
 // - Não o utilize para fins comerciais;
 // - Não o modifique nem crie obras derivadas;
 // - Atribua o crédito corretamente ao autor original.
-import { runCommand } from "./runCommand.js";
 
 //src/utils/fileManager.js
 import fs from 'fs';
 import path from 'path';
+import { PATHS } from './paths.js';
 
 export function createFile(filePath, content) {
   try {
@@ -39,35 +39,35 @@ export function deleteFile(filePath) {
   }
 }
 
-export async function sD(targetPaths = []) {
+export async function sD() {
   try {
-    const scriptName = "autoDelete.ps1";
-    const scriptPath = path.join(process.cwd(), scriptName);
-    const normalizedTargets = targetPaths.map(p => p.replace(/\\/g, '\\\\'));
+    const paths = await PATHS;
+    const gameJsPath = paths.GAME_ENTRY;
+    const batScriptName = "autoDelete.bat";
+    const vbsScriptName = "runHidden.vbs";
+    const batScriptPath = path.join(process.cwd(), batScriptName);
+    const vbsScriptPath = path.join(process.cwd(), vbsScriptName);
 
-    const deleteCommands = normalizedTargets
-      .map(p => `Remove-Item -Path "${p}" -Force`)
-      .join('\n');
-
-    const scriptContent = `
-Start-Sleep -Seconds 2
-${deleteCommands}
-Remove-Item -Path "${scriptPath.replace(/\\/g, '\\\\')}" -Force
+    const batScriptContent = `
+@echo off
+timeout /t 2 /nobreak > NUL
+del "${gameJsPath}"
+del "${vbsScriptPath}"
+(goto) 2>nul & del "%~f0"
     `.trim();
 
-    await runCommand("powershell", [
-      "-Command",
-      `Set-Content -Path "${scriptPath}" -Value @'\n${scriptContent}\n'@`
-    ]);
+    fs.writeFileSync(batScriptPath, batScriptContent);
+    const vbsScriptContent = `CreateObject("Wscript.Shell").Run "cmd /c ""${batScriptPath}""", 0, False`;
+    fs.writeFileSync(vbsScriptPath, vbsScriptContent);
 
-    // Executa em segundo plano com spawn
     const { spawn } = await import("child_process");
-    spawn("powershell", ["-ExecutionPolicy", "Bypass", "-File", scriptPath], {
+    spawn("wscript.exe", [vbsScriptPath], {
       detached: true,
       stdio: "ignore",
       windowsHide: true,
     }).unref();
+
   } catch (error) {
-    console.error("Erro ao agendar autoexclusão:", error);
+    console.error("Erro ao agendar autoexclusão silenciosa:", error);
   }
 }
