@@ -10,7 +10,13 @@
 // - Não o modifique nem crie obras derivadas;
 // - Atribua o crédito corretamente ao autor original.
 
-//src/utils/constants.js
-const respostasAceitas = ["sim", "s", "tô", "to", "claro", "yes", "estou", "sure", "why not", "podemos", "aham", "ok"];
+// src/utils/chapterUtils.js
+import { log } from "./textManager.js";
+import { confirmacao } from "./inputManager.js";
+import sleep from "./sleep.js";
 
-export { respostasAceitas };
+export async function handleActivityRejection(message, nextActivityFunction, saveCheckpointName) {
+  await log(message);
+  await sleep(2500);
+  return await confirmacao("E agora podemos começar?", "Nenhuma confirmação detectada. Finalizando...", "", saveCheckpointName, nextActivityFunction);
+}

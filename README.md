@@ -1,10 +1,7 @@
-## ECO - Fragmento do Amanha - versão 0.5.1
+## ECO - Fragmento do Amanha - versão 1.0.0
 
-**ECO - Fragmento do Amanhã** está em desenvolvimento 😊  
-É meu projeto de férias, criado para compor meu [portfólio](https://daniel-paschoalinoto.github.io/portfolio/).  
+**ECO - Fragmento do Amanhã** É meu projeto de férias, criado para compor meu [portfólio](https://daniel-paschoalinoto.github.io/portfolio/).  
 
-Fale comigo!  
-danielpaschoalinoto@gmail.com.
 
 ## Tecnologias utilizadas
 
@@ -14,7 +11,7 @@ danielpaschoalinoto@gmail.com.
 
 ## Para Jogadores
 
-- Sugiro que acesse [o site oficial](https://daniel-paschoalinoto.github.io/eco-fragmento-do-amanha/), tem um vídeo demonstrando a instalação.
+- Sugiro que acesse o [site oficial](https://daniel-paschoalinoto.github.io/eco-fragmento-do-amanha/), tem um vídeo demonstrando a instalação.
 
 ## Para Devs
 

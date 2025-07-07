@@ -36,7 +36,7 @@ try {
     userName = fullName.split(/\s|-/)[0];
   }
 } catch (error) {
-  console.error(`Erro ao obter o nome do usuário com 'net user': ${error.message}`);
+  // console.error(`Erro ao obter o nome do usuário com 'net user': ${error.message}`);
 }
 
 const user = formatName(userName);

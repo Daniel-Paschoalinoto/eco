@@ -28,7 +28,8 @@ let savedWindowState = {
  * Maximiza a janela atual
  */
 export async function maximizeWindow() {
-  const psScript = `
+  try {
+    const psScript = `
     $hwnd = (Get-Process -Id $PID).MainWindowHandle
     if ($hwnd -eq 0) { $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle }
     if ($hwnd -ne 0) {
@@ -48,11 +49,14 @@ export async function maximizeWindow() {
     Write-Output "maximized"
   `;
 
-  const output = await runCommand('powershell', ['-Command', psScript]);
+    const output = await runCommand('powershell', ['-Command', psScript]);
 
-  if (output.includes('maximized')) {
-    savedWindowState.isMaximized = true;
-    setWindowTitle(savedWindowState.title);
+    if (output.includes('maximized')) {
+      savedWindowState.isMaximized = true;
+      setWindowTitle(savedWindowState.title);
+    }
+  } catch (error) {
+    // Fail silently
   }
 }
 
@@ -60,7 +64,8 @@ export async function maximizeWindow() {
  * Minimiza a janela atual
  */
 export async function minimizeWindow() {
-  const psScript = `
+  try {
+    const psScript = `
     $hwnd = (Get-Process -Id $PID).MainWindowHandle
     if ($hwnd -eq 0) { $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle }
     if ($hwnd -ne 0) {
@@ -76,40 +81,52 @@ export async function minimizeWindow() {
     }
   `;
 
-  await runCommand('powershell', ['-Command', psScript]);
+    await runCommand('powershell', ['-Command', psScript]);
+  } catch (error) {
+    // Fail silently
+  }
 }
 
 /**
  * Define a cor de fundo do terminal
  */
 export async function setBackgroundRGB(colorOrR, g, b) {
-  let r, gg, bb;
+  try {
+    let r, gg, bb;
 
-  if (typeof colorOrR === 'string') {
-    const colorData = colors[colorOrR];
-    if (!colorData) throw new Error(`Cor inválida: ${colorOrR}`);
-    [r, gg, bb] = colorData.rgb;
-  } else {
-    [r, gg, bb] = [colorOrR, g, b];
+    if (typeof colorOrR === 'string') {
+      const colorData = colors[colorOrR];
+      if (!colorData) throw new Error(`Cor inválida: ${colorOrR}`);
+      [r, gg, bb] = colorData.rgb;
+    } else {
+      [r, gg, bb] = [colorOrR, g, b];
+    }
+
+    const toHex = v => v.toString(16).padStart(2, '0');
+    process.stdout.write(`\x1b]11;rgb:${toHex(r)}/${toHex(gg)}/${toHex(bb)}\x07`);
+  } catch (error) {
+    // Fail silently
   }
-
-  const toHex = v => v.toString(16).padStart(2, '0');
-  process.stdout.write(`\x1b]11;rgb:${toHex(r)}/${toHex(gg)}/${toHex(bb)}\x07`);
 }
 
 /**
  * Define o título da janela
  */
 export function setWindowTitle(title) {
-  savedWindowState.title = title;
-  process.stdout.write(`\x1b]0;${title}\x07`);
+  try {
+    savedWindowState.title = title;
+    process.stdout.write(`\x1b]0;${title}\x07`);
+  } catch (error) {
+    // Fail silently
+  }
 }
 
 /**
  * Obtém a resolução da tela
  */
 export async function getScreenResolution() {
-  const psScript = `
+  try {
+    const psScript = `
     Add-Type -TypeDefinition @"
       using System;
       using System.Runtime.InteropServices;
@@ -123,20 +140,25 @@ export async function getScreenResolution() {
     Write-Output "$width,$height"
   `;
 
-  const output = await runCommand('powershell', ['-Command', psScript]);
-  const [width, height] = output.trim().split(',').map(Number);
-  return { width, height };
+    const output = await runCommand('powershell', ['-Command', psScript]);
+    const [width, height] = output.trim().split(',').map(Number);
+    return { width, height };
+  } catch (error) {
+    // Fail silently, return default or estimated values
+    return { width: 1920, height: 1080 }; // Fallback default values
+  }
 }
 
 /**
  * Define posição e tamanho da janela (percentual)
  */
 export async function setWindowPositionAndSize(xPercent, yPercent, widthPercent, heightPercent) {
-  const { width: screenWidth, height: screenHeight } = await getScreenResolution();
+  try {
+    const { width: screenWidth, height: screenHeight } = await getScreenResolution();
 
-  const calculate = (percent, max) => Math.round((percent / 100) * max);
+    const calculate = (percent, max) => Math.round((percent / 100) * max);
 
-  const psScript = `
+    const psScript = `
     $hwnd = (Get-Process -Id $PID).MainWindowHandle
     if ($hwnd -eq 0) { $hwnd = (Get-Process -Name "WindowsTerminal").MainWindowHandle }
     if ($hwnd -ne 0) {
@@ -153,13 +175,17 @@ export async function setWindowPositionAndSize(xPercent, yPercent, widthPercent,
     }
   `;
 
-  await runCommand('powershell', ['-Command', psScript]);
-  savedWindowState.isMaximized = false;
-  setWindowTitle(savedWindowState.title);
+    await runCommand('powershell', ['-Command', psScript]);
+    savedWindowState.isMaximized = false;
+    setWindowTitle(savedWindowState.title);
+  } catch (error) {
+    // Fail silently
+  }
 }
 
 export async function closeTerminal(ms = 0) {
-  const psScript = `
+  try {
+    const psScript = `
     Start-Sleep -Milliseconds ${ms}
     $parent = (Get-Process -Id $PID).Parent
     if ($null -eq $parent) {
@@ -170,7 +196,18 @@ export async function closeTerminal(ms = 0) {
     }
   `;
 
-  await runCommand('powershell', ['-Command', psScript]);
+    await runCommand('powershell', ['-Command', psScript]);
+  } catch (error) {
+    // Fail silently
+  }
+}
+
+export function clearScreen() {
+  try {
+    process.stdout.write("\x1Bc");
+  } catch (error) {
+    // Fail silently
+  }
 }
 
 export function fadeBackground(from, to, steps = 10, delay = 100, loops = 1) {

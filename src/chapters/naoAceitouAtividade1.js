@@ -10,7 +10,9 @@
 // - Não o modifique nem crie obras derivadas;
 // - Atribua o crédito corretamente ao autor original.
 
-//src/utils/constants.js
-const respostasAceitas = ["sim", "s", "tô", "to", "claro", "yes", "estou", "sure", "why not", "podemos", "aham", "ok"];
+import { handleActivityRejection } from "../utils/chapterUtils.js";
+import { atividade1 } from "./atividade1.js";
 
-export { respostasAceitas };
+export async function naoAceitouAtividade1() {
+  return await handleActivityRejection("Seu retorno foi uma escolha inteligente.", atividade1, "naoAceitouAtividade1");
+}

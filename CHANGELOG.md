@@ -1,9 +1,16 @@
 ## Updates
+Versão 1.0.0 - 07/07/2025
+- Criação da 4ª atividade.
+- Finalização de narrativa.
+- Polimento e ajustes narrativos.
+- Revisão gramatical.
+- Revisão da arquitetura/modularização de capítulos.
+- Testes amplos do início ao fim em todos os fluxos.
 
 Versão 0.5.3 - 05/07/2025
 - Criação de [CHANGELOG.md](./CHANGELOG.md) e ajuste no [README.md](./README.md).
 - Remoção diretório docs.
-- Inclusão do código de licença nos arquivos (sugestão do amigo)
+- Inclusão do código de licença nos arquivos (sugestão do amigo do PHP).
 - Reupload do vídeo e atualização do id no front.
 
 Versão 0.5.1 - 04/07/2025

@@ -69,16 +69,16 @@ export function playSound(
   return child;
 }
 
-export function stopSound(soundProcess) {
-  if (!soundProcess || soundProcess.killed) return;
-  try {
-    soundProcess.kill('SIGTERM');
-  } catch (err) {
-    console.warn('Erro ao matar processo de som:', err);
-  } finally {
-    activeSoundProcesses.delete(soundProcess);
-  }
-}
+// export function stopSound(soundProcess) {
+//   if (!soundProcess || soundProcess.killed) return;
+//   try {
+//     soundProcess.kill('SIGTERM');
+//   } catch (err) {
+//     console.warn('Erro ao matar processo de som:', err);
+//   } finally {
+//     activeSoundProcesses.delete(soundProcess);
+//   }
+// }
 export function stopAllSounds() {
   for (const proc of Array.from(activeSoundProcesses)) {
     try {

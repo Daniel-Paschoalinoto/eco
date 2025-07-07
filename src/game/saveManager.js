@@ -65,7 +65,7 @@ export async function carregar() {
       const saveData = JSON.parse(fileContent.toString("utf8"));
       return saveData.checkpoint;
     } catch (error) {
-      console.error("Erro ao carregar o save em modo DEV:", error);
+      // console.error("Erro ao carregar o save em modo DEV:", error);
       return null;
     }
   } else {
@@ -74,7 +74,7 @@ export async function carregar() {
       const saveData = JSON.parse(decryptedData);
       return saveData.checkpoint;
     } catch (error) {
-      console.error("Erro ao carregar o save em modo PROD:", error);
+      // console.error("Erro ao carregar o save em modo PROD:", error);
       return null;
     }
   }

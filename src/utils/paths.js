@@ -13,7 +13,18 @@
 //src/utils/paths.js
 import path from 'path';
 import os from 'os';
-import { getDesktopPath } from './systemPaths.js';
+import { runCommand } from './runCommand.js';
+
+async function getDesktopPath() {
+  const psCommand = "[Environment]::GetFolderPath('Desktop')";
+  try {
+    const output = await runCommand('powershell', ['-Command', psCommand]);
+    return output.trim();
+  } catch (error) {
+    // console.error("Erro ao obter o caminho do Desktop:", error);
+    return path.join(os.homedir(), 'Desktop');
+  }
+}
 
 // A raiz do projeto é onde o processo Node foi iniciado.
 const PROJECT_ROOT = process.cwd();

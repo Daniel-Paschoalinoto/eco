@@ -14,7 +14,7 @@
 import { log } from './textManager.js';
 import { guardar } from '../game/saveManager.js';
 import sleep from './sleep.js';
-import { closeTerminal } from './windowManager.js';
+import { closeTerminal, clearScreen } from './windowManager.js';
 import { respostasAceitas } from "./constants.js";
 
 const stdin = process.stdin;
@@ -25,7 +25,7 @@ process.on('SIGINT', () => {
   // Do nothing to prevent process exit on Ctrl+C
 });
 
-function noop() {}
+function noop() { }
 stdin.on('data', noop);
 
 function getLineInput(resolve) {
@@ -134,17 +134,18 @@ export async function askLog(texts, speeds = "m", colorNames = "") {
 export async function confirmacao(pergunta, respostaNao, respostaSim, textoSaveNao, proximaFuncao) {
   const resposta = await askLog(pergunta);
   if (!respostasAceitas.includes(resposta.toLowerCase())) {
-    process.stdout.write("\x1Bc");
+    clearScreen();
     await log(respostaNao, "instant", "red");
     await sleep(2000);
     guardar(textoSaveNao);
     await closeTerminal(1000);
+    return null; // Indica que o jogo será encerrado
   } else {
-    process.stdout.write("\x1Bc");
+    clearScreen();
     if (respostaSim) {
       await log(respostaSim, "m", "green");
       await sleep(2000);
-      process.stdout.write("\x1Bc");
+      clearScreen();
     }
     guardar(proximaFuncao.name);
     return await proximaFuncao();
