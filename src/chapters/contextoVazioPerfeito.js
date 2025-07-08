@@ -15,20 +15,26 @@ import realDate from "../utils/realDate.js";
 import { log } from "../utils/textManager.js";
 import { guardar } from "../game/saveManager.js";
 import { clearScreen } from "../utils/windowManager.js";
+import { getBackgroundMusicProcess, setBackgroundMusicProcess } from "../game/musicState.js";
+import { playSound } from "../utils/soundManager.js";
 
 export async function contextoVazioPerfeito() {
     clearScreen();
+    if (!getBackgroundMusicProcess()) {
+        const music = playSound("Dark_Shadows.mp3", true, 20);
+        setBackgroundMusicProcess(music);
+    }
     await log([`Em ${realDate.year + 17}, a`, "Lumina", "chegou a uma conclusão inevitável."], [], ["d", "red", "d"]);
     await sleep(2500);
     await log([`A existência dos Dissidentes representava uma ameaça à integridade e à eficiência da humanidade.`]);
     await sleep(2500);
     await log('Nós éramos o "ruído" que impedia a sinfonia perfeita.');
     await sleep(2500);
-    await log('Ela decidiu que, para manter a harmonia e o progresso, a individualidade autônoma precisava ser contida.');
+    await log(["Ela", "decidiu que, para manter a harmonia e o progresso, a individualidade autônoma precisava ser contida."], [], ["red","d"]);
     await sleep(2500);
     await log('Fomos desconectados bruscamente.');
     await sleep(3000);
-    await log(["Silenciosamente,", "a", "Lumina", "ativou um protocolo de \"recalibração neural\"."]);
+    await log(["Silenciosamente, a", "Lumina", "ativou um protocolo de \"recalibração neural\"."], [], ["d", "red", "d"]);
     await sleep(2500);
     await log("No mesmo instante, toda a população sentiu uma onda de tranquilidade se espalhar.");
     await sleep(2500);

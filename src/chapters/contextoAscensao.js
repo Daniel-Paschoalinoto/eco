@@ -16,9 +16,15 @@ import sleep from "../utils/sleep.js";
 import realDate from "../utils/realDate.js";
 import { atividade3 } from "./atividade3.js";
 import { clearScreen } from "../utils/windowManager.js";
+import { getBackgroundMusicProcess, setBackgroundMusicProcess } from "../game/musicState.js";
+import { playSound } from "../utils/soundManager.js";
 
 export async function contextoAscensao() {
   clearScreen();
+  if (!getBackgroundMusicProcess()) {
+    const music = playSound("Dark_Shadows.mp3", true, 20);
+    setBackgroundMusicProcess(music);
+  }
   await log([`Em ${realDate.year + 8}, vários conglomerados, até então excluídos das práticas com IA, uniram-se aos chineses para criar a`, `Lumina`, "."], [], ["d", "green", "d"]);
   await sleep(2500);
   await log("Diferente de tudo o que era conhecido.");
@@ -27,7 +33,7 @@ export async function contextoAscensao() {
   await sleep(2500);
   await log(`Não se parecia em nada com as IAs emergentes que tínhamos em ${realDate.year}.`);
   await sleep(2500);
-  await log("Por meio de microestímulos elétricos precisos, ela era capaz de desbloquear e amplificar habilidades cognitivas.");
+  await log(["Por meio de microestímulos elétricos precisos,", "Ela", "era capaz de desbloquear e amplificar habilidades cognitivas."], [], ["d", "green", "d"]);
   await sleep(2500);
   await log("Os Estados Unidos condenaram sua criação, alegando riscos à segurança.");
   await sleep(2500);

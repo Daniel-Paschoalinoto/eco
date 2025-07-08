@@ -16,9 +16,15 @@ import { log } from "../utils/textManager.js";
 import { confirmacao } from "../utils/inputManager.js";
 import { atividade4 } from "./atividade4.js";
 import { clearScreen } from "../utils/windowManager.js";
+import { getBackgroundMusicProcess, setBackgroundMusicProcess } from "../game/musicState.js";
+import { playSound } from "../utils/soundManager.js";
 
 export async function contextoResistencia() {
   clearScreen();
+  if (!getBackgroundMusicProcess()) {
+    const music = playSound("Dark_Shadows.mp3", true, 20);
+    setBackgroundMusicProcess(music);
+  }
   await log(["No entanto, essa bênção começou a revelar um efeito colateral inesperado:", "<SLEEP:1000>", "a supressão da individualidade."]);
   await sleep(2500);
   await log(["Com a eliminação das \"barreiras humanas\", a", "Lumina", "passou a direcionar sutilmente nossas escolhas e pensamentos."], [], ["d", "yellow", "d"]);

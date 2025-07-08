@@ -1,4 +1,9 @@
 ## Updates
+
+Versão 1.0.1 - 07/07/2025
+- Correções de som nos últimos capítulos.
+- Ajuste de texto em Ultima e Vazio.
+
 Versão 1.0.0 - 07/07/2025
 - Criação da 4ª atividade.
 - Finalização de narrativa.

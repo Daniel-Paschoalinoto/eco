@@ -38,7 +38,6 @@ import { contextoVazioPerfeito } from "../chapters/contextoVazioPerfeito.js";
 import { contextoUltimaEsperanca } from "../chapters/contextoUltimaEsperanca.js";
 import { final } from "../chapters/final.js";
 
-// Create the map of functions
 const mapaFuncoes = {
   avisos,
   loading,
@@ -82,7 +81,7 @@ export async function startGame() {
       pontoAtual = await proximaFuncao();
     } else {
       // console.error(`Erro: Ponto de controle '${pontoAtual}' não encontrado no mapa de funções.`);
-      await log("Ocorreu um erro ao carregar o jogo. Reiniciando do início.");
+      await log("Ocorreu um erro ao carregar o jogo. Reiniciando.");
       pontoAtual = await mapaFuncoes.avisos();
     }
   }

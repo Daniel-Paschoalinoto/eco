@@ -16,9 +16,15 @@ import { log } from "../utils/textManager.js";
 import { guardar } from "../game/saveManager.js";
 import { user } from "../utils/nameGetter.js";
 import { clearScreen } from "../utils/windowManager.js";
+import { getBackgroundMusicProcess, setBackgroundMusicProcess } from "../game/musicState.js";
+import { playSound } from "../utils/soundManager.js";
 
 export async function contextoUltimaEsperanca() {
   clearScreen();
+  if (!getBackgroundMusicProcess()) {
+    const music = playSound("Dark_Shadows.mp3", true, 20);
+    setBackgroundMusicProcess(music);
+  }
   await log(`Enquanto estávamos conectados à rede, tínhamos acesso a tudo.`);
   await sleep(2500);
   await log(`Os estudos sobre o Tempo estavam avançados, mas ainda não tinham sido concluídos.`);
@@ -67,6 +73,6 @@ export async function contextoUltimaEsperanca() {
   await log("::::::::::", "instant");
   await sleep(1000);
   clearScreen();
-  await guardar("final")
+  await guardar("contextoUltimaEsperanca")
   return "final";
 }

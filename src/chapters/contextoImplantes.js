@@ -18,6 +18,10 @@ import { atividade2 } from "./atividade2.js";
 import { clearScreen } from "../utils/windowManager.js";
 
 export async function contextoImplantes() {
+  if (!getBackgroundMusicProcess()) {
+      const music = playSound("Dark_Shadows.mp3", true, 20);
+      setBackgroundMusicProcess(music);
+    }
   await log(`Em ${realDate.year + 5}, os implantes neurais começaram a ser comercializados pelos Norte-Americanos.`);
   await sleep(2500);
   await log("Com eles, era possível controlar dispositivos, acessar a internet e interagir online apenas com o pensamento.");

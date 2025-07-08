@@ -1,4 +1,4 @@
-## ECO - Fragmento do Amanha - versão 1.0.0
+## ECO - Fragmento do Amanha - versão 1.0.1
 
 **ECO - Fragmento do Amanhã** É meu projeto de férias, criado para compor meu [portfólio](https://daniel-paschoalinoto.github.io/portfolio/).  
 
