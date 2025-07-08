@@ -16,6 +16,8 @@ import sleep from "../utils/sleep.js";
 import realDate from "../utils/realDate.js";
 import { atividade2 } from "./atividade2.js";
 import { clearScreen } from "../utils/windowManager.js";
+import { getBackgroundMusicProcess, setBackgroundMusicProcess } from "../game/musicState.js";
+import { playSound } from "../utils/soundManager.js";
 
 export async function contextoImplantes() {
   if (!getBackgroundMusicProcess()) {
