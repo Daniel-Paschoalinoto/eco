@@ -52,7 +52,7 @@ export async function atividade1() {
     await log("", hintSpeed);
     await log(["Dica 2:", "O segundo está onde tudo o que você acessa diariamente fica, mas nesse nível você não costuma mexer."], [hintSpeed, hintSpeed], ["cyan", "d"]);
     await log("", hintSpeed);
-    await log(["Dica 3:", "O terceiro está onde todas as suas interações com os aplicativos ficam salvas"], [hintSpeed, hintSpeed], ["cyan", "d"]);
+    await log(["Dica 3:", "O terceiro está onde todas as suas interações com os aplicativos ficam salvas."], [hintSpeed, hintSpeed], ["cyan", "d"]);
     await log("", hintSpeed);
 
     isFirstAttempt = false;
